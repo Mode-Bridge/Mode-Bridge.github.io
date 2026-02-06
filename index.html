@@ -4,57 +4,53 @@
   
 
 
-  <!-- SEO / EEAT Meta Tags -->
+  <!-- SEO Meta Tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Staking Polygon (POL) — Rewards, APY/APR, Validators, Calculator, Safety &amp; Troubleshooting (2026)</title>
-  <meta name="description" content="Staking Polygon (POL) guide (2026): how Polygon staking works, rewards and real yield, APY vs APR, how to stake step-by-step, validator list criteria, minimum POL, calculator framework, best practices, risks, safety checks, comparisons vs liquid staking, and troubleshooting. Includes KPIs, runbook, and a deep FAQ.">
+  <title>Mode Bridge — How to Bridge to Mode Network, Fees, Time, Supported Tokens, Safety & Troubleshooting (2026)</title>
+  <meta name="description" content="Mode Bridge guide (2026): how to bridge to Mode Network step-by-step, safest routes, fees and expected time, supported tokens, wallet/network setup, explorer verification, security checklist, risks, and troubleshooting. Includes runbook, KPIs, and a deep FAQ.">
   <meta name="author" content="Crypto Finance Experts">
-  <link rel="canonical" href="https://staking-polygon.example.com/">
+  <link rel="canonical" href="https://mode-bridge.example.com/">
 
-  <!-- Favicon (use your local file) -->
-  <link rel="icon" type="image/png" href="polygon-logo-png_seeklogo-527156.png">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="modlog.png">
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://staking-polygon.example.com/">
-  <meta property="og:title" content="Staking Polygon (POL) — Rewards, APY/APR, Validators, Calculator, Safety &amp; Troubleshooting (2026)">
-  <meta property="og:description" content="Practical Staking Polygon (POL) guide: rewards, APY/APR, validator selection, safety checklist, calculator framework, and troubleshooting.">
-  <meta property="og:image" content="cover.png">
+  <meta property="og:url" content="https://mode-bridge.example.com/">
+  <meta property="og:title" content="Mode Bridge — Fees, Time, Supported Tokens, Security & Troubleshooting (2026)">
+  <meta property="og:description" content="Practical Mode Bridge guide: bridge routes, fees & time expectations, supported tokens, security checklist, and troubleshooting.">
+  <meta property="og:image" content="mode.jpg">
 
   <!-- Twitter Card -->
   <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://staking-polygon.example.com/">
-  <meta property="twitter:title" content="Staking Polygon (POL) — Rewards, APY/APR, Validators, Calculator, Safety &amp; Troubleshooting (2026)">
-  <meta property="twitter:description" content="Deep Polygon staking guide: yield drivers, validator criteria, minimum POL, best practices, and risks in 2025–2026.">
-  <meta property="twitter:image" content="cover.png">
+  <meta property="twitter:url" content="https://mode-bridge.example.com/">
+  <meta property="twitter:title" content="Mode Bridge — How to Bridge to Mode Network Safely (2026)">
+  <meta property="twitter:description" content="Deep Mode Bridge guide: safest routes, fees, token visibility, explorer verification, and FAQs.">
+  <meta property="twitter:image" content="mode.jpg">
 
   <style>
     :root{
-      /* Black–Purple Theme */
-      --primary:#A855F7;       /* purple-500 */
-      --primary-600:#9333EA;   /* purple-600 */
-      --primary-700:#7E22CE;   /* purple-700 */
-      --accent:#22D3EE;        /* cyan accent for tiny highlights */
+      /* Mode.Network-inspired yellow/black */
+      --primary:#F7D400;        /* vivid yellow */
+      --primary-600:#F2C200;
+      --primary-700:#D8A800;
+      --accent:#FFFFFF;         /* white accent */
 
-      --ink:#F8FAFC;           /* near-white text */
-      --muted:#A1A1AA;         /* zinc-400 */
-      --muted-2:#71717A;       /* zinc-500 */
+      --ink:#FFFBEA;
+      --muted:#C7C7C7;
+      --muted-2:#9A9A9A;
 
-      --bg:#070712;            /* deep black/purple */
-      --panel:#0B0B18;
-      --panel-2:#0F0F24;
-      --line:rgba(255,255,255,.10);
+      --bg:#070708;
+      --panel:#0D0D10;
+      --panel-2:#121216;
+      --line:rgba(255,255,255,.12);
 
-      --ok:#22C55E;
-      --warn:#F59E0B;
-      --error:#EF4444;
-
-      --shadow: 0 18px 44px rgba(0,0,0,.55);
+      --shadow: 0 18px 44px rgba(0,0,0,.72);
       --radius:14px;
-      --radius-sm:10px;
       --radius-lg:22px;
+
       --gap:1.25rem;
       --gap-lg:2rem;
     }
@@ -66,10 +62,10 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
       color:var(--muted);
       background:
-        radial-gradient(900px 600px at 15% 0%, rgba(168,85,247,.22), transparent 60%),
-        radial-gradient(900px 600px at 90% 10%, rgba(34,211,238,.10), transparent 60%),
-        radial-gradient(900px 600px at 55% 85%, rgba(126,34,206,.16), transparent 60%),
-        linear-gradient(180deg, #050510 0%, #070712 45%, #050510 100%);
+        radial-gradient(900px 600px at 12% 0%, rgba(247,212,0,.20), transparent 60%),
+        radial-gradient(900px 600px at 88% 12%, rgba(247,212,0,.10), transparent 60%),
+        radial-gradient(900px 600px at 55% 90%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(180deg, #040406 0%, var(--bg) 55%, #040406 100%);
       line-height:1.65;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
@@ -93,19 +89,23 @@
       padding-top:.6rem;
       border-top:1px solid var(--line);
     }
-    h3{font-size:clamp(1.05rem,2.2vw,1.3rem); color:#EDE9FE}
+    h3{
+      font-size:clamp(1.05rem,2.2vw,1.3rem);
+      color:#FFF7B3;
+      margin-top:1rem;
+    }
 
     p,li,td,th{font-size:1rem}
-    .lead{font-size:1.125rem; color:#E5E7EB}
+    .lead{font-size:1.125rem; color:#F5F5F5}
     .muted{color:var(--muted)}
     .muted-2{color:var(--muted-2)}
 
     header.hero{
       padding: clamp(2rem,6vw,4rem) 0;
       background:
-        radial-gradient(700px 420px at 18% 10%, rgba(168,85,247,.25), transparent 60%),
-        radial-gradient(700px 420px at 90% 20%, rgba(34,211,238,.12), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0) 55%);
+        radial-gradient(900px 520px at 18% 10%, rgba(247,212,0,.22), transparent 62%),
+        radial-gradient(900px 520px at 90% 20%, rgba(255,255,255,.06), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 55%);
       border-bottom:1px solid var(--line);
     }
 
@@ -117,15 +117,18 @@
     }
 
     .hero-card{
-      background: linear-gradient(180deg, rgba(15,15,36,.82), rgba(11,11,24,.68));
+      background: linear-gradient(180deg, rgba(18,18,22,.86), rgba(13,13,16,.72));
       border:1px solid var(--line);
       border-radius:var(--radius-lg);
       padding:clamp(1rem,3vw,1.75rem);
       box-shadow:var(--shadow);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
     }
 
-    .brand-row{display:flex; align-items:center; gap:.9rem; margin-bottom:.75rem}
+    .brand-row{
+      display:flex; align-items:center; gap:.9rem;
+      margin-bottom:.75rem
+    }
     .brand-logo{
       width:54px;
       height:54px;
@@ -138,178 +141,143 @@
       flex:0 0 auto;
     }
 
+    /* SINGLE CTA — centered, big, attractive */
+    .cta-center{
+      display:flex;
+      justify-content:center;
+      margin-top: 1.15rem;
+    }
     .cta{
-      display:inline-block;
-      margin-top:1rem;
-      background:linear-gradient(180deg, var(--primary), var(--primary-700));
-      color:white;
-      padding:.9rem 1.4rem;
-      border-radius:12px;
-      font-weight:900;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.65rem;
+      background:
+        radial-gradient(80% 140% at 50% 0%, rgba(255,255,255,.10), rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, var(--primary), var(--primary-700));
+      color:#0A0A0D;
+      padding:1.25rem 2.85rem;
+      border-radius:18px;
+      font-weight:950;
       letter-spacing:.2px;
-      box-shadow:0 14px 32px rgba(168,85,247,.28);
-      border:1px solid rgba(255,255,255,.10);
+      font-size:1.16rem;
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:
+        0 18px 62px rgba(247,212,0,.22),
+        0 0 0 8px rgba(247,212,0,.10);
+      transform: translateZ(0);
+      transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+      text-decoration:none;
+      text-align:center;
+      min-width:min(560px, 100%);
     }
-    .cta:hover{filter:brightness(1.05); text-decoration:none}
-    .cta.secondary{
-      background:transparent;
-      border:1px solid var(--line);
-      color:var(--ink);
-      margin-left:.75rem;
-      box-shadow:none;
+    .cta:hover{
+      text-decoration:none;
+      filter:brightness(1.06);
+      transform: translateY(-2px);
+      box-shadow:
+        0 22px 78px rgba(247,212,0,.26),
+        0 0 0 10px rgba(247,212,0,.12);
     }
+    .cta:active{transform: translateY(0px); filter:brightness(.98);}
 
     .note{
       border-left:3px solid var(--primary);
-      padding:.75rem 1rem;
-      background:rgba(168,85,247,.10);
-      border-radius:10px;
-      color:#E5E7EB;
+      padding:.85rem 1rem;
+      background:rgba(247,212,0,.10);
+      border-radius:12px;
+      color:#F5F5F5;
+      margin-top:1rem;
     }
 
+    /* HERO IMAGE — framed + beautiful */
     .hero-media{
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      margin-top: 18px;
-    }
-    .hero-img{
-      width:100%;
-      height:auto;
-      object-fit:contain;
-      max-height:520px;
+      position:relative;
       border-radius:var(--radius-lg);
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.14);
+      overflow:hidden;
       box-shadow:var(--shadow);
-      padding:.25rem;
+      background:
+        radial-gradient(120% 140% at 30% 0%, rgba(247,212,0,.18), rgba(247,212,0,0) 60%),
+        rgba(255,255,255,.03);
     }
-
-    .content-media{
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      margin-top: 14px;
+    .hero-media::before{content:""; display:block; padding-top:56.25%;}
+    .hero-img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      transform: scale(1.02);
+      filter:saturate(1.02) contrast(1.02);
     }
-    .content-img{
-      width:100%;
-      height:auto;
-      object-fit:contain;
-      max-height:420px;
-      border-radius:var(--radius);
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      box-shadow:var(--shadow);
-      padding:.25rem;
+    .hero-media::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(70% 70% at 20% 10%, rgba(255,255,255,.08), rgba(255,255,255,0) 55%),
+        linear-gradient(180deg, rgba(0,0,0,.00), rgba(0,0,0,.28));
+      pointer-events:none;
     }
 
     section.step-guide{padding: clamp(2rem,6vw,3.5rem) 0}
     .steps{display:grid; gap:var(--gap); grid-template-columns:1fr;}
     .step{
-      background:linear-gradient(180deg, rgba(15,15,36,.78), rgba(11,11,24,.62));
+      background:linear-gradient(180deg, rgba(18,18,22,.80), rgba(13,13,16,.68));
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:1.2rem;
-      box-shadow: 0 12px 26px rgba(0,0,0,.45);
+      box-shadow: 0 12px 26px rgba(0,0,0,.50);
       transition:transform .2s ease, box-shadow .2s ease;
     }
-    .step:hover{transform:translateY(-4px); box-shadow:0 18px 34px rgba(0,0,0,.55)}
+    .step:hover{transform:translateY(-4px); box-shadow:0 18px 34px rgba(0,0,0,.60)}
     .step .icon{
       width:54px;height:54px;border-radius:50%;
       display:inline-grid; place-items:center;
-      background:rgba(168,85,247,.18);
+      background:rgba(247,212,0,.14);
       margin-bottom:.6rem;
-      color:#EDE9FE;
+      color:#FFF7B3;
       font-weight:950;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
     }
 
     main .card{
-      background:linear-gradient(180deg, rgba(15,15,36,.70), rgba(11,11,24,.58));
+      background:linear-gradient(180deg, rgba(18,18,22,.76), rgba(13,13,16,.66));
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:1.25rem;
       margin:1.25rem 0;
-      box-shadow: 0 12px 26px rgba(0,0,0,.45);
-    }
-
-    .grid-2{display:grid; gap:var(--gap); grid-template-columns:1fr;}
-    .pillbar{
-      display:flex; flex-wrap:wrap; gap:.6rem;
-      margin:.75rem 0 0;
-    }
-    .pill{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
-      padding:.4rem .65rem;
-      border-radius:999px;
-      font-weight:800;
-      color:#E5E7EB;
-      box-shadow:none;
+      box-shadow: 0 12px 26px rgba(0,0,0,.50);
     }
 
     .toc{
       border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(168,85,247,.10), rgba(255,255,255,.02));
+      background:linear-gradient(180deg, rgba(247,212,0,.08), rgba(255,255,255,.03));
       border-radius:var(--radius);
       padding:1rem;
     }
-    .toc strong{color:#F1F5F9}
+    .toc strong{color:#FFFBEA}
     .toc ul{margin:.5rem 0 0; padding-left:1.1rem}
     .toc li{margin:.25rem 0}
-    .toc a{font-weight:800}
+    .toc a{font-weight:950}
 
     table{width:100%; border-collapse:collapse; overflow:hidden; border-radius:12px}
     th,td{padding:.9rem; border-bottom:1px solid var(--line)}
     th{
-      background:rgba(168,85,247,.10);
-      color:#F8FAFC;
+      background:rgba(247,212,0,.12);
+      color:#FFFBEA;
       text-align:left
     }
-    tr.highlight{background:rgba(168,85,247,.08)}
+    tr.highlight{background:rgba(247,212,0,.08)}
     tr:hover{background:rgba(255,255,255,.03)}
 
-    .ok{color:var(--ok)} .warn{color:var(--warn)} .err{color:var(--error)}
-
-    .eeat{
-      background:linear-gradient(180deg, rgba(168,85,247,.10), rgba(255,255,255,.02));
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:1.25rem;
-      box-shadow: 0 12px 26px rgba(0,0,0,.45);
-    }
-
-    .faq-item{border-bottom:1px solid var(--line); padding: .9rem 0}
-    .faq-button{
-      all:unset; display:flex; justify-content:space-between; align-items:center;
-      width:100%; cursor:pointer; padding:.3rem 0;
-    }
-    .faq-button:focus-visible{outline:2px solid var(--primary)}
-    .faq-button h3{margin:0; font-weight:950}
-    .faq-content{max-height:0; overflow:hidden; transition:max-height .25s ease}
-    .faq-content.open{padding-top:.6rem}
-    .faq-plus{font-weight:950; color:#EDE9FE}
-
-    .cta-center{
-      display:flex;
-      justify-content:center;
-      margin-top: 1rem;
-    }
-    .cta-center .cta{margin-top:0}
-
-    .badge-row{
-      display:flex; flex-wrap:wrap; gap:.6rem;
-      margin:.9rem 0 0;
-    }
-    .badge{
-      border:1px solid var(--line);
-      background:rgba(34,211,238,.06);
-      padding:.35rem .6rem;
-      border-radius:999px;
+    code, .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .inline-code{
+      display:inline-block;
+      padding:.15rem .35rem;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+      color:#FFFBEA;
       font-weight:900;
-      color:#E5E7EB;
     }
 
     .callout-grid{
@@ -324,24 +292,62 @@
       border-radius:var(--radius);
       padding:1rem;
     }
-    .mini h3{margin-bottom:.35rem}
     .kpi-badges{
-      display:flex; flex-wrap:wrap; gap:.55rem; margin-top:.5rem;
+      display:flex; flex-wrap:wrap; gap:.55rem; margin-top:.6rem;
     }
     .kpi-badges span{
-      border:1px solid rgba(168,85,247,.22);
-      background:rgba(168,85,247,.07);
-      color:#EDE9FE;
+      border:1px solid rgba(247,212,0,.22);
+      background:rgba(247,212,0,.07);
+      color:#FFFBEA;
       padding:.3rem .55rem;
       border-radius:999px;
-      font-weight:900;
+      font-weight:950;
       font-size:.9rem;
     }
 
+    /* SECONDARY IMAGE — do NOT stretch/crop */
+    .content-media{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-top:14px;
+
+      border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:var(--shadow);
+      background:rgba(255,255,255,.03);
+      padding:12px;
+    }
+    .content-img{
+      width:100%;
+      height:auto;
+      max-height:420px;
+      object-fit:contain;
+      display:block;
+    }
+
+    .sources{
+      background:linear-gradient(180deg, rgba(247,212,0,.08), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:1.25rem;
+      box-shadow: 0 12px 26px rgba(0,0,0,.50);
+    }
+
+    .faq-item{border-bottom:1px solid var(--line); padding: .9rem 0}
+    .faq-button{
+      all:unset; display:flex; justify-content:space-between; align-items:center;
+      width:100%; cursor:pointer; padding:.3rem 0;
+    }
+    .faq-button:focus-visible{outline:2px solid var(--primary)}
+    .faq-button h3{margin:0; font-weight:950}
+    .faq-content{max-height:0; overflow:hidden; transition:max-height .25s ease}
+    .faq-content.open{padding-top:.6rem}
+    .faq-plus{font-weight:950; color:#FFF7B3}
+
     @media (min-width: 860px){
-      .hero-grid{grid-template-columns: 1fr;}
       .steps{grid-template-columns: repeat(4, 1fr)}
-      .grid-2{grid-template-columns: 1fr 1fr}
       .callout-grid{grid-template-columns: 1fr 1fr}
     }
   </style>
@@ -353,72 +359,69 @@
   <div class="container hero-grid">
     <div class="hero-card" aria-label="Intro">
       <div class="brand-row">
-        <img class="brand-logo" src="polygon-logo-png_seeklogo-527156.png" alt="Staking Polygon logo">
+        <img class="brand-logo" src="modlog.png" alt="Mode Network logo">
         <div>
-          <div class="muted" style="font-weight:900; letter-spacing:.2px;">Operational Guide</div>
-          <div class="muted-2" style="font-size:.95rem;">Rewards • APY/APR • Validators • Calculator • Safety</div>
+          <div class="muted" style="font-weight:950; letter-spacing:.2px;">Operational Guide</div>
+          <div class="muted-2" style="font-size:.95rem;">Mode Bridge • Fees/Time • Supported Tokens • Safety • Troubleshooting</div>
         </div>
       </div>
 
-      <h1>Staking Polygon (POL)</h1>
+      <h1>Mode Bridge</h1>
       <p class="lead">
-        This is a practical, security-first guide to <strong>Staking Polygon (POL)</strong>: how staking works end-to-end,
-        what drives rewards, how to compare <strong>APY vs APR</strong>, how to choose validators, how to estimate yield with
-        a calculator framework, and how to avoid the common mistakes that cause lost time (or lost funds).
+        This is a practical, security-first guide to <strong>Mode Bridge</strong>: how to bridge assets to <strong>Mode Network</strong> safely,
+        which routes are considered official or widely used, what fees and time to expect, how to verify your bridge transfer on explorers,
+        and how to fix the most common “missing funds / wrong network / token not showing” issues.
       </p>
 
-
+      <!-- ONE CENTERED BUTTON -->
       <div class="cta-center">
-        <a href="https://staking-polygon.com/" class="cta" aria-label="Open Polygon Staking (placeholder)">Open Polygon Staking</a>
+        <a href="https://www.mode.network/" class="cta" aria-label="Open Mode Network official site">
+          Open Mode Bridge
+        </a>
       </div>
 
-      <div class="note" style="margin-top:1rem;">
-        <strong>Quick rule:</strong> If you’re staking meaningful size, do a small test delegation first,
-        then scale in. Staking is operational: validator choice, unbonding rules, and wallet hygiene matter.
+      <div class="note">
+        <strong>Quick rule:</strong> use official Mode.Network links, do a small test bridge first,
+        and verify the result on the explorer before bridging large amounts.
       </div>
     </div>
 
     <div class="hero-media" aria-hidden="true">
-      <!-- First top image -->
-      <img class="hero-img" src="snimok-ekrana-2022-01-25-v-16.10.24.png" alt="Staking Polygon overview visual">
+      <img class="hero-img" src="mode.jpg" alt="Mode Bridge hero image">
     </div>
   </div>
 </header>
 
 <section class="step-guide" aria-labelledby="how-works">
   <div class="container">
-    <h2 id="how-works">Staking Polygon (POL): How the Workflow Works (Choose → Delegate → Earn → Unstake)</h2>
+    <h2 id="how-works">Mode Bridge Workflow: Choose Route → Bridge → Verify → Fix Token Visibility</h2>
     <div class="steps" role="list">
       <article class="step" role="listitem">
         <div class="icon">①</div>
-        <h3>Choose a staking method (native vs liquid staking)</h3>
+        <h3>Choose a Mode Bridge route (official first)</h3>
         <p>
-          Decide if you want native delegation (more “direct”, but with lock/unbond rules) or liquid staking
-          (more flexibility, but extra smart-contract and peg/liquidity considerations).
+          Start from Mode’s official site/docs to avoid phishing clones. Prefer the official bridge route when available.
         </p>
       </article>
       <article class="step" role="listitem">
         <div class="icon">②</div>
-        <h3>Select validators (the real risk/return lever)</h3>
+        <h3>Bridge to Mode Network (test transfer first)</h3>
         <p>
-          Your validator choice drives uptime risk, slashing exposure, commission drag, and reliability.
-          “Highest APY” is not a strategy if the operator is unstable or opaque.
+          Confirm the source chain, destination chain (Mode), token, and address. Test with a small amount before scaling.
         </p>
       </article>
       <article class="step" role="listitem">
         <div class="icon">③</div>
-        <h3>Delegate and track rewards (net yield matters)</h3>
+        <h3>Verify Mode Bridge on explorer (source of truth)</h3>
         <p>
-          Rewards are not just “APR”: net yield depends on commission, compounding cadence, and any extra
-          fees/constraints. Track realized outcomes, not only quotes.
+          Wallet UIs can lag. Verify tx status, token transfers, and contract addresses using the Mode explorer.
         </p>
       </article>
       <article class="step" role="listitem">
         <div class="icon">④</div>
-        <h3>Unstake safely (timelines, claims, and mistakes)</h3>
+        <h3>Fix “token not showing” (contract verification)</h3>
         <p>
-          The exit path is part of the plan: understand unbonding delays, claim steps, and how long capital is illiquid.
-          Most “stuck” issues come from missing exit steps or network mismatch.
+          If your bridged token doesn’t show, verify the destination token contract on explorer and add the verified contract in your wallet.
         </p>
       </article>
     </div>
@@ -428,484 +431,369 @@
 <main class="container" role="main">
 
   <section class="card toc" aria-label="Table of Contents">
-    <strong>On this page (Staking Polygon):</strong>
+    <strong>On this page (Mode Bridge):</strong>
     <ul>
-      <li><a href="#overview">Staking Polygon overview (what it is &amp; who it’s for)</a></li>
-      <li><a href="#rewards">Polygon staking rewards: what drives yield</a></li>
-      <li><a href="#apy-apr">Polygon staking APY / APR: how to compare correctly</a></li>
-      <li><a href="#how-to">How to stake Polygon (POL): step-by-step tutorial</a></li>
-      <li><a href="#calculator">Polygon staking calculator: estimation framework</a></li>
-      <li><a href="#validators">Polygon validator list: selection checklist</a></li>
-      <li><a href="#minimum">Polygon staking minimum POL required</a></li>
-      <li><a href="#yield">Polygon staking yield: compounding &amp; net return</a></li>
-      <li><a href="#review">Staking Polygon review: legit, trust, and what to watch</a></li>
-      <li><a href="#safety">Is staking Polygon safe? risks &amp; rewards</a></li>
-      <li><a href="#comparison">Staking Polygon comparison vs liquid staking</a></li>
-      <li><a href="#best-practices">Best way to stake Polygon: best practices</a></li>
-      <li><a href="#troubleshooting">Troubleshooting &amp; common issues</a></li>
-      <li><a href="#eeat">Sources &amp; references</a></li>
-      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#overview">Mode Bridge overview (what it is & why people bridge)</a></li>
+      <li><a href="#routes">Mode Bridge routes: official and common options</a></li>
+      <li><a href="#fees-time">Mode Bridge fees & time: what to expect</a></li>
+      <li><a href="#wallet">Mode Network wallet setup: network + gas planning</a></li>
+      <li><a href="#verify">How to verify a Mode Bridge transfer (explorer-first)</a></li>
+      <li><a href="#tokens">Mode Bridge tokens: supported assets & “token not showing”</a></li>
+      <li><a href="#security">Mode Bridge security checklist</a></li>
+      <li><a href="#troubleshooting">Mode Bridge troubleshooting</a></li>
+      <li><a href="#sources">Authoritative sources & references</a></li>
+      <li><a href="#faq">Mode Bridge FAQ (deep)</a></li>
     </ul>
   </section>
 
   <section class="card" id="overview">
-    <h2>Staking Polygon Overview: What It Is, and Why People Stake POL</h2>
+    <h2>Mode Bridge Overview: What “Mode Bridge” Means (and Why It Matters)</h2>
     <p>
-      <strong>Staking Polygon (POL)</strong> generally means committing POL to help secure network operations (directly or via delegation),
-      earning rewards in return. The trade-off is simple: you exchange liquidity and operational attention
-      (validator selection + rules) for yield and network participation.
+      <strong>Mode Bridge</strong> usually refers to moving assets from another chain (often Ethereum or an L2)
+      onto <strong>Mode Network</strong> using a bridging protocol.
+      Bridges are convenient, but they add operational steps and smart-contract/infrastructure risk—so process matters.
     </p>
 
     <div class="callout-grid" role="list">
       <div class="mini" role="listitem">
-        <h3>Best use-case</h3>
+        <h3>When Mode Bridge makes sense</h3>
         <p class="muted">
-          Long-term holders who want yield and can tolerate lock/unbond timelines.
+          You want to use Mode Network apps, move stablecoins/liquidity, or interact with Mode DeFi with lower friction than mainnet.
         </p>
         <div class="kpi-badges">
-          <span>Long-term</span><span>Yield-focused</span><span>Risk-managed</span>
+          <span>Use Mode apps</span><span>Move assets</span><span>DeFi activity</span>
         </div>
       </div>
 
       <div class="mini" role="listitem">
-        <h3>Main constraints</h3>
+        <h3>What usually goes wrong</h3>
         <p class="muted">
-          Unbonding delay, validator/operator risk, and the need for careful wallet hygiene.
+          Wrong destination chain, wrong wallet network, token visibility issues, or using a fake bridge site.
         </p>
         <div class="kpi-badges">
-          <span>Illiquidity</span><span>Operator risk</span><span>Process matters</span>
+          <span>Wrong chain</span><span>Token not showing</span><span>Phishing risk</span>
         </div>
       </div>
     </div>
 
-    <div class="note" style="margin-top:1rem;">
-      <strong>Operational truth:</strong> the “best” staking setup is the one you can exit safely.
-      Always plan the unstake path before you stake.
+    <div class="note">
+      <strong>Operational truth:</strong> if the explorer shows the transfer, funds are rarely “lost”.
+      Fix network selection and token visibility before retrying.
     </div>
 
     <div class="content-media">
-      <!-- Second image -->
-      <img class="content-img" src="poly2.png" alt="Staking Polygon checklist visual">
+      <img class="content-img" src="mode2.png" alt="Mode Bridge secondary image">
     </div>
   </section>
 
-  <section class="card" id="rewards">
-    <h2>Polygon Staking Rewards: What Drives Rewards and Why They Change</h2>
+  <section class="card" id="routes">
+    <h2>Mode Bridge Routes: Official First, Then Reputable Alternatives</h2>
     <p>
-      <strong>Polygon staking rewards</strong> vary over time. Your realized outcome depends on network conditions and
-      your validator’s behavior (commission, uptime, performance), plus how you compound.
-    </p>
-    <ul>
-      <li><strong>Validator commission:</strong> your rewards are reduced by the operator’s cut.</li>
-      <li><strong>Uptime/performance:</strong> instability reduces rewards and can increase risk.</li>
-      <li><strong>Compounding cadence:</strong> auto-compound vs manual compounding changes net APY.</li>
-      <li><strong>Operational fees:</strong> some paths require extra transactions (claim/compound/unstake).</li>
-    </ul>
-
-    <div class="note">
-      <strong>Rule:</strong> Treat quoted yield as “gross”. Track net yield after commission + fees + missed time (downtime/unbond).
-    </div>
-  </section>
-
-  <section class="card" id="apy-apr">
-    <h2>Polygon Staking APY / APR: How to Compare Without Getting Tricked</h2>
-    <p>
-      <strong>APR</strong> is typically the “simple rate” (no compounding assumption).
-      <strong>APY</strong> includes a compounding assumption (and can be misleading if compounding isn’t realistic or fees are ignored).
+      For <strong>Mode Bridge</strong>, start from official Mode sources and verify domains.
+      If you use third-party bridges, do a small test and verify the destination token contracts on explorer.
     </p>
 
-    <table aria-label="APY vs APR comparison">
+    <table aria-label="Mode Bridge route selection checklist">
       <thead>
         <tr>
-          <th>Term</th>
-          <th>What it implies</th>
-          <th>Common mistake</th>
+          <th>Route type</th>
+          <th>Best for</th>
+          <th>Key checks</th>
         </tr>
       </thead>
       <tbody>
         <tr class="highlight">
-          <td>APR</td>
-          <td>Simple annual rate (no compounding)</td>
-          <td>Assuming APR = final outcome (it ignores compounding and fees)</td>
+          <td>Official bridge route</td>
+          <td>Most users</td>
+          <td>Correct domain, supported tokens, explorer tx links</td>
         </tr>
         <tr>
-          <td>APY</td>
-          <td>Annualized rate with compounding assumption</td>
-          <td>Believing APY without checking compounding frequency + transaction costs</td>
+          <td>Third-party bridges</td>
+          <td>More chain options</td>
+          <td>Reputation, audits, limits, fees, destination contract verification</td>
         </tr>
       </tbody>
     </table>
 
     <div class="note">
-      <strong>Quick check:</strong> If compounding requires frequent transactions, fees can erase the “APY gap” for small balances.
+      <strong>Rule:</strong> bookmark Mode.Network first, then navigate to bridging from there to reduce phishing risk.
     </div>
   </section>
 
-  <section class="card" id="how-to">
-    <h2>How to Stake Polygon (POL): Tutorial (Clean, Repeatable Workflow)</h2>
+  <section class="card" id="fees-time">
+    <h2>Mode Bridge Fees and Time: What to Expect</h2>
+    <p>
+      <strong>Mode Bridge</strong> cost and time depend on the source chain gas fee, bridge fee model,
+      and whether a claim/finalize step is required.
+      Always check the bridge’s estimate right before confirming.
+    </p>
+    <ul>
+      <li><strong>Fees:</strong> source chain gas + bridge fee + destination receive/claim gas (if applicable).</li>
+      <li><strong>Time:</strong> can range from minutes to longer depending on bridge confirmations and relayer liquidity.</li>
+      <li><strong>Hidden cost:</strong> failed approvals or wrong token selection can cost more than the bridge fee.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Tip:</strong> do a small test bridge to validate end-to-end time and the exact token you receive on Mode Network.
+    </div>
+  </section>
+
+  <section class="card" id="wallet">
+    <h2>Mode Bridge Wallet Setup: Network, Gas Planning, and Readiness Checklist</h2>
+    <p>
+      After you use <strong>Mode Bridge</strong>, you still need to transact on Mode Network.
+      That means: wallet on the correct network and enough gas token to approve/swap/move funds.
+    </p>
+
+    <table aria-label="Mode Network readiness">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>What it means</th>
+          <th>Why it matters for Mode Bridge</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>Wallet network</td>
+          <td>Mode Network selected</td>
+          <td>Wrong network = “missing funds” illusion</td>
+        </tr>
+        <tr>
+          <td>Explorer verification</td>
+          <td>Check your address on explorer</td>
+          <td>Confirms the transfer actually arrived</td>
+        </tr>
+        <tr>
+          <td>Gas planning</td>
+          <td>Keep gas to transact</td>
+          <td>Enables approvals, swaps, recovery, and exits</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <strong>Rule:</strong> don’t bridge all-in—leave gas on both chains for approvals and recovery steps.
+    </div>
+  </section>
+
+  <section class="card" id="verify">
+    <h2>How to Verify a Mode Bridge Transfer (Explorer-First)</h2>
     <ol>
-      <li><strong>Choose your method:</strong> native staking vs liquid staking (based on your liquidity needs).</li>
-      <li><strong>Prepare wallet hygiene:</strong> verify official URLs, consider hardware wallet for size, keep backups safe.</li>
-      <li><strong>Pick a validator:</strong> assess commission, uptime history, transparency, and operational reputation.</li>
-      <li><strong>Delegate a small test:</strong> verify rewards accrual and that you understand the UI and steps.</li>
-      <li><strong>Scale in:</strong> add stake in tranches to reduce operational mistakes.</li>
-      <li><strong>Track + compound:</strong> decide if compounding is worth it after fees.</li>
-      <li><strong>Plan your exit:</strong> know unbonding/claim rules before you need liquidity.</li>
+      <li><strong>Save the tx hash</strong> from the bridge UI.</li>
+      <li><strong>Check the source tx</strong> (must be successful).</li>
+      <li><strong>Check bridge status</strong> (in progress / completed / claim required).</li>
+      <li><strong>Check your address on the Mode explorer</strong> for token transfers and contract address.</li>
+      <li><strong>Only then</strong> fix wallet visibility (add verified token contract if needed).</li>
     </ol>
 
     <div class="note">
-      <strong>Best way to stake Polygon:</strong> stable operational setup beats chasing the highest headline number.
-      Reliability + sane commission + safe process wins.
+      <strong>Most common mistake:</strong> trusting wallet UI before verifying explorer data.
     </div>
   </section>
 
-  <section class="card" id="calculator">
-    <h2>Polygon Staking Calculator: A Practical Estimation Framework</h2>
+  <section class="card" id="tokens">
+    <h2>Mode Bridge Tokens: Supported Assets, Contract Verification, and “Token Not Showing”</h2>
     <p>
-      A <strong>Polygon staking calculator</strong> should estimate your <em>net</em> outcome (not just a marketing APY).
-      Use this framework:
+      With <strong>Mode Bridge</strong>, token issues are usually one of three things:
+      (1) token not supported by the selected route, (2) token arrives as a different representation, or (3) wallet UI doesn’t show it.
+      Always verify the contract address on the explorer before adding a token.
     </p>
 
-    <table aria-label="Staking calculator inputs">
+    <table aria-label="Mode Bridge token checklist">
       <thead>
         <tr>
-          <th>Input</th>
-          <th>Meaning</th>
-          <th>Why it matters</th>
+          <th>Problem</th>
+          <th>Likely cause</th>
+          <th>Fix</th>
         </tr>
       </thead>
       <tbody>
         <tr class="highlight">
-          <td>Stake amount (POL)</td>
-          <td>Your principal</td>
-          <td>Determines if compounding fees are worth it</td>
+          <td>Token not showing</td>
+          <td>Wallet doesn’t track token by default</td>
+          <td>Verify on explorer → add verified contract</td>
         </tr>
         <tr>
-          <td>Gross APR</td>
-          <td>Network/validator rate before compounding</td>
-          <td>Baseline yield driver</td>
+          <td>Wrong token received</td>
+          <td>Different representation on destination</td>
+          <td>Verify contract + symbol on explorer</td>
         </tr>
         <tr>
-          <td>Validator commission</td>
-          <td>Operator cut</td>
-          <td>Directly reduces rewards</td>
-        </tr>
-        <tr>
-          <td>Compounding frequency</td>
-          <td>Monthly/weekly/daily (if applicable)</td>
-          <td>Increases APY but may increase fees</td>
-        </tr>
-        <tr>
-          <td>Tx costs</td>
-          <td>Claim/compound/unstake fees</td>
-          <td>Can dominate small portfolios</td>
+          <td>No arrival</td>
+          <td>Wrong chain/address or tx failed</td>
+          <td>Check source tx + bridge status + destination explorer</td>
         </tr>
       </tbody>
     </table>
 
     <div class="note">
-      <strong>Calculator takeaway:</strong> For smaller balances, “set and forget” (no frequent compounding) often yields higher net results after fees.
+      <strong>Rule:</strong> never add token contracts from social media—only from explorer + official sources.
     </div>
   </section>
 
-  <section class="card" id="validators">
-    <h2>Polygon Validator List: How to Choose the Right Validator</h2>
-    <p>
-      Instead of chasing “top APR”, evaluate validators like infrastructure providers.
-      A strong <strong>Polygon validator list</strong> checklist:
-    </p>
+  <section class="card" id="security">
+    <h2>Mode Bridge Security Checklist: Reduce Risk Fast</h2>
     <ul>
-      <li><strong>Commission:</strong> reasonable and stable (avoid sudden spikes).</li>
-      <li><strong>Uptime &amp; reliability:</strong> consistent performance matters more than hype.</li>
-      <li><strong>Transparency:</strong> clear operator identity, documentation, and communication.</li>
-      <li><strong>Risk posture:</strong> sensible security practices and operational maturity.</li>
+      <li><strong>Bookmark official domains:</strong> Mode.Network, docs, explorer, and bridge.</li>
+      <li><strong>Test transfer first:</strong> small amount to validate chain, token, and time.</li>
+      <li><strong>Verify on explorer:</strong> treat explorer as source of truth.</li>
+      <li><strong>Minimize approvals:</strong> avoid unlimited allowances on unknown contracts.</li>
+      <li><strong>Revoke stale allowances:</strong> periodically review and revoke permissions.</li>
+      <li><strong>Keep gas buffers:</strong> on both source chain and Mode Network.</li>
     </ul>
 
     <div class="note">
-      <strong>Heuristic:</strong> Pick validators you can explain in one sentence (who they are + why you trust their operations).
-    </div>
-  </section>
-
-  <section class="card" id="minimum">
-    <h2>Polygon Staking Minimum POL Required</h2>
-    <p>
-      The <strong>Polygon staking minimum POL required</strong> depends on the staking method and platform.
-      In practice, your “real minimum” is the amount where fees don’t crush net yield and you can still afford
-      exit transactions if needed.
-    </p>
-    <ul>
-      <li><strong>Hard minimum:</strong> varies by method/platform.</li>
-      <li><strong>Practical minimum:</strong> enough POL so periodic transactions (claim/compound/unstake) don’t eat yield.</li>
-      <li><strong>Safety minimum:</strong> keep extra for network fees and recovery actions.</li>
-    </ul>
-
-    <div class="note">
-      <strong>Rule:</strong> Always keep a gas buffer; being “all-in” is how people get stuck.
-    </div>
-  </section>
-
-  <section class="card" id="yield">
-    <h2>Polygon Staking Yield: How to Think About Net Returns</h2>
-    <p>
-      <strong>Polygon staking yield</strong> should be evaluated as <em>net</em> performance: rewards minus commissions minus fees,
-      adjusted for time locked/unbonded and any downtime.
-    </p>
-
-    <h3>Net yield checklist</h3>
-    <ul>
-      <li>Gross rewards earned</li>
-      <li>Minus validator commission</li>
-      <li>Minus transaction costs (claim/compound/unstake)</li>
-      <li>Minus “lost time” (unbonding delays / operational downtime)</li>
-    </ul>
-
-    <div class="note">
-      <strong>Best practice:</strong> Track realized outcomes quarterly. If net yield is not beating your alternative (or risk feels wrong), rotate strategy.
-    </div>
-  </section>
-
-  <section class="card" id="review">
-    <h2>Staking Polygon Review: Legit, Trust, and What to Watch (2025–2026)</h2>
-    <p>
-      A <strong>Staking Polygon review</strong> should focus on predictable outcomes and safety:
-      whether the process is understandable, the validator ecosystem is mature, and the “gotchas” are manageable.
-    </p>
-
-    <div class="callout-grid">
-      <div class="mini">
-        <h3>Staking Polygon legit?</h3>
-        <p class="muted">
-          Generally, staking as a mechanism is legitimate. Your real question is: <em>which method/provider</em> and
-          <em>which validator</em> are you trusting operationally.
-        </p>
-      </div>
-      <div class="mini">
-        <h3>Staking Polygon trust</h3>
-        <p class="muted">
-          Trust is earned via transparency: clear docs, known operators, consistent performance, and a clean exit path.
-        </p>
-      </div>
-    </div>
-
-    <div class="note">
-      <strong>2025 / 2026 lens:</strong> The market rewards operational discipline. Assume attackers target approvals, fake sites, and users rushing steps.
-    </div>
-  </section>
-
-  <section class="card" id="safety">
-    <h2>Staking Polygon Safe? Risks and Rewards (What Actually Matters)</h2>
-    <p>
-      “Safe” is not binary. <strong>Staking Polygon safe</strong> depends on method risk + validator/operator risk + user mistakes.
-      You can reduce risk dramatically with hygiene and conservative choices.
-    </p>
-
-    <h3>Key risks</h3>
-    <ul>
-      <li><strong>Smart-contract risk:</strong> higher with extra layers (some liquid staking designs).</li>
-      <li><strong>Validator/operator risk:</strong> downtime, poor ops, slashing exposure.</li>
-      <li><strong>Phishing/approval risk:</strong> fake UIs and bad approvals are top avoidable loss sources.</li>
-      <li><strong>Liquidity risk:</strong> you may not be able to exit instantly (unbonding / market liquidity).</li>
-    </ul>
-
-    <div class="note">
-      <strong>Hard rule:</strong> Use bookmarks for official sites, prefer minimal approvals, and keep a separate wallet for “daily” dApp usage if you’re staking meaningful size.
-    </div>
-  </section>
-
-  <section class="card" id="comparison">
-    <h2>Staking Polygon Comparison: Native Staking vs Liquid Staking</h2>
-    <p>
-      <strong>Staking Polygon vs liquid staking</strong> is a trade-off between simplicity and flexibility.
-      Choose based on your need for liquidity and your tolerance for extra smart-contract/market risks.
-    </p>
-
-    <table aria-label="Native vs Liquid staking">
-      <thead>
-        <tr>
-          <th>Dimension</th>
-          <th>Native delegation</th>
-          <th>Liquid staking</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="highlight">
-          <td>Liquidity</td>
-          <td>Lower (unbonding delays)</td>
-          <td>Higher (tokenized position, depends on market)</td>
-        </tr>
-        <tr>
-          <td>Complexity</td>
-          <td>Lower</td>
-          <td>Higher (contracts + peg/liquidity)</td>
-        </tr>
-        <tr>
-          <td>Risk surface</td>
-          <td>Validator/operator + protocol rules</td>
-          <td>Native risks + smart-contract + market liquidity risks</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="note">
-      <strong>Decision rule:</strong> If you need quick exits, liquid staking can help—but treat it like an additional layer of risk.
-    </div>
-  </section>
-
-  <section class="card" id="best-practices">
-    <h2>Best Way to Stake Polygon: Best Practices (Simple, High-Impact)</h2>
-    <ul>
-      <li><strong>Use a hardware wallet</strong> for meaningful amounts.</li>
-      <li><strong>Delegate in tranches</strong> (test small, then scale).</li>
-      <li><strong>Prefer reputable validators</strong> with stable commission and strong ops.</li>
-      <li><strong>Keep a gas buffer</strong> for claim/unstake/recovery actions.</li>
-      <li><strong>Review allowances periodically</strong> and revoke stale permissions.</li>
-      <li><strong>Track net yield</strong> (not just headline APY).</li>
-    </ul>
-
-    <div class="note">
-      <strong>Most common mistake:</strong> users optimize for +0.5% yield and ignore the 10× bigger risk: bad ops + bad security habits.
+      <strong>Top risk:</strong> phishing bridge links + malicious approvals. Slow down and verify domains and contracts.
     </div>
   </section>
 
   <section class="card" id="troubleshooting">
-    <h2>Staking Polygon Troubleshooting: Common Issues, Root Causes, Fixes</h2>
+    <h2>Mode Bridge Troubleshooting: Common Issues and Fixes</h2>
 
-    <h3>“Rewards not showing”</h3>
+    <h3>“Mode Bridge completed but my balance is zero”</h3>
     <ul>
-      <li>You’re viewing the wrong network/account in the wallet.</li>
-      <li>Rewards accrue but require a claim/refresh action in the UI.</li>
-      <li>Validator has downtime or reporting lag—check on-chain data if available.</li>
+      <li>Switch wallet network to <strong>Mode Network</strong>.</li>
+      <li>Check your address on the Mode explorer to confirm the token transfer exists.</li>
+      <li>Add the token by verified contract address if it’s not visible.</li>
     </ul>
 
-    <h3>“Can’t unstake / withdraw”</h3>
+    <h3>“Mode Bridge is stuck / pending”</h3>
     <ul>
-      <li>Unbonding period is active (wait until it completes).</li>
-      <li>There is a claim/finalize step you haven’t executed.</li>
-      <li>You don’t have enough gas for the exit transaction.</li>
+      <li>Check the source chain tx status (must be successful).</li>
+      <li>Some routes require a claim/finalize step—check bridge status.</li>
+      <li>Relayer/liquidity delays can happen; don’t resend until you understand the state.</li>
     </ul>
 
-    <h3>“APY seems lower than expected”</h3>
+    <h3>“I don’t have gas on Mode Network to move funds”</h3>
     <ul>
-      <li>Commission is higher than assumed.</li>
-      <li>Compounding is not happening (or fees make it not worth it).</li>
-      <li>Validator performance/uptime reduced realized rewards.</li>
+      <li>Acquire a small amount of the destination gas token via exchange withdrawal or another route.</li>
+      <li>Plan gas before bridging next time (keep buffers).</li>
     </ul>
 
     <div class="note">
-      <strong>Best debugging method:</strong> verify state from the chain / official dashboards first, then UI second.
-      UI can lag; on-chain data is the source of truth.
+      <strong>Golden rule:</strong> if the explorer shows success, don’t panic—fix network selection and token visibility first.
     </div>
   </section>
 
-  <section class="eeat" id="eeat" aria-labelledby="eeat-title">
-    <h2 id="eeat-title">Staking Polygon: Authoritative Notes &amp; External References</h2>
-    <p>
-      Replace placeholder links with your chosen authoritative sources. Keep this block “clean” (official docs, reputable security resources,
-      and dashboards) to strengthen EEAT.
-    </p>
+  <section class="sources" id="sources" aria-labelledby="sources-title">
+    <h2 id="sources-title">Authoritative Sources & References</h2>
+    <p>Use these official and high-quality references for Mode Bridge routes, verification, and security hygiene:</p>
 
-    <h3>Polygon / Staking</h3>
+    <h3>Official Mode</h3>
     <ul>
-      <li><a href="#" target="_blank" rel="noopener nofollow">Polygon — Official Site</a></li>
-      <li><a href="#" target="_blank" rel="noopener nofollow">Polygon Staking — Official Docs</a></li>
-      <li><a href="#" target="_blank" rel="noopener nofollow">Polygon Validators — Explorer / Dashboard</a></li>
+      <li><a href="https://www.mode.network/" target="_blank" rel="noopener nofollow">Mode — Official site</a></li>
+      <li><a href="https://docs.mode.network/" target="_blank" rel="noopener nofollow">Mode Docs</a></li>
+    </ul>
+
+    <h3>Network registry & explorer</h3>
+    <ul>
+      <li><a href="https://chainlist.org/" target="_blank" rel="noopener nofollow">Chainlist — verify Mode network settings</a></li>
+      <li><a href="https://explorer.mode.network/" target="_blank" rel="noopener nofollow">Mode Explorer</a></li>
     </ul>
 
     <h3>Security hygiene</h3>
     <ul>
-      <li><a href="https://ethereum.org/guides/how-to-revoke-token-access/" target="_blank" rel="noopener nofollow">Ethereum.org — Revoke Token Approvals</a></li>
-      <li><a href="https://revoke.cash/" target="_blank" rel="noopener nofollow">Revoke.cash — Allowance Management</a></li>
-      <li><a href="https://blog.openzeppelin.com/" target="_blank" rel="noopener nofollow">OpenZeppelin — Smart Contract Security</a></li>
-      <li><a href="https://consensys.io/blog" target="_blank" rel="noopener nofollow">Consensys — Security Research</a></li>
+      <li><a href="https://ethereum.org/guides/how-to-revoke-token-access/" target="_blank" rel="noopener nofollow">Ethereum.org — Revoke token approvals</a></li>
+      <li><a href="https://revoke.cash/" target="_blank" rel="noopener nofollow">Revoke.cash — Allowance management</a></li>
+      <li><a href="https://blog.openzeppelin.com/" target="_blank" rel="noopener nofollow">OpenZeppelin — Smart contract security</a></li>
     </ul>
 
     <div class="note">
-      <strong>About:</strong> Prepared by Crypto Finance Experts as a practical SEO-oriented knowledge base for <em>Staking Polygon (POL)</em>:
-      rewards, APY/APR, validators, calculator framework, safety, comparisons, and troubleshooting.
+      <strong>Tip:</strong> always navigate to the bridge from official Mode docs/site to reduce phishing risk.
     </div>
   </section>
 
   <section class="card faq-section" aria-labelledby="faq">
-    <h2 id="faq">Staking Polygon (POL): Frequently Asked Questions</h2>
+    <h2 id="faq">Mode Bridge FAQ: The Most Asked Questions (2026)</h2>
 
     <div class="faq-item">
       <button class="faq-button" aria-expanded="false" aria-controls="f1" id="b1">
-        <h3>What is Staking Polygon (POL) and how does it work?</h3><span class="faq-plus">+</span>
+        <h3>What is Mode Bridge?</h3><span class="faq-plus">+</span>
       </button>
       <div id="f1" class="faq-content" role="region" aria-labelledby="b1">
-        <p><strong>Staking Polygon (POL)</strong> typically involves delegating POL to validators (or using a staking method that represents your stake) to earn rewards while supporting network operations.</p>
+        <p><strong>Mode Bridge</strong> means transferring assets from another chain to <strong>Mode Network</strong> using an official or third-party bridge route.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-button" aria-expanded="false" aria-controls="f2" id="b2">
-        <h3>Polygon staking rewards: what affects my yield?</h3><span class="faq-plus">+</span>
+        <h3>What is the safest way to use Mode Bridge?</h3><span class="faq-plus">+</span>
       </button>
       <div id="f2" class="faq-content" role="region" aria-labelledby="b2">
-        <p>Your net yield depends on gross rate, validator commission, validator performance/uptime, compounding behavior, and transaction costs for claim/compound/unstake actions.</p>
+        <p>Start from the official Mode.Network site/docs, use the official bridge route if available, do a small test transfer, then verify on the Mode explorer before bridging large amounts.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-button" aria-expanded="false" aria-controls="f3" id="b3">
-        <h3>Polygon staking APY / APR: which should I trust?</h3><span class="faq-plus">+</span>
+        <h3>How long does Mode Bridge take?</h3><span class="faq-plus">+</span>
       </button>
       <div id="f3" class="faq-content" role="region" aria-labelledby="b3">
-        <p>APR is a simple rate; APY assumes compounding. Trust the number that matches your actual compounding cadence and includes fees/commission in the net estimate.</p>
+        <p>It depends on the route, confirmations required, and relayer/liquidity conditions. Many routes complete in minutes, but delays can happen—always verify bridge status and explorer data.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-button" aria-expanded="false" aria-controls="f4" id="b4">
-        <h3>How to stake Polygon (POL) safely?</h3><span class="faq-plus">+</span>
+        <h3>What fees should I expect with Mode Bridge?</h3><span class="faq-plus">+</span>
       </button>
       <div id="f4" class="faq-content" role="region" aria-labelledby="b4">
-        <p>Use official links (bookmarks), consider a hardware wallet for size, delegate a small test first, choose reputable validators, and keep a gas buffer for exits and recovery actions.</p>
+        <p>Fees commonly include source chain gas + bridge fee + destination receive/claim gas (if applicable). Check the bridge estimate immediately before confirming.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-button" aria-expanded="false" aria-controls="f5" id="b5">
-        <h3>Staking Polygon safe, legit, and trustworthy in 2026?</h3><span class="faq-plus">+</span>
+        <h3>Mode Bridge completed but tokens are missing — what do I do?</h3><span class="faq-plus">+</span>
       </button>
       <div id="f5" class="faq-content" role="region" aria-labelledby="b5">
-        <p>Staking as a mechanism can be legitimate, but outcomes depend on method/provider risk, validator quality, and user security hygiene. Treat phishing and approvals as the top avoidable risks.</p>
+        <p>Switch wallet to Mode Network, verify the transfer on the Mode explorer, then add the token by verified contract address if it’s not visible in your wallet.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-button" aria-expanded="false" aria-controls="f6" id="b6">
-        <h3>Polygon validator list: what matters most?</h3><span class="faq-plus">+</span>
+        <h3>Why do I see a different token after using Mode Bridge?</h3><span class="faq-plus">+</span>
       </button>
       <div id="f6" class="faq-content" role="region" aria-labelledby="b6">
-        <p>Look for stable commission, strong uptime/performance, transparency, and operational reputation. Avoid unknown operators offering eye-catching headline rates.</p>
+        <p>Some bridges mint a wrapped/representative token on the destination chain. Verify the destination token contract on the Mode explorer and confirm it matches official information for that route.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-button" aria-expanded="false" aria-controls="f7" id="b7">
-        <h3>Staking Polygon vs liquid staking: which is better?</h3><span class="faq-plus">+</span>
+        <h3>How do I avoid fake Mode Bridge sites?</h3><span class="faq-plus">+</span>
       </button>
       <div id="f7" class="faq-content" role="region" aria-labelledby="b7">
-        <p>Native staking is simpler but less liquid; liquid staking may be more flexible but adds smart-contract and market liquidity/peg risks. Choose based on your need for fast exits.</p>
+        <p>Start from the official <strong>mode.network</strong> domain, follow links to docs/bridge from there, and bookmark the verified bridge URL. Avoid sponsored ads and random links.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-button" aria-expanded="false" aria-controls="f8" id="b8">
-        <h3>Polygon staking calculator: what inputs do I need?</h3><span class="faq-plus">+</span>
+        <h3>Do I need gas on Mode Network after bridging?</h3><span class="faq-plus">+</span>
       </button>
       <div id="f8" class="faq-content" role="region" aria-labelledby="b8">
-        <p>Stake amount, gross APR, validator commission, compounding frequency, and transaction costs. The goal is a net yield estimate, not a marketing APY.</p>
+        <p>Yes—if you want to approve, swap, revoke, or move funds on Mode Network, you’ll need gas. Plan a small buffer so you can complete your next steps.</p>
       </div>
     </div>
 
     <div class="faq-item">
       <button class="faq-button" aria-expanded="false" aria-controls="f9" id="b9">
-        <h3>Why can’t I unstake or withdraw right now?</h3><span class="faq-plus">+</span>
+        <h3>Should I bridge directly from an exchange address?</h3><span class="faq-plus">+</span>
       </button>
       <div id="f9" class="faq-content" role="region" aria-labelledby="b9">
-        <p>Most commonly: an unbonding period is still running, a claim/finalize step is required, or you lack gas for the exit transaction.</p>
+        <p>Usually avoid it unless explicitly supported. Use a self-custody wallet you control, so you can verify and recover if something goes wrong.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f10" id="b10">
+        <h3>What should I do before bridging a large amount with Mode Bridge?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f10" class="faq-content" role="region" aria-labelledby="b10">
+        <p>Do a small test, verify on explorer, confirm the token contract on Mode, ensure gas buffers exist on both chains, and save tx hashes for troubleshooting.</p>
       </div>
     </div>
 
@@ -913,22 +801,54 @@
 
 </main>
 
-<footer class="container" role="contentinfo" style="padding:2rem 0; border-top:1px solid var(--line); margin-top:2rem">
-  <p class="muted">© 2026 Staking Polygon (POL) Guide. Educational content with safety-first operational focus.</p>
+<footer class="container" role="contentinfo" style="padding:2rem 0; border-top:1px solid rgba(255,255,255,.12); margin-top:2rem">
+  <p class="muted">© 2026 Mode Bridge Guide. Educational content with a security-first operational focus.</p>
 </footer>
 
+<script>
+  // Accessible FAQ accordion
+  (function(){
+    const items = document.querySelectorAll('.faq-item');
+    items.forEach((item) => {
+      const btn = item.querySelector('.faq-button');
+      const panel = item.querySelector('.faq-content');
+      const plus = item.querySelector('.faq-plus');
 
+      if(!btn || !panel) return;
 
+      btn.addEventListener('click', () => {
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
 
+        // close all
+        items.forEach((it) => {
+          const b = it.querySelector('.faq-button');
+          const p = it.querySelector('.faq-content');
+          const s = it.querySelector('.faq-plus');
+          if(!b || !p) return;
+          b.setAttribute('aria-expanded', 'false');
+          p.style.maxHeight = '0px';
+          p.classList.remove('open');
+          if(s) s.textContent = '+';
+        });
 
+        // open clicked if it was closed
+        if(!isOpen){
+          btn.setAttribute('aria-expanded', 'true');
+          panel.classList.add('open');
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+          if(plus) plus.textContent = '–';
+        }
+      });
 
+      window.addEventListener('resize', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        if(expanded){
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+      });
+    });
+  })();
+</script>
 
-
-
-
-
-
-
-
-
-</body></html>
+</body>
+</html>
