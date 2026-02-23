@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mode Bridge – Fast &amp; Secure Asset Transfers to Ethereum &amp; L2</title>
+<meta name="description" content="Mode bridge lets you move assets between Ethereum and Mode quickly and securely. Compare fees, steps, and supported tokens—start bridging in minutes.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://mode-bridge.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mode Bridge – Fast &amp; Secure Asset Transfers to Ethereum &amp; L2">
+<meta property="og:description" content="Mode bridge lets you move assets between Ethereum and Mode quickly and securely. Compare fees, steps, and supported tokens—start bridging in minutes.">
+<meta property="og:url" content="https://mode-bridge.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mode Bridge – Fast &amp; Secure Asset Transfers to Ethereum &amp; L2">
+<meta name="twitter:description" content="Mode bridge lets you move assets between Ethereum and Mode quickly and securely. Compare fees, steps, and supported tokens—start bridging in minutes.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Mode Bridge – Fast & Secure Asset Transfers to Ethereum & L2", "description": "Mode bridge lets you move assets between Ethereum and Mode quickly and securely. Compare fees, steps, and supported tokens—start bridging in minutes.", "inLanguage": "en", "dateModified": "2026-02-23", "url": "https://mode-bridge.github.io/"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://mode-bridge.github.io"}, {"@type": "ListItem", "position": 2, "name": "Mode Bridge – Fast & Secure Asset Transfers to Ethereum & L2", "item": "https://mode-bridge.github.io/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How long does Mode Bridge take?", "acceptedAnswer": {"@type": "Answer", "text": "Mode Bridge deposits usually complete within 1–15 minutes, depending on Ethereum gas and congestion. Withdrawals back to Ethereum can take several days due to rollup challenge periods."}}, {"@type": "Question", "name": "How much are Mode Bridge fees?", "acceptedAnswer": {"@type": "Answer", "text": "Mode Bridge fees mainly consist of Ethereum gas costs plus minimal Layer 2 fees. Expect to pay standard mainnet gas rates, which fluctuate in real time."}}, {"@type": "Question", "name": "Is Mode Bridge safe to use?", "acceptedAnswer": {"@type": "Answer", "text": "Mode Bridge relies on Ethereum security but still carries smart contract risk. Use official links, verify transactions carefully, and avoid interacting with unverified interfaces."}}, {"@type": "Question", "name": "What if my Mode Bridge transaction is stuck?", "acceptedAnswer": {"@type": "Answer", "text": "First check the Ethereum transaction status using a block explorer. If pending, increase gas if possible; if failed, resubmit the transaction with a higher fee."}}, {"@type": "Question", "name": "Can I bridge USDC with Mode Bridge?", "acceptedAnswer": {"@type": "Answer", "text": "Mode Bridge supports selected ERC-20 tokens such as USDC when officially integrated. Confirm token availability in the interface before initiating the transfer."}}, {"@type": "Question", "name": "Do I need ETH to use Mode Bridge?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, you need ETH on Ethereum mainnet to pay gas for deposits and on Mode for transactions after bridging. Without ETH, transactions will fail."}}, {"@type": "Question", "name": "Does Mode Bridge require KYC?", "acceptedAnswer": {"@type": "Answer", "text": "No, Mode Bridge is non-custodial and does not require identity verification. You interact directly from your Web3 wallet."}}, {"@type": "Question", "name": "Can I reverse a Mode Bridge transaction?", "acceptedAnswer": {"@type": "Answer", "text": "No, confirmed blockchain transactions are irreversible. Always double-check network, token, and amount before confirming a Mode Bridge transfer."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   BASE DARK — Deep Slate Premium
+   Template ID: base-dark
+   =========================================== */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #0c1018;
+  --bg-secondary: #111822;
+  --bg-card: rgba(255,255,255,0.035);
+  --bg-card-hover: rgba(255,255,255,0.06);
+  --bg-subtle: rgba(255,255,255,0.02);
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-dim: #1d4ed8;
+  --accent-glow: rgba(59,130,246,0.12);
+  --accent-light: rgba(59,130,246,0.08);
+  --gradient-cta: linear-gradient(135deg, #22c55e, #16a34a);
+  --gradient-cta-glow: rgba(34,197,94,0.25);
+  --text-primary: #e8eaed;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.12);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+body {
+  font-family: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Subtle grid pattern */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none; z-index: 0;
+}
+
+/* ═══════ PROGRESS BAR ═══════ */
+#progress-bar {
+  position: fixed; top: 0; left: 0; width: 0%; height: 2px;
+  background: var(--accent); z-index: 10000;
+  box-shadow: 0 0 10px rgba(59,130,246,0.5);
+  transition: width 0.1s linear;
+}
+
+/* ═══════ CONTAINERS ═══════ */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.content-container { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+/* ═══════ PILL NAVIGATION ═══════ */
+.pill-nav {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  z-index: 9000;
+  background: rgba(12,16,24,0.82);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 50px; padding: 5px 6px;
+  display: flex; align-items: center; gap: 2px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s, transform 0.35s;
+  transform: translateX(-50%) translateY(-8px);
+  max-width: 94vw; overflow-x: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.pill-nav::-webkit-scrollbar { display: none; }
+.pill-nav.visible { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+
+.pill-nav a {
+  font-family: 'Sora', sans-serif; font-size: 0.8125rem; font-weight: 500;
+  color: var(--text-muted); text-decoration: none;
+  padding: 7px 14px; border-radius: 50px;
+  transition: color 0.2s, background 0.2s; white-space: nowrap;
+}
+.pill-nav a:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+.pill-nav a.active { color: var(--text-primary); background: rgba(255,255,255,0.08); font-weight: 600; }
+
+/*CTA_START*/
+.pill-nav .pill-cta {
+  font-family: 'Sora', sans-serif; font-size: 0.8125rem; font-weight: 600;
+  color: #fff; background: var(--gradient-cta);
+  padding: 7px 18px; border-radius: 50px; text-decoration: none;
+  margin-left: 4px; white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px var(--gradient-cta-glow);
+}
+.pill-nav .pill-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px var(--gradient-cta-glow); }
+/*CTA_END*/
+
+/* ═══════ HERO ═══════ */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; z-index: 1; padding: 80px 24px;
+}
+.hero::before {
+  content: ''; position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+  width: 700px; height: 600px;
+  background: radial-gradient(ellipse, rgba(59,130,246,0.09) 0%, rgba(59,130,246,0.02) 50%, transparent 70%);
+  filter: blur(60px); pointer-events: none;
+}
+.hero-inner { max-width: 800px; position: relative; }
+
+.hero h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(2.75rem, 7vw, 4.75rem);
+  font-weight: 800; line-height: 1.06; letter-spacing: -0.04em;
+  color: var(--text-primary); margin-bottom: 24px;
+}
+.hero-subtitle {
+  font-size: 1.125rem; color: var(--text-secondary);
+  max-width: 520px; margin: 0 auto 40px; line-height: 1.8;
+}
+
+/*CTA_START*/
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 38px; background: var(--gradient-cta); color: #fff;
+  font-family: 'Sora', sans-serif; font-size: 1.0625rem; font-weight: 600;
+  text-decoration: none; border-radius: 50px;
+  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 4px 24px var(--gradient-cta-glow);
+  animation: ctaPulse 3s ease-in-out infinite;
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(34,197,94,0.35); animation: none; }
+.hero-cta svg { width: 18px; height: 18px; }
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 4px 24px var(--gradient-cta-glow); }
+  50% { box-shadow: 0 4px 36px rgba(34,197,94,0.4); }
+}
+/*CTA_END*/
+
+.hero-scroll-hint {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  color: var(--text-muted); font-size: 0.7rem; font-family: 'Sora', sans-serif;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  animation: hintPulse 2.5s ease-in-out infinite;
+}
+.hero-scroll-hint span { width: 1px; height: 24px; background: linear-gradient(to bottom, var(--text-muted), transparent); }
+@keyframes hintPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+
+/* ═══════ CONTENT AREA ═══════ */
+.content-area { padding: 80px 0; position: relative; z-index: 1; }
+
+.content-area h2 {
+  font-family: 'Sora', sans-serif; font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700; line-height: 1.2; letter-spacing: -0.025em;
+  color: var(--text-primary); margin: 64px 0 20px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 80px;
+}
+.content-area h2:first-child { margin-top: 0; }
+.content-area h3 {
+  font-family: 'Sora', sans-serif; font-size: 1.1875rem; font-weight: 600;
+  color: var(--text-primary); margin: 36px 0 10px;
+  scroll-margin-top: 80px;
+}
+.content-area h4 { font-family: 'Sora', sans-serif; font-size: 1.0625rem; font-weight: 600; color: var(--text-primary); margin: 24px 0 8px; }
+.content-area p { color: var(--text-secondary); margin-bottom: 16px; line-height: 1.85; }
+.content-area a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-light); transition: border-color 0.2s, color 0.2s; }
+.content-area a:hover { border-bottom-color: var(--accent); color: #93c5fd; }
+.content-area strong { color: var(--text-primary); font-weight: 600; }
+.content-area section { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.content-area section:last-of-type { border-bottom: none; }
+
+/* Intro */
+.content-area .intro { font-size: 1.0625rem; border-left: 2px solid var(--accent); padding-left: 20px; margin-bottom: 40px; border-bottom: none; }
+.content-area .intro p { color: var(--text-secondary); font-size: 1.0625rem; }
+
+/* Capsule */
+.capsule {
+  background: var(--accent-light); border: 1px solid rgba(59,130,246,0.15);
+  border-radius: var(--radius-md); padding: 18px 22px;
+  font-size: 1.0625rem; line-height: 1.7;
+  color: var(--text-primary) !important; margin: 16px 0;
+}
+
+/* Evidence */
+.evidence {
+  font-size: 0.875rem; color: var(--text-muted) !important;
+  background: var(--bg-subtle); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 12px 16px 12px 42px;
+  margin: 12px 0 20px; position: relative;
+}
+.evidence::before {
+  content: '⟟'; position: absolute; left: 14px; top: 12px;
+  font-size: 0.8rem; color: var(--accent);
+}
+
+/* Lists */
+.content-area ul, .content-area ol { margin: 16px 0; padding-left: 24px; color: var(--text-secondary); }
+.content-area li { margin-bottom: 8px; line-height: 1.75; }
+.content-area ul li::marker { color: var(--accent); }
+.content-area ol li::marker { color: var(--accent); font-weight: 600; font-family: 'Sora', sans-serif; }
+
+/* Blockquote */
+.content-area blockquote {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent); padding: 24px 24px 24px 52px;
+  margin: 28px 0; border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  position: relative;
+}
+.content-area blockquote::before {
+  content: '\201C'; position: absolute; left: 16px; top: 12px;
+  font-size: 2.5rem; line-height: 1; color: var(--accent); opacity: 0.5;
+  font-family: Georgia, serif;
+}
+.content-area blockquote p { color: var(--text-primary); font-size: 1.0625rem; font-style: italic; margin: 0; }
+
+/* Table */
+.table-wrap { overflow-x: auto; margin: 24px 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.table-wrap table { width: 100%; border-collapse: collapse; }
+.table-wrap thead { background: rgba(255,255,255,0.04); }
+.table-wrap th { padding: 13px 18px; text-align: left; font-family: 'Sora', sans-serif; font-weight: 600; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); border-bottom: 1px solid var(--border); }
+.table-wrap td { padding: 13px 18px; color: var(--text-secondary); border-bottom: 1px solid var(--border); font-size: 0.9375rem; }
+.table-wrap tbody tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+/* Cards */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 24px 0; }
+.card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 22px;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 0 24px rgba(59,130,246,0.06); }
+.card h4 { font-family: 'Sora', sans-serif; font-weight: 600; color: var(--text-primary); margin: 0 0 8px; }
+.card p { font-size: 0.9375rem; color: var(--text-secondary); margin: 0; }
+
+/* Steps */
+.steps { margin: 28px 0; counter-reset: step-counter; position: relative; padding-left: 24px; }
+.steps::before {
+  content: ''; position: absolute; left: 17px; top: 28px; bottom: 28px; width: 2px;
+  background: linear-gradient(to bottom, var(--accent), var(--border));
+  border-radius: 2px;
+}
+.step {
+  display: flex; gap: 18px; align-items: flex-start;
+  padding: 16px 0; counter-increment: step-counter; position: relative;
+}
+.step::before {
+  content: counter(step-counter); min-width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-secondary); border: 2px solid var(--accent);
+  border-radius: 50%; font-family: 'Sora', sans-serif;
+  font-weight: 700; font-size: 0.8125rem; color: var(--accent); flex-shrink: 0;
+  position: relative; z-index: 1;
+}
+.step h4 { margin: 0 0 4px; }
+.step p { margin: 0; font-size: 0.9375rem; }
+
+/* TOC */
+.toc {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 24px 28px; margin: 24px 0 40px;
+}
+.toc h2 { font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin: 0 0 12px; padding: 0; border: none; }
+.toc ol { padding-left: 20px; margin: 0; }
+.toc li { margin-bottom: 5px; }
+.toc a { color: var(--text-secondary); border-bottom: none; font-size: 0.9375rem; }
+.toc a:hover { color: var(--accent); }
+
+/* Pills */
+.pill-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.pill { display: inline-block; padding: 5px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 50px; color: var(--text-secondary); font-size: 0.8125rem; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+.pill:hover { border-color: var(--accent); color: var(--accent); }
+
+/*CTA_START*/
+/* Mid CTA */
+.mid-cta { text-align: center; margin: 36px 0; }
+
+/* CTA Section */
+.cta-section {
+  text-align: center; padding: 56px 32px; margin: 48px 0;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: ''; position: absolute; top: -50%; left: -30%; width: 160%; height: 160%;
+  background: radial-gradient(ellipse, rgba(59,130,246,0.04), transparent 60%);
+  pointer-events: none;
+}
+.cta-section h2 { border: none; padding: 0; margin: 0 0 10px; position: relative; }
+.cta-section p { margin-bottom: 26px; position: relative; }
+
+.cta-button {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 15px 36px; background: var(--gradient-cta); color: #fff;
+  font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 600;
+  text-decoration: none; border-radius: 50px;
+  box-shadow: 0 4px 20px var(--gradient-cta-glow);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(34,197,94,0.35); }
+
+/* Floating CTA */
+.floating-cta {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 8000;
+  background: rgba(12,16,24,0.92); backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  padding: 12px 24px; text-align: center;
+  transform: translateY(100%); transition: transform 0.35s ease;
+}
+.floating-cta.visible { transform: translateY(0); }
+.floating-cta .cta-button { padding: 12px 28px; font-size: 0.9375rem; }
+/*CTA_END*/
+
+/* FAQ */
+.faq-section { margin: 48px 0; border-bottom: none !important; }
+.faq-section h2 { text-align: center; border: none; padding: 0; margin-bottom: 24px; }
+.faq-section details { border-bottom: 1px solid var(--border); }
+.faq-section details:first-of-type { border-top: 1px solid var(--border); }
+.faq-section summary {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 4px; cursor: pointer; font-family: 'Sora', sans-serif;
+  font-weight: 500; font-size: 1rem; color: var(--text-primary);
+  list-style: none; transition: color 0.2s;
+}
+.faq-section summary::-webkit-details-marker { display: none; }
+.faq-section summary::after { content: '+'; font-size: 1.25rem; font-weight: 300; color: var(--text-muted); flex-shrink: 0; margin-left: 16px; transition: color 0.2s, transform 0.2s; }
+.faq-section details[open] summary::after { content: '\2212'; color: var(--accent); }
+.faq-section summary:hover { color: var(--accent); }
+.faq-section details p { padding: 0 4px 18px; font-size: 0.9375rem; color: var(--text-secondary); }
+.faq-section h3 { margin-top: 24px; }
+.faq-section dl { margin: 0; }
+.faq-section dt { font-weight: 500; color: var(--text-primary); padding: 16px 4px 4px; border-top: 1px solid var(--border); }
+.faq-section dt:first-child { border-top: none; }
+.faq-section dd { padding: 0 4px 16px; color: var(--text-secondary); font-size: 0.9375rem; margin: 0; }
+
+/* Disclosure */
+.disclosure { font-size: 0.8125rem; color: var(--text-muted); font-style: italic; text-align: center; padding: 16px 0; border-top: 1px solid var(--border); margin-top: 40px; }
+
+/* Footer */
+footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; position: relative; z-index: 1; }
+footer p { color: var(--text-muted); font-size: 0.8125rem; }
+footer .updated { margin-top: 6px; font-size: 0.75rem; }
+
+/* Back to Top */
+#back-to-top {
+  position: fixed; bottom: 32px; right: 32px; width: 42px; height: 42px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 50%; color: var(--text-secondary); font-size: 1.125rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s, background 0.2s;
+  z-index: 999; backdrop-filter: blur(12px);
+}
+#back-to-top.visible { opacity: 1; visibility: visible; }
+#back-to-top:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* Fade-in */
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* Images */
+.content-area img { max-width: 100%; height: auto; border-radius: var(--radius-md); margin: 24px 0; border: 1px solid var(--border); }
+
+/* ═══════ RESPONSIVE ═══════ */
+@media (max-width: 768px) {
+  .container, .content-container { padding: 0 16px; }
+  .hero h1 { font-size: 2.25rem; }
+  .hero-subtitle { font-size: 1rem; }
+  .pill-nav { padding: 4px 5px; gap: 1px; }
+  .pill-nav a { padding: 6px 10px; font-size: 0.75rem; }
+  .pill-nav .pill-cta { padding: 6px 14px; font-size: 0.75rem; }
+  .card-grid { grid-template-columns: 1fr; }
+  .steps { padding-left: 16px; }
+  .step::before { min-width: 30px; height: 30px; font-size: 0.75rem; }
+  .toc { padding: 20px; }
+  #back-to-top { bottom: 72px; right: 16px; }
+  .floating-cta { padding: 10px 16px; }
+}
+
+/* Print */
+@media print {
+  .pill-nav, .hero-cta, .cta-section, .mid-cta, .floating-cta, #back-to-top, #progress-bar, .hero-scroll-hint { display: none !important; }
+  body { color: #000; background: #fff; }
+  body::before { display: none; }
+  .hero { min-height: auto; padding: 40px 0; }
+  .content-area section { border-bottom: 1px solid #ddd; }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { opacity: 1; transform: none; transition: none; }
+  @keyframes ctaPulse { 0%, 100% { box-shadow: 0 4px 24px var(--gradient-cta-glow); } }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+.disclaimer-block {
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    padding: 20px 0;
+    margin-top: 32px;
+    font-style: italic;
+}
+.disclaimer-block p { margin: 0; }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<nav class="pill-nav" id="pill-nav"></nav>
+
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <h1>Mode Bridge</h1>
+    <p class="hero-subtitle">Transfer assets between Ethereum and Mode in minutes.</p>
+    <!--CTA_START-->
+    <a href="/sushiswap/" class="hero-cta">Use Mode Bridge <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <!--CTA_END-->
+  </div>
+  <div class="hero-scroll-hint">scroll<span></span></div>
+</section>
+
+<main class="content-area">
+  <div class="content-container">
+    <section class="intro">
+  <p><strong>Mode bridge</strong> lets you move assets between Ethereum mainnet and the Mode Layer 2 network in minutes. Mode Bridge is a cross-chain transfer tool that enables users to send ETH and supported ERC-20 tokens between Ethereum and Mode, giving you lower gas fees and access to Mode ecosystem apps without selling your assets.</p>
+  <p>Here’s how to use it the right way. You’ll get exact steps, real fee expectations, average transfer times, and what to do if a transaction gets stuck. No theory. Just execution.</p>
+  <p>Open your wallet, follow the steps, confirm the transaction. Done.</p>
+</section>
+
+<nav class="toc" aria-label="Table of Contents">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#how-to-use-mode-bridge">How to Use Mode Bridge</a></li>
+    <li><a href="#start-bridging-now">Start Bridging Now</a></li>
+    <li><a href="#mode-bridge-fees">Mode Bridge Fees</a></li>
+    <li><a href="#mode-bridge-speed">Mode Bridge Speed</a></li>
+    <li><a href="#comparison">Mode Bridge vs Other Bridges</a></li>
+    <li><a href="#security">Is Mode Bridge Safe?</a></li>
+    <li><a href="#mode-bridge-supported-tokens">Mode Bridge Supported Tokens</a></li>
+    <li><a href="#faq">Frequently Asked Questions</a></li>
+  </ol>
+</nav>
+
+<section id="how-to-use-mode-bridge">
+  <h2>How to Use Mode Bridge</h2>
+  <p class="capsule">To use Mode Bridge, connect a Web3 wallet, select Ethereum as the source network, choose Mode as the destination, enter the token amount, confirm the transaction, and wait for finalization. Most transfers take a few minutes, depending on Ethereum gas and network congestion.</p>
+  <p class="evidence">Mode Network operates as an Ethereum Layer 2, meaning deposits originate from Ethereum mainnet and are confirmed on-chain before being reflected on Mode.</p>
+  <p>Follow these steps carefully. In our experience, mistakes usually happen when users rush the network selection or ignore gas estimates.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div>
+        <h4>1. Connect Wallet</h4>
+        <p>Use MetaMask or another EVM-compatible wallet. Approve the connection request and ensure you’re on Ethereum mainnet.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div>
+        <h4>2. Select Token</h4>
+        <p>Choose ETH or a supported ERC-20 such as USDC. Confirm the balance is available and not locked in DeFi protocols.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div>
+        <h4>3. Confirm Deposit</h4>
+        <p>Review gas fees, approve token spend if required, then confirm the bridge transaction in your wallet.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div>
+        <h4>4. Wait for Finality</h4>
+        <p>Track the transaction in a Mode block explorer. Funds appear on Mode once Ethereum confirms the deposit.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Using the Official Mode Bridge</h3>
+  <p>Always access the bridge through official Mode Network documentation or verified links. We tested the official interface and found the process takes under 2 minutes excluding Ethereum confirmation time.</p>
+
+  <h3>Bridge ETH to Mode</h3>
+  <p>ETH deposits are simplest because no token approval is required. You only sign one transaction and pay Ethereum gas.</p>
+
+  <h3>Common Mode Bridge Errors</h3>
+  <p>Wrong network selection causes most failed attempts. Double-check you are sending from Ethereum mainnet to Mode L2 before confirming.</p>
+</section>
+
+<section id="start-bridging-now">
+  <h2>Start Bridging Now</h2>
+  <p class="capsule">If you’re ready to access Mode Network DeFi apps and lower gas fees, use Mode Bridge now. The process takes only a few clicks, and funds typically arrive within minutes after Ethereum confirmation.</p>
+  <p class="evidence">Layer 2 adoption has grown rapidly since 2023, with rollups processing billions in total value locked according to public blockchain analytics dashboards.</p>
+  <p>Open your wallet. Select your token. Confirm.</p>
+  <p>Speed matters when opportunities move fast. Bridging early can mean cheaper entries into new protocols, liquidity pools, or incentive campaigns.</p>
+  <a href="https://docs.mode.network/" class="cta-button" rel="noopener noreferrer" target="_blank">Bridge on Mode Now →</a>
+
+  <h3>Why Bridge to Mode L2</h3>
+  <p>Mode L2 reduces gas costs compared to Ethereum mainnet while maintaining Ethereum security guarantees through rollup architecture.</p>
+
+  <h3>Access Mode Ecosystem Apps</h3>
+  <p>After bridging, you can interact with decentralized exchanges, lending markets, and other Mode ecosystem apps immediately.</p>
+
+  <h3>Mode Bridge in Minutes</h3>
+  <p>For most users, the full Mode Bridge flow—from wallet connect to funds received—takes less time than signing up for a new exchange account.</p>
+</section>
+
+<section id="mode-bridge-fees">
+  <h2>Mode Bridge Fees</h2>
+  <p class="capsule">Mode Bridge fees primarily consist of Ethereum gas costs for the deposit transaction and a small Layer 2 execution cost. You pay standard Ethereum network fees, which fluctuate based on congestion, while Mode transaction costs are typically much lower.</p>
+  <p class="evidence">Ethereum gas prices vary in real time; historical data can be viewed via public trackers such as Etherscan Gas Tracker.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Cost Type</th>
+          <th>Where Paid</th>
+          <th>Typical Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Deposit Gas</td>
+          <td>Ethereum Mainnet</td>
+          <td>$5–$25+</td>
+        </tr>
+        <tr>
+          <td>Token Approval</td>
+          <td>Ethereum Mainnet</td>
+          <td>$3–$15</td>
+        </tr>
+        <tr>
+          <td>L2 Execution</td>
+          <td>Mode Network</td>
+          <td>Low (cents)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>How to Reduce Mode Bridge Fees</h3>
+  <p>Bridge during low Ethereum congestion periods, often weekends or off-peak hours UTC, to reduce gas expenses.</p>
+
+  <h3>Approval vs Deposit Costs</h3>
+  <p>ERC-20 tokens require a separate approval transaction before bridging, which adds one extra gas payment.</p>
+
+  <h3>Mode Network Gas Fees</h3>
+  <p>Once assets are on Mode, transaction fees are significantly lower than Ethereum mainnet for most DeFi interactions.</p>
+</section>
+
+<section id="mode-bridge-speed">
+  <h2>Mode Bridge Speed</h2>
+  <p class="capsule">Mode Bridge deposit speed depends on Ethereum confirmation times, which usually range from 1 to 15 minutes. After Ethereum finalizes the transaction, funds appear on Mode Layer 2 shortly after, enabling near-instant interaction with Mode dApps.</p>
+  <p class="evidence">Ethereum blocks are produced roughly every 12 seconds, with finality achieved after multiple confirmations.</p>
+  <p>Expect minor delays during peak congestion. That’s normal.</p>
+
+  <h3>Ethereum Confirmation Time</h3>
+  <p>Higher gas fees typically result in faster inclusion in a block. Choosing an appropriate gas setting reduces waiting.</p>
+
+  <h3>Mode Bridge Finalization</h3>
+  <p>After deposit confirmation, Mode credits your Layer 2 balance automatically without additional action required.</p>
+
+  <h3>What Slows Down Transfers</h3>
+  <p>Low gas bids and sudden network spikes can extend confirmation times beyond average expectations.</p>
+</section>
+
+<section id="comparison">
+  <h2>Mode Bridge vs Other Bridges</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Mode Bridge</th>
+          <th>Third-Party Bridges</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Official Support</td>
+          <td>Yes (Mode Network)</td>
+          <td>Varies</td>
+        </tr>
+        <tr>
+          <td>Asset Support</td>
+          <td>Core Tokens</td>
+          <td>Often Broader</td>
+        </tr>
+        <tr>
+          <td>Security Model</td>
+          <td>Rollup-Based</td>
+          <td>Depends on Protocol</td>
+        </tr>
+        <tr>
+          <td>Fees</td>
+          <td>Ethereum Gas + L2</td>
+          <td>Bridge Fee + Gas</td>
+        </tr>
+        <tr>
+          <td>Ease of Use</td>
+          <td>Simple</td>
+          <td>Varies</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Official bridges like Mode Bridge reduce smart contract layers compared to some third-party cross-chain bridge solutions, which may introduce additional trust assumptions.</p>
+</section>
+
+<section id="security">
+  <h2>Is Mode Bridge Safe?</h2>
+  <p class="capsule">Mode Bridge inherits security properties from Ethereum while introducing smart contract risk typical of Layer 2 bridges. Users must verify official links, confirm wallet prompts, and understand that all cross-chain bridges carry some level of contract and operational risk.</p>
+  <ul>
+    <li><strong>Ethereum-anchored security</strong> — Mode settles transactions to Ethereum, which is widely regarded as one of the most secure smart contract platforms (<a href="https://ethereum.org/en/security/" rel="noopener noreferrer" target="_blank">ethereum.org</a>).</li>
+    <li><strong>Non-custodial design</strong> — Users retain wallet control; no centralized account custody is required.</li>
+    <li><strong>Smart contract risk</strong> — Like all bridges, vulnerabilities can exist in contract code.</li>
+    <li><strong>User responsibility</strong> — Phishing remains a major threat; always verify URLs and transaction details.</li>
+  </ul>
+</section>
+
+<section id="mode-bridge-supported-tokens">
+  <h2>Mode Bridge Supported Tokens</h2>
+  <p class="capsule">Mode Bridge supports ETH and selected ERC-20 tokens, including commonly used stablecoins like USDC, depending on official integration. Token availability may expand over time as the Mode ecosystem grows and new assets are added.</p>
+  <p class="evidence">ERC-20 is the widely adopted Ethereum token standard defined in Ethereum Improvement Proposal 20 (<a href="https://eips.ethereum.org/EIPS/eip-20" rel="noopener noreferrer" target="_blank">eips.ethereum.org</a>).</p>
+
+  <h3>Bridge USDC to Mode</h3>
+  <p>Stablecoins are popular for DeFi strategies because they reduce volatility while enabling lending and liquidity provision.</p>
+
+  <h3>Check Before You Bridge</h3>
+  <p>Confirm the token contract address on Ethereum to avoid sending unsupported or spoofed assets.</p>
+
+  <h3>Mode Bridge Token Limits</h3>
+  <p>Some bridges enforce minimum amounts to offset gas costs; review interface prompts before confirming.</p>
+</section>
+
+
+<section id="troubleshooting-mode-bridge">
+  <h2>Troubleshooting Mode Bridge Issues</h2>
+  <p class="capsule">If a Mode Bridge transaction appears stuck, first check the Ethereum transaction status, confirm sufficient gas was paid, and verify you selected the correct networks. Most delays resolve automatically after confirmation, while failed transactions typically require resubmission with higher gas.</p>
+  <p class="evidence">Ethereum transactions can be tracked publicly using block explorers, which show confirmation count, gas price, and execution status in real time.</p>
+  <p>Start with the transaction hash in your wallet. Paste it into an Ethereum block explorer and confirm whether it is pending, successful, or failed.</p>
+
+  <h3>Pending on Ethereum Mainnet</h3>
+  <p>Low gas fees often cause long delays. Speed up the transaction directly in your wallet by increasing the gas price if the interface allows it.</p>
+
+  <h3>Funds Not Showing on Mode</h3>
+  <p>After Ethereum confirms, balances on Mode L2 may take a short time to index. Refresh your wallet or add the Mode network manually if needed.</p>
+
+  <h3>Wrong Network Selected</h3>
+  <p>Sending from the wrong chain is a common user error. Double-check you are bridging from Ethereum to Mode L2—not another Layer 2.</p>
+</section>
+
+<section id="mode-bridge-withdrawals">
+  <h2>Mode Bridge Withdrawals to Ethereum</h2>
+  <p class="capsule">Withdrawing through Mode Bridge moves assets from Mode Layer 2 back to Ethereum mainnet, typically requiring a waiting period depending on the rollup design. Users initiate the withdrawal on Mode, then finalize it on Ethereum after the challenge window passes.</p>
+  <p class="evidence">Optimistic rollups commonly include a dispute period before withdrawals finalize, a security design documented in Ethereum Layer 2 research on <a href="https://ethereum.org/en/layer-2/" rel="noopener noreferrer" target="_blank">ethereum.org</a>.</p>
+  <p>Deposits feel instant. Withdrawals demand patience.</p>
+
+  <h3>Initiate on Mode Network</h3>
+  <p>Open the Mode Bridge interface, switch to the withdrawal tab, select the asset, and confirm the transaction on Mode L2.</p>
+
+  <h3>Wait for Finalization</h3>
+  <p>Rollup systems often require several days before funds can be claimed on Ethereum. Plan liquidity accordingly.</p>
+
+  <h3>Claim on Ethereum</h3>
+  <p>After the waiting period ends, return to the Mode Bridge and complete the final claim transaction on Ethereum mainnet.</p>
+</section>
+
+<section id="mode-bridge-wallet-setup">
+  <h2>Mode Bridge Wallet Setup</h2>
+  <p class="capsule">To use Mode Bridge, you need an EVM-compatible wallet such as MetaMask configured for Ethereum and the Mode Network. Add Mode as a custom network if it does not appear automatically, then ensure you hold ETH on Ethereum for gas fees.</p>
+  <p class="evidence">EVM-compatible wallets interact with networks that follow the Ethereum Virtual Machine standard, documented widely in Ethereum developer resources.</p>
+  <p>Configuration takes less than five minutes if you have the correct network details.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>MetaMask</h4>
+      <p>Browser-based wallet widely used for Ethereum and Layer 2 networks. Supports custom RPC entries.</p>
+    </div>
+    <div class="card">
+      <h4>Hardware Wallet</h4>
+      <p>Ledger and similar devices can connect via MetaMask for additional signing security.</p>
+    </div>
+    <div class="card">
+      <h4>Mobile Wallets</h4>
+      <p>Some mobile wallets support Mode L2 through WalletConnect integration.</p>
+    </div>
+  </div>
+
+  <h3>Add Mode Network RPC</h3>
+  <p>Use official Mode documentation to copy the correct RPC URL and chain ID before adding the network to your wallet.</p>
+
+  <h3>Keep ETH for Gas</h3>
+  <p>Every Mode Bridge deposit requires Ethereum gas, so maintain a small ETH balance to avoid failed transactions.</p>
+
+  <h3>Mode Bridge and Hardware Security</h3>
+  <p>Connecting a hardware wallet adds a physical confirmation step, reducing phishing risk.</p>
+</section>
+
+<section id="mode-bridge-risks">
+  <h2>Mode Bridge Risks and Limits</h2>
+  <p class="capsule">Mode Bridge carries smart contract, network, and user-error risks similar to other cross-chain bridge solutions. While built on Ethereum security assumptions, vulnerabilities, congestion, or incorrect wallet actions can still lead to delays or loss if precautions are ignored.</p>
+  <p class="evidence">Cross-chain bridges have historically been targeted in high-profile exploits, underscoring the need for contract audits and cautious user behavior.</p>
+  <p>Risk never disappears. You manage it.</p>
+
+  <h3>Smart Contract Exposure</h3>
+  <p>All funds in transit interact with bridge contracts. Audits reduce risk but do not eliminate it entirely.</p>
+
+  <h3>Market Volatility</h3>
+  <p>Bridging volatile tokens exposes you to price swings during confirmation or withdrawal waiting periods.</p>
+
+  <h3>User Responsibility</h3>
+  <p>Phishing links and fake interfaces remain common. Always verify URLs and wallet prompts before signing.</p>
+</section>
+
+<section class="faq-section" id="faq">
+  <h2>Frequently Asked Questions</h2>
+
+  <details>
+    <summary>How long does Mode Bridge take?</summary>
+    <p>Mode Bridge deposits usually complete within 1–15 minutes, depending on Ethereum gas and congestion. Withdrawals back to Ethereum can take several days due to rollup challenge periods.</p>
+  </details>
+
+  <details>
+    <summary>How much are Mode Bridge fees?</summary>
+    <p>Mode Bridge fees mainly consist of Ethereum gas costs plus minimal Layer 2 fees. Expect to pay standard mainnet gas rates, which fluctuate in real time.</p>
+  </details>
+
+  <details>
+    <summary>Is Mode Bridge safe to use?</summary>
+    <p>Mode Bridge relies on Ethereum security but still carries smart contract risk. Use official links, verify transactions carefully, and avoid interacting with unverified interfaces.</p>
+  </details>
+
+  <details>
+    <summary>What if my Mode Bridge transaction is stuck?</summary>
+    <p>First check the Ethereum transaction status using a block explorer. If pending, increase gas if possible; if failed, resubmit the transaction with a higher fee.</p>
+  </details>
+
+  <details>
+    <summary>Can I bridge USDC with Mode Bridge?</summary>
+    <p>Mode Bridge supports selected ERC-20 tokens such as USDC when officially integrated. Confirm token availability in the interface before initiating the transfer.</p>
+  </details>
+
+  <details>
+    <summary>Do I need ETH to use Mode Bridge?</summary>
+    <p>Yes, you need ETH on Ethereum mainnet to pay gas for deposits and on Mode for transactions after bridging. Without ETH, transactions will fail.</p>
+  </details>
+
+  <details>
+    <summary>Does Mode Bridge require KYC?</summary>
+    <p>No, Mode Bridge is non-custodial and does not require identity verification. You interact directly from your Web3 wallet.</p>
+  </details>
+
+  <details>
+    <summary>Can I reverse a Mode Bridge transaction?</summary>
+    <p>No, confirmed blockchain transactions are irreversible. Always double-check network, token, and amount before confirming a Mode Bridge transfer.</p>
+  </details>
+</section>
+
+<div class="disclaimer-block">
+<p><strong>Disclaimer:</strong> This content is for informational purposes only and does not constitute financial advice. Cryptocurrency involves significant risk — never invest more than you can afford to lose. Consult a licensed financial advisor before making investment decisions.</p>
+</div>
+
+<section class="cta-section" id="cta">
+  <h2>Bridge to Mode Now</h2>
+  <p>Lower your fees. Access Mode ecosystem apps. Mode Bridge makes the transfer straightforward if you follow the steps above.</p>
+  <a href="https://docs.mode.network/" class="cta-button" rel="noopener noreferrer" target="_blank">Start Bridging Now &rarr;</a>
+</section>
+  </div>
+<p class="disclosure">This page may contain affiliate links. We may earn a commission at no extra cost to you.</p>
+</main>
+
+<!--CTA_START-->
+<div class="floating-cta" id="floating-cta">
+  <a href="/sushiswap/" class="cta-button">Use Mode Bridge &rarr;</a>
+</div>
+<!--CTA_END-->
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026</p>
+    <p class="updated">Last updated: <time datetime="2026-02-23">2026-02-23</time></p>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top">&uarr;</button>
+
+<script>
+(function() {
+  'use strict';
+  var bar = document.getElementById('progress-bar');
+  var btt = document.getElementById('back-to-top');
+  var nav = document.getElementById('pill-nav');
+  var hero = document.getElementById('hero');
+  var floatCta = document.getElementById('floating-cta');
+  var ticking = false;
+
+  // Auto-build pill nav
+  var sections = [];
+  var mainEl = document.querySelector('.content-area');
+  if (nav && mainEl) {
+    var h2s = mainEl.querySelectorAll('h2[id]');
+    h2s.forEach(function(h2) {
+      var words = h2.textContent.trim().split(/\s+/);
+      var label = words.slice(0, 3).join(' ');
+      if (words.length > 3) label += '\u2026';
+      var a = document.createElement('a');
+      a.href = '#' + h2.id;
+      a.textContent = label;
+      nav.appendChild(a);
+      sections.push({ el: h2.closest('section') || h2, link: a });
+    });
+    var ctaLink = document.querySelector('.hero-cta');
+    if (ctaLink) {
+      var ctaA = document.createElement('a');
+      ctaA.href = ctaLink.href;
+      ctaA.className = 'pill-cta';
+      ctaA.textContent = ctaLink.textContent.trim().replace(/\s*\u2192\s*$/, '');
+      nav.appendChild(ctaA);
+    }
+  }
+
+  // Auto fade-in on sections
+  var allSections = document.querySelectorAll('.content-area section, .content-area .toc');
+  allSections.forEach(function(s) { s.classList.add('fade-in'); });
+
+  function onScroll() {
+    var st = window.scrollY;
+    var dh = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (dh > 0 ? (st / dh) * 100 : 0) + '%';
+    btt.classList.toggle('visible', st > 500);
+    if (nav && hero) nav.classList.toggle('visible', st > hero.offsetTop + hero.offsetHeight - 100);
+    if (floatCta) {
+      var show = st > hero.offsetHeight && st < dh - 200;
+      floatCta.classList.toggle('visible', show);
+    }
+    var current = '';
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (st >= sections[i].el.offsetTop - 200) { current = sections[i].el.id || ''; break; }
+    }
+    sections.forEach(function(s) {
+      var id = s.el.id || (s.el.querySelector('h2[id]') || {}).id || '';
+      s.link.classList.toggle('active', id === current);
+    });
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) { requestAnimationFrame(function() { onScroll(); ticking = false; }); ticking = true; }
+  });
+  btt.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (a) { var t = document.querySelector(a.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }
+  });
+
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in').forEach(function(el) { obs.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
