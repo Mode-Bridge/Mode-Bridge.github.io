@@ -1,0 +1,107 @@
+{
+ "keyword": "mode bridge",
+ "h1": "Mode Bridge",
+ "brand": "Mode",
+ "niche": "bridge",
+ "verb": "Bridge",
+ "title": "Mode Bridge - Open App",
+ "meta_description": "mode bridge opens the official app to deposit or withdraw supported assets between Ethereum and Mode Mainnet.",
+ "palette": {
+  "mode": "dark",
+  "bg": "#000000",
+  "accent": "#DFFE00",
+  "ink": "#FFFFFF"
+ },
+ "hero_h2": "Move assets between Ethereum and Mode Mainnet",
+ "hero_lead": "mode bridge opens the official route for deposits and withdrawals between Ethereum and Mode Mainnet using Mode's canonical bridge flow.",
+ "badge": "Mode L2",
+ "widget": {
+  "from": "ETH",
+  "from_net": "Ethereum",
+  "to": "ETH",
+  "to_net": "Mode Mainnet",
+  "action": "Open Mode Bridge"
+ },
+ "trust": [
+  "Canonical bridge",
+  "Ethereum to Mode",
+  "ETH, USDC, USDT, WBTC"
+ ],
+ "what_is": "Mode is an OP Stack Layer 2 focused on DeFi and onchain agents; its canonical bridge moves supported assets between Ethereum Mainnet and Mode Mainnet. See the <a href=\"https://docs.mode.network/user-guides/bridge\">Mode bridge guide</a> for the official deposit and withdrawal framing.",
+ "how": [
+  {
+   "t": "Open the app",
+   "d": "Use the official bridge domain listed in Mode network details, then connect a wallet you control."
+  },
+  {
+   "t": "Select direction",
+   "d": "Choose a deposit from Ethereum to Mode or a withdrawal from Mode back to Ethereum."
+  },
+  {
+   "t": "Choose asset",
+   "d": "Pick a supported asset such as ETH, USDC, USDT, or WBTC and enter the amount."
+  },
+  {
+   "t": "Review and confirm",
+   "d": "Check the domain, network, token, amount, gas prompt, and destination before signing."
+  }
+ ],
+ "points": [
+  {
+   "h": "Canonical L1 to L2 path",
+   "p": "Mode docs describe the canonical bridge as the route for moving funds between Ethereum Mainnet and Mode Mainnet."
+  },
+  {
+   "h": "Built around supported assets",
+   "p": "The user guide lists ETH, USDC, USDT, and WBTC as supported assets, so check the app before sending anything else."
+  },
+  {
+   "h": "Verify network details",
+   "p": "Mode Mainnet uses ETH as its currency symbol and chain ID 34443; confirm against <a href=\"https://docs.mode.network/user-guides/network-details\">Mode network details</a> before transacting."
+  }
+ ],
+ "eeat": [
+  {
+   "text": "Mode bridge guide",
+   "url": "https://docs.mode.network/user-guides/bridge"
+  },
+  {
+   "text": "Mode official site",
+   "url": "https://www.mode.network/"
+  },
+  {
+   "text": "Mode explorer",
+   "url": "https://explorer.mode.network/"
+  }
+ ],
+ "faq": [
+  {
+   "q": "What is mode bridge?",
+   "a": "mode bridge is the canonical Mode flow for deposits and withdrawals between Ethereum Mainnet and Mode Mainnet.",
+   "open": true
+  },
+  {
+   "q": "Is mode bridge the official app?",
+   "a": "Use the bridge domain listed in <a href=\"https://docs.mode.network/user-guides/network-details\">Mode network details</a> and verify the URL before connecting a wallet.",
+   "open": false
+  },
+  {
+   "q": "Which assets can I use on mode bridge?",
+   "a": "Mode docs list ETH, USDC, USDT, and WBTC as supported for the canonical bridge flow.",
+   "open": false
+  },
+  {
+   "q": "Does mode bridge support withdrawals?",
+   "a": "Yes. Mode docs use deposit for Ethereum to Mode and withdrawal for Mode back to Ethereum.",
+   "open": false
+  },
+  {
+   "q": "What should I check before using mode bridge?",
+   "a": "Confirm the domain, wallet network, token, amount, destination chain, and wallet prompt before signing any transaction.",
+   "open": false
+  }
+ ],
+ "official_url": "https://bridge.mode.network/",
+ "official_domain": "bridge.mode.network",
+ "footer_note": "Not the official app; verify the destination domain before connecting. Educational content only, not financial advice."
+}
