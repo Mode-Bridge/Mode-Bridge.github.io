@@ -1,0 +1,96 @@
+{
+  "key_facts": {
+    "Category": "OP Stack Layer 2 bridge",
+    "Network": "Mode",
+    "Token": "MODE",
+    "Custody": "Non-custodial bridge interactions",
+    "Ecosystem": "Optimism Superchain"
+  },
+  "intent": [
+    {
+      "q": "Mode bridge from Ethereum to Mode Network",
+      "a": "The official Mode bridge is used to move assets into Mode Network, an OP Stack Layer 2 focused on DeFi, AI agents, and low-cost on-chain activity. A typical deposit starts on Ethereum, signs an L1 transaction, and makes funds available on Mode after the bridge process completes. Users should confirm the app URL is app.mode.network, check the source and destination chains, and keep enough ETH for L1 gas. For live app access, use the bridge linked from the <a href=\"https://www.mode.network/\">Mode official website</a>, because bridge clones are common around airdrops and incentive campaigns."
+    },
+    {
+      "q": "Mode bridge withdrawal time and fees",
+      "a": "Mode bridge fees depend on the source-chain gas cost, destination-chain execution, and the bridge or route selected. Official OP Stack withdrawals can involve a challenge/finality period, while third-party bridges may offer faster liquidity-based exits with different assumptions. Users searching for Mode bridge withdrawal time should not expect every route to behave the same way. The final quote or bridge screen is the source of truth for timing, minimums, and fees. For larger withdrawals, compare the official bridge with reputable third-party options, but remember that faster exits shift risk from canonical bridge finality to liquidity-provider and protocol risk."
+    },
+    {
+      "q": "Mode bridge supported assets",
+      "a": "Mode bridge asset support can change as the ecosystem adds tokens, liquidity, and third-party routes. Common bridge intent centers on ETH and stablecoins, but users should only trust assets shown in the official app or reputable bridge aggregators at the time of transfer. A token with the same ticker can have multiple contracts across chains, so verify the destination contract before bridging long-tail assets. If a token is not officially supported, wrapping or bridging through an unofficial route can create an asset that has little app support or liquidity on Mode."
+    },
+    {
+      "q": "Mode Network vs Base bridge",
+      "a": "Mode and Base are both OP Stack networks, but they serve different app ecosystems. Base has broad consumer and exchange-driven liquidity, while Mode emphasizes DeFi, AI-powered applications, rewards, and Mode Trade. The bridge choice depends on where the user wants to transact after funds arrive. If the target app is on Mode, bridge to Mode; if the target app is on Base, bridge to Base. From an SEO standpoint, the intent is usually not abstract chain comparison, but whether Mode has the app, incentives, or yield strategy the user wants to use."
+    }
+  ],
+  "compare": {
+    "title": "Mode Bridge vs third-party bridge routes",
+    "rows": [
+      ["Dimension", "Mode official bridge", "Third-party bridge"],
+      ["Primary path", "Canonical Mode app flow", "Liquidity or aggregator-based route"],
+      ["Best for", "Direct deposits and official network access", "Potentially faster exits or alternative assets"],
+      ["Fees", "Depends on L1/L2 gas and bridge action", "Quote includes provider fees and liquidity spread"],
+      ["Risk", "OP Stack bridge assumptions", "Provider, liquidity, and route assumptions"]
+    ]
+  },
+  "faq": [
+    {
+      "q": "What is the official Mode bridge URL?",
+      "a": "The Mode bridge is linked from mode.network and commonly accessed through app.mode.network/bridge. Users should avoid bridge links from search ads, token claim pages, or direct messages. The official Mode website also links to docs, explorer, governance, rewards, and social channels."
+    },
+    {
+      "q": "What token pays gas on Mode?",
+      "a": "Mode is an EVM Layer 2, and users typically need ETH on Mode to pay transaction gas. MODE is the ecosystem token, but gas handling should be checked in the wallet and app before transacting. Bridging only an ERC-20 without gas can leave funds on Mode but unable to move."
+    },
+    {
+      "q": "Is Mode built on Optimism?",
+      "a": "Mode documentation says Mode is powered by the OP Stack in collaboration with Optimism and contributes to the Superchain ecosystem. That places Mode in the same broad technical family as other OP Stack networks, while its application focus is DeFi and AI-powered financial agents."
+    },
+    {
+      "q": "Can I bridge stablecoins to Mode?",
+      "a": "Stablecoin support depends on the official bridge, third-party routes, and current Mode liquidity. Users should verify the exact token contract and route before bridging. For DeFi use, liquidity depth on the destination app matters as much as whether the bridge can technically deliver the token."
+    },
+    {
+      "q": "Why is my Mode bridge transaction pending?",
+      "a": "A Mode bridge transaction can appear pending while the source transaction confirms, while the bridge relays data, or while the destination transaction is finalized. Check the source-chain transaction first, then the Mode explorer. If a third-party bridge was used, the route provider's tracker may also be needed."
+    },
+    {
+      "q": "Does bridging to Mode qualify for rewards?",
+      "a": "Mode has run rewards and incentive seasons, but bridging alone should not be assumed to qualify for any current campaign. Eligibility can depend on season rules, app usage, staking MODE, voting, or other actions. Always read the live Mode dashboard or official campaign page before moving funds for rewards."
+    }
+  ],
+  "niche": {
+    "type": "bridge",
+    "asset": "ETH",
+    "receive": "ETH",
+    "supported_networks": ["Ethereum", "Mode"]
+  },
+  "authority": [
+    {
+      "text": "Mode official website",
+      "url": "https://www.mode.network/"
+    },
+    {
+      "text": "Mode documentation",
+      "url": "https://docs.mode.network/"
+    },
+    {
+      "text": "Mode bridge app",
+      "url": "https://app.mode.network/bridge/"
+    },
+    {
+      "text": "Mode token on CoinGecko",
+      "url": "https://www.coingecko.com/en/coins/mode"
+    },
+    {
+      "text": "Mode chain data on DeFiLlama",
+      "url": "https://defillama.com/chain/Mode"
+    }
+  ],
+  "sameAs": [
+    "https://twitter.com/modenetwork",
+    "https://github.com/mode-network",
+    "https://www.coingecko.com/en/coins/mode"
+  ]
+}
