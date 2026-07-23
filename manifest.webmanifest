@@ -1,0 +1,19 @@
+{
+  "name": "Mode Bridge",
+  "short_name": "Mode Bridge",
+  "description": "Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "lang": "en",
+  "background_color": "#f5f6f8",
+  "theme_color": "#f5f6f8",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

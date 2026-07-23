@@ -1,68 +1,31 @@
 # Mode Bridge
-> Mode Bridge is the wallet-connected infrastructure for transferring supported assets between Ethereum and Mode, an EVM-compatible OP Stack layer-two network.
 
-## What is Mode Bridge
-Mode Bridge moves assets into Mode for onchain use or returns them to Ethereum. Its canonical route is Mode’s fork of the Optimism Standard Bridge, while the current Mode app also displays routes powered by LI.FI. The canonical bridge connects only Ethereum and Mode; liquidity bridges and aggregators may offer faster or broader routes with additional protocol assumptions. This independent dashboard is informational and does not custody assets or execute transactions.
-
-## How it works
-1. Connect an EVM wallet, select the source chain, destination chain, asset, amount, and available route.
-2. For an ERC-20 asset, approve the route’s contract, then sign the bridge transaction; native ETH requires no token approval.
-3. On a canonical deposit, assets are escrowed on Ethereum and the corresponding balance is minted or released on Mode through OP Stack cross-domain messaging.
-4. A canonical Mode-to-Ethereum withdrawal is initiated on Mode, proven on Ethereum, held through the challenge period, and finalized with another Ethereum transaction.
+> Mode Bridge moves ETH and ERC-20 tokens between Ethereum and Mode using the canonical OP Stack bridge or third-party routes.
 
 ## Key facts
-- Mode Mainnet chain ID: `34443`; Mode Sepolia chain ID: `919`.
-- ETH is Mode’s native asset and gas token.
-- The canonical bridge connects Ethereum Mainnet and Mode Mainnet.
-- Mode documentation lists ETH, USDC, USDT, and WBTC as canonical bridge assets.
-- Canonically bridged ETH remains native ETH on Mode rather than becoming wrapped ETH.
-- The bridge supports native ETH and ERC-20 transfers through OP Stack Standard Bridge contracts.
-- Ethereum L1 Standard Bridge proxy: `0x735aDBbE72226BD52e818E7181953f42E3b0FF21`.
-- Mode L2 Standard Bridge: `0x4200000000000000000000000000000000000010`.
-- Canonical deposits generally complete within minutes; canonical withdrawals require a seven-day challenge period.
-- Bridge contracts are upgradeable, and Mode relies on permissioned state proposers and challengers.
+- Route: source chain  destination chain
+- Deposit: typically minutes
+- Withdraw: may need proving/finalization
+- Gas: native asset on both chains
+- Custody: Non-custodial — your wallet signs
+- Verify: Use the official contracts; beware fake bridge sites
 
-## Common questions
-### Is Mode Bridge safe?
-It removes exchange-custody risk but retains smart-contract, upgrade, wallet, token-mapping, and Mode protocol risks. Verify the destination, contract, allowance, and route before signing.
-
-### Does Mode Bridge hold my funds?
-Your wallet controls transaction signing. Canonical L1 assets are nevertheless escrowed in bridge contracts while corresponding assets exist on Mode.
-
-### What fees are charged?
-Users pay source-chain gas and any route costs shown in the quote. Canonical withdrawals also require ETH on Ethereum for the prove and finalize transactions.
-
-### How long does bridging take?
-Mode documentation says deposits can take up to about ten minutes. A canonical withdrawal may need up to an hour before proving, followed by the seven-day challenge period and finalization.
-
-### Which assets and chains are supported?
-The canonical route covers Ethereum–Mode transfers for ETH, USDC, USDT, and WBTC. The LI.FI-powered interface may show other routes; the live quote determines current availability.
-
-### How do I start?
-Use an EVM wallet, open the bridge interface, select a route, review the receiving address and costs, then sign. Do not make a direct programmatic deposit from a centralized exchange because funds are credited to the sending address.
+## On this page
+- [What is Mode Bridge?](https://mode-bridge.github.io/#what)
+- [How bridging works](https://mode-bridge.github.io/#how)
+- [Depositing to Mode](https://mode-bridge.github.io/#deposit)
+- [Withdrawing back to Ethereum](https://mode-bridge.github.io/#withdraw)
+- [Time and fees](https://mode-bridge.github.io/#fees)
+- [Is Mode Bridge safe?](https://mode-bridge.github.io/#safety)
+- [Problems and fixes](https://mode-bridge.github.io/#troubleshoot)
+- [FAQ](https://mode-bridge.github.io/#faq)
 
 ## App
-- Dashboard: https://mode-bridge.github.io/
-- App: https://mode-bridge.github.io/dashboard/
+- [Mode Bridge dashboard](https://mode-bridge.github.io/)
+- [Open the app](https://mode-bridge.github.io/dashboard/)
 
-## Official resources
-Mode Bridge App: https://app.mode.network/bridge/
-Canonical Bridge Documentation: https://docs.mode.network/user-guides/bridge
-Bridge to Mode Guide: https://docs.mode.network/user-guides/bridge/bridge-to-mode
-Bridge from Mode Guide: https://docs.mode.network/user-guides/bridge/bridge-from-mode
-Network Details: https://docs.mode.network/user-guides/network-details
-Mainnet Contract Addresses: https://docs.mode.network/user-guides/mainnet-contract-addresses/l1-l2-contracts
-Mode Website: https://www.mode.network/
-Mode GitHub: https://github.com/mode-network
-Mode Documentation Source: https://github.com/mode-network/documentation
-Mode Public Audit Reports: https://github.com/mode-network/public-audits
-Mode X: https://twitter.com/modenetwork
-
-## Data & references
-Mode Block Explorer: https://explorer.mode.network/
-Ethereum Bridge Contract: https://etherscan.io/address/0x735aDBbE72226BD52e818E7181953f42E3b0FF21
-Mode on L2BEAT: https://l2beat.com/scaling/projects/mode
-Mode on DeFiLlama: https://defillama.com/chain/mode
-Optimism Standard Bridge Guide: https://docs.optimism.io/app-developers/guides/bridging/standard-bridge
-OP Stack Bridge Specification: https://specs.optimism.io/protocol/bridges.html
-ERC-20 Standard: https://eips.ethereum.org/EIPS/eip-20
+## Sources
+- [docs.mode.network](https://docs.mode.network/)
+- [l2beat.com](https://l2beat.com/scaling/projects/mode)
+- [ethereum.org](https://ethereum.org/developers/docs/scaling/optimistic-rollups/)
+- [docs.optimism.io](https://docs.optimism.io/op-stack/protocol/getting-started)
