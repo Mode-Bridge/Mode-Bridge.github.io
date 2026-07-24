@@ -1,19 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mode Bridge — Dashboard</title>
-  <meta name="description" content="Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work.">
-  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
-  <meta name="theme-color" content="#f5f6f8">
-  <link rel="canonical" href="https://mode-bridge.github.io/">
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" href="favicon.png">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="image_src" href="og-cover.png">
-  <link rel="preconnect" href="https://api.coingecko.com" crossorigin>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Mode Bridge — Dashboard</title>
+<meta content="Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" name="robots"/>
+<meta content="#f5f6f8" name="theme-color"/>
+<link href="https://mode-bridge.github.io/" rel="canonical"/>
+<link href="favicon.png" rel="icon" type="image/png"/>
+<link href="favicon.png" rel="apple-touch-icon"/>
+<link href="manifest.webmanifest" rel="manifest"/>
+<link href="og-cover.png" rel="image_src"/>
+<link crossorigin="" href="https://api.coingecko.com" rel="preconnect"/>
+<style>
 /* Mode Bridge — independent single-page hub. */
 :root {
   color-scheme: light;
@@ -112,7 +113,7 @@ html:not(.js) .menu-btn { display: none; }
 
 /* ───────── main / topbar ───────── */
 .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.topbar { position: sticky; top: 0; z-index: 40; flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap; padding: 11px 26px; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.82); backdrop-filter: blur(10px); }
+.topbar { position: relative; z-index: 40; flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap; padding: 21px 26px; border-bottom: 0; background: transparent; }
 .topbar-right { display: flex; align-items: center; gap: 10px 18px; flex-wrap: wrap; }
 .mode-switch { display: inline-flex; align-items: center; gap: 10px; }
 .ms-label { font-size: 13.5px; font-weight: 700; color: var(--muted); transition: color 150ms var(--ease); }
@@ -176,6 +177,44 @@ html:not(.js) .menu-btn { display: none; }
 .content .lead-in { padding: clamp(4px, 1vh, 12px) 0 clamp(10px, 2.5vh, 22px); }
 .content .lead-in > p { margin: 0 0 16px; font-size: 15px; line-height: 1.66; color: var(--text); }
 .content .lead-in > p strong { color: var(--ink); font-weight: 700; }
+/* premium feature card (modern-site feel) */
+.content .lead-in .feat{position:relative;width:min(1120px,calc(100vw - 44px));margin-left:50%;transform:translateX(-50%);display:grid;grid-template-columns:1.08fr .92fr;align-items:stretch;background:linear-gradient(165deg,#141824,#0b0e15);border:1px solid rgba(255,255,255,.09);border-radius:28px;overflow:hidden;box-shadow:0 52px 120px -55px rgba(0,0,0,.82)}
+.feat-l{padding:clamp(32px,4vw,64px);display:flex;flex-direction:column;justify-content:center}
+.feat-l h2{margin:0;font-size:clamp(2.2rem,4.6vw,3.2rem);line-height:1.03;font-weight:800;letter-spacing:-.03em;color:#fff}
+.feat-lead{margin:20px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.9);max-width:48ch}
+.content .lead-in .feat-lead a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.55);text-underline-offset:3px}
+.content .lead-in .feat-lead a:hover{text-decoration-color:#fff}
+.feat-cta{margin:32px 0 0}
+.content .lead-in .feat-btn{display:inline-flex;align-items:center;gap:10px;padding:17px 38px;border-radius:999px;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 50%,#7c4dff));color:#fff;font-weight:750;font-size:16.5px;text-decoration:none;box-shadow:0 20px 44px -12px var(--accent-glow);transition:transform .16s var(--ease),box-shadow .16s var(--ease)}
+.content .lead-in .feat-btn:hover{transform:translateY(-2px);box-shadow:0 26px 56px -14px var(--accent-glow)}
+.feat-btn .arr{transition:transform .18s var(--ease)}
+.content .lead-in .feat-btn:hover .arr{transform:translateX(3px)}
+.feat-more{margin:18px 0 0}
+.feat-readmore{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:rgba(255,255,255,.7);transition:color .15s var(--ease)}
+.feat-readmore::-webkit-details-marker{display:none}
+.feat-readmore:hover{color:#fff}
+.feat-readmore .chev{width:15px;height:15px;transition:transform .2s var(--ease)}
+.feat-more[open] .feat-readmore .chev{transform:rotate(180deg)}
+.feat-detail{margin:20px 0 0;font-size:14.5px;line-height:1.72;color:rgba(255,255,255,.82)}
+.content .lead-in .feat-detail a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.55);text-underline-offset:3px}
+.feat-more:not([open]) .feat-detail{display:none}
+.content .lead-in .feat-lead{color:rgba(255,255,255,.9)}
+.content .lead-in .feat-detail,.content .lead-in .feat-detail p{color:rgba(255,255,255,.82)}
+.feat-facts{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;margin:18px 0 2px}
+.feat-fact{padding:10px 0;border-top:1px solid rgba(255,255,255,.1)}
+.feat-fact .fl{display:block;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:0 0 3px}
+.feat-fact .fv{display:block;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.88)}
+.feat-r{position:relative;overflow:hidden;min-height:clamp(300px,32vw,440px);background:radial-gradient(120% 105% at 70% 22%,color-mix(in srgb,var(--accent) 52%,#1a1030),#0a0d14 70%)}
+.feat-r::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:36px 36px;-webkit-mask:radial-gradient(70% 72% at 64% 36%,#000,transparent 76%);mask:radial-gradient(70% 72% at 64% 36%,#000,transparent 76%)}
+.feat-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:clamp(122px,16vw,166px);height:clamp(122px,16vw,166px);border-radius:34px;display:grid;place-items:center;background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.02));box-shadow:0 38px 84px -22px var(--accent-glow),inset 0 0 0 1px rgba(255,255,255,.18)}
+.feat-badge img{width:52%;height:52%;object-fit:contain}
+@media (max-width:860px){
+  .content .lead-in .feat{width:calc(100vw - 28px);grid-template-columns:1fr}
+  .feat-l{padding:30px 22px 32px}
+  .feat-r{min-height:200px}
+  .feat-facts{grid-template-columns:1fr}
+}
+
 .tbl.spec table { min-width: 0; }
 .tbl.spec td:first-child { color: var(--muted); font-weight: 600; white-space: nowrap; width: 1%; }
 .content .sec { border-top: 1px solid var(--line); scroll-margin-top: 66px; }
@@ -323,168 +362,190 @@ html.js .reveal.in { opacity: 1; transform: none; }
 .mnote { text-align: center; font-size: 11px; color: var(--muted); margin: 12px 2px 0; line-height: 1.5; }
 .mnote a { color: var(--accent-2); font-weight: 600; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) { .scrollcue2 svg, .mspin { animation: none; } .mbar i { transition: none; } }
+/* docs layout (sticky TOC + open sections) */
+.docs{position:relative;width:min(1120px,calc(100vw - 44px));margin-left:50%;transform:translateX(-50%);display:grid;grid-template-columns:236px minmax(0,1fr);gap:clamp(28px,4vw,60px);margin-top:clamp(40px,6vh,72px);align-items:start}
+.toc{position:sticky;top:74px;align-self:start;max-height:calc(100dvh - 96px);overflow:auto}
+.toc-h{margin:0 0 10px;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);padding-left:13px}
+.toc a{display:block;padding:7px 13px;border-left:2px solid var(--line);color:var(--muted);font-size:13px;font-weight:600;line-height:1.35;text-decoration:none;transition:color .15s var(--ease),border-color .15s var(--ease)}
+.toc a:hover{color:var(--ink)}
+.toc a.active{color:var(--accent-2);border-left-color:var(--accent);font-weight:750}
+.doc-main{min-width:0}
+.content .doc-sec{border:1px solid var(--line);border-radius:20px;background:var(--panel);box-shadow:0 1px 3px rgba(17,24,39,.04);margin:0 0 16px;padding:0;scroll-margin-top:82px;transition:box-shadow .26s var(--ease),border-color .26s var(--ease)}
+.content .doc-sec:first-child{border-top:1px solid var(--line)}
+.content .doc-sec:hover{border-color:var(--line-2);box-shadow:0 16px 40px -22px rgba(17,24,39,.18)}
+.content .doc-sec[open]{border-color:var(--line)}
+.content .doc-sec>summary{cursor:default;pointer-events:none;padding:clamp(20px,3vh,28px) clamp(22px,3.2vw,32px) 8px;list-style:none}
+.content .doc-sec>summary::-webkit-details-marker{display:none}
+.content .doc-sec>summary::after{display:none}
+.content .doc-sec>summary h2{font-size:clamp(1.2rem,2.3vw,1.5rem)}
+.content .doc-sec .sec-body{padding:0 clamp(22px,3.2vw,32px) clamp(22px,3.4vh,30px);max-width:74ch}
+.content .doc-sec.field-notes{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:20px;background:var(--panel);box-shadow:0 1px 3px rgba(17,24,39,.04);margin:0 0 16px;padding:clamp(22px,3vh,28px) clamp(22px,3.2vw,32px)}
+.content .doc-sec.field-notes h2{font-size:clamp(1.2rem,2.3vw,1.5rem)}
+.content .doc-sec.field-notes .fn-body{max-width:74ch}
+@media (max-width:900px){
+  .docs{grid-template-columns:1fr;width:calc(100vw - 28px);gap:0}
+  .toc{position:sticky;top:56px;z-index:20;display:flex;gap:8px;overflow-x:auto;max-height:none;background:var(--bg);padding:11px 2px;margin:0 0 6px;border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch}
+  .toc-h{display:none}
+  .toc a{flex:0 0 auto;white-space:nowrap;border-left:0;border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:12.5px}
+  .toc a.active{color:var(--accent-2);border-color:var(--accent);background:var(--accent-soft)}
+}
+.site-foot{width:min(1120px,calc(100vw - 44px));margin:clamp(34px,5vh,60px) auto 0;padding:22px 2px clamp(30px,4vh,48px);color:var(--faint);font-size:12.5px;line-height:1.6}
+.site-foot p{margin:0 0 6px;max-width:82ch}
+.site-foot strong{color:var(--muted);font-weight:700}
+.site-foot .foot-fine{font-size:11.5px}
   </style>
-  <meta property="og:type" content="website"><meta property="og:url" content="https://mode-bridge.github.io/">
-  <meta property="og:title" content="Mode Bridge — Dashboard">
-  <meta property="og:description" content="Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work.">
-  <meta property="og:site_name" content="Mode Bridge"><meta property="og:image" content="https://mode-bridge.github.io/og-cover.png">
-  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Mode Bridge — independent dashboard">
-  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Mode Bridge — Dashboard">
-  <meta name="twitter:description" content="Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work."><meta name="twitter:image" content="https://mode-bridge.github.io/og-cover.png">
-  <script type="application/ld+json">
+<meta content="website" property="og:type"/><meta content="https://mode-bridge.github.io/" property="og:url"/>
+<meta content="Mode Bridge — Dashboard" property="og:title"/>
+<meta content="Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work." property="og:description"/>
+<meta content="Mode Bridge" property="og:site_name"/><meta content="https://mode-bridge.github.io/og-cover.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="Mode Bridge — independent dashboard" property="og:image:alt"/>
+<meta content="summary_large_image" name="twitter:card"/><meta content="Mode Bridge — Dashboard" name="twitter:title"/>
+<meta content="Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work." name="twitter:description"/><meta content="https://mode-bridge.github.io/og-cover.png" name="twitter:image"/>
+<script type="application/ld+json">
   {"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://mode-bridge.github.io/#website", "url": "https://mode-bridge.github.io/", "name": "Mode Bridge", "inLanguage": "en"}, {"@type": "SoftwareApplication", "@id": "https://mode-bridge.github.io/#brand", "name": "Mode bridge", "alternateName": ["Mode Bridge", "Mode"], "description": "Cross-chain bridge routes for moving assets to and from Mode, via native or third-party bridges.", "sameAs": ["https://docs.mode.network/", "https://ethereum.org/developers/docs/scaling/optimistic-rollups/", "https://docs.optimism.io/op-stack/protocol/getting-started", "https://www.coingecko.com/en/coins/mode", "https://docs.mode.network/user-guides/bridge/bridge-to-mode"], "applicationCategory": "FinanceApplication", "operatingSystem": "Web"}, {"@type": "WebPage", "@id": "https://mode-bridge.github.io/#webpage", "url": "https://mode-bridge.github.io/", "name": "Mode Bridge — Dashboard", "description": "Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work.", "isPartOf": {"@id": "https://mode-bridge.github.io/#website"}, "about": {"@id": "https://mode-bridge.github.io/#brand"}, "mainEntity": {"@id": "https://mode-bridge.github.io/#brand"}, "inLanguage": "en", "dateModified": "2026-07-21"}, {"@type": "FAQPage", "@id": "https://mode-bridge.github.io/#faq", "mainEntity": [{"@type": "Question", "name": "Is this the official Mode Bridge site?", "acceptedAnswer": {"@type": "Answer", "text": "No. This is an independent reference dashboard — it doesn't custody assets or execute transactions. Always confirm the bridge interface, contract addresses, and route against the official Mode documentation before signing anything."}}, {"@type": "Question", "name": "How long does Mode Bridge take?", "acceptedAnswer": {"@type": "Answer", "text": "Deposits from Ethereum to Mode generally complete within minutes. Canonical withdrawals back to Ethereum carry the optimistic-rollup challenge period of about seven days, plus a proof and a finalization transaction on Ethereum that you submit yourself."}}, {"@type": "Question", "name": "How do I bridge to Mode?", "acceptedAnswer": {"@type": "Answer", "text": "Connect an EVM wallet, choose Ethereum as source and Mode (chain ID 34443) as destination, pick the asset and amount, then approve the token if it's an ERC-20 and sign the bridge transaction. Native ETH needs no approval. The receiving address on Mode is the same as your Ethereum address."}}, {"@type": "Question", "name": "Do I need ETH on Mode before bridging?", "acceptedAnswer": {"@type": "Answer", "text": "Yes for transacting after you arrive — ETH is Mode's native gas token. A canonical ETH deposit gives you gas automatically, but if you bridge only USDC or another token, you'll hold funds you can't move until some ETH lands on your Mode address."}}, {"@type": "Question", "name": "Is Mode Bridge safe to use?", "acceptedAnswer": {"@type": "Answer", "text": "It removes exchange-custody risk but retains smart-contract, upgradeability, and Mode protocol risks — the contracts are upgradeable and proposers and challengers are currently permissioned, as tracked on L2BEAT. Verify the site, the contract, and the allowance before every signature, and never treat any bridge as risk-free."}}, {"@type": "Question", "name": "What's the difference between the canonical bridge and third-party routes?", "acceptedAnswer": {"@type": "Answer", "text": "The canonical bridge is Mode's fork of the OP Stack Standard Bridge: it connects only Ethereum and Mode, escrows assets on L1, and carries the seven-day withdrawal wait. Third-party liquidity routes shown in the app can be faster or reach more chains, but add that provider's contracts, fees, and trust assumptions on top."}}]}]}
   </script>
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
-  <div class="shell">
-    <main class="main" id="main">
-      <header class="topbar">
-        <div class="topbar-left">
-          <button class="menu-btn" type="button" aria-label="Open navigation menu" aria-controls="sideNav" aria-expanded="false" data-nav-open><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
-          <a class="topbar-logo" href="./" aria-label="Mode Bridge home"><img src="favicon.png" width="20" height="20" alt="Mode Bridge logo"></a>
-          <h1 class="wordmark">Mode Bridge</h1>
-        </div>
-        <div class="topbar-right">
-          <div class="ticker" aria-label="Live metrics">
-            <a class="tick" href="https://defillama.com/chain/mode" target="_blank" rel="noopener noreferrer" aria-label="Mode TVL"><span>Mode TVL</span> <b id="sig-ctvl">…</b> <span class="ext" aria-hidden="true">↗</span></a>
-            <a class="tick" href="https://www.coingecko.com/en/coins/mode-2" target="_blank" rel="noopener noreferrer" aria-label="Mode"><span>Mode</span> <b id="sig-mode-2">…</b> <span class="ext" aria-hidden="true">↗</span></a>
-            <a class="tick" href="https://www.coingecko.com/en/coins/ethereum" target="_blank" rel="noopener noreferrer" aria-label="ETH"><span>ETH</span> <b id="sig-ethereum">…</b> <span class="ext" aria-hidden="true">↗</span></a>
-            </div>
-        </div>
-      </header>
-
-            <section class="hero2">
-        <div class="hero2-l">
-          <h2 class="hero2-h">Bridge Assets Between Ethereum and Mode</h2>
-          <p class="hero2-lead"><strong>Mode Bridge</strong> moves ETH and ERC-20 tokens between Ethereum and Mode using the canonical OP Stack bridge or third-party routes.</p>
-          <div class="hero2-cta">
-            <a class="btn2 btn2-primary" href="dashboard/" target="_blank" rel="noopener noreferrer">Open the Mode Bridge <span class="go" aria-hidden="true">↗</span></a>
-            <a class="btn2 btn2-ghost" href="#what">How it works</a>
-          </div>
-        </div>
-        <div class="hero2-r">
-        <section class="swap-card" id="swap-preview" aria-labelledby="preview-title">
-          <div class="card-head">
-            <p class="card-title" id="preview-title">Preview</p>
-            <span class="preview-tag"><span aria-hidden="true"></span>Preview only</span>
-          </div>
-          <div class="leg">
-            <span class="asset" id="asset-from"><span class="tok"><img src="eth.png" alt="Ethereum token" width="24" height="24" loading="lazy" decoding="async"></span><b>Ethereum</b><svg class="chev-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
-            <span class="leg-amt"><span class="amount">0.00</span><span class="leg-sub">Preview</span></span>
-          </div>
-          <button class="swap-arrow" id="route-swap" type="button" aria-label="Swap preview direction" title="Swap preview direction">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 4v13M8 4L4 8M8 4l4 4M16 20V7M16 20l-4-4M16 20l4-4"/></svg>
-          </button>
-          <div class="leg">
-            <span class="asset" id="asset-to"><span class="tok"><img src="mode.png" alt="Mode token" width="24" height="24" loading="lazy" decoding="async"></span><b>Mode</b><svg class="chev-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
-            <span class="leg-amt"><span class="amount">0.00</span><span class="leg-sub">Preview</span></span>
-          </div>
-          <div class="route-panel">
-            <div class="route-info"><b id="route-name">Deposit · Ethereum → Mode</b><span>Non-custodial bridge route</span></div>
-            <div class="route-tok"><span class="tok sm"><img src="mode.png" alt="Mode token" width="18" height="18" loading="lazy" decoding="async"></span> Mode</div>
-          </div>
-          <div class="route-row"><span>Type</span><b>Bridge route</b></div>
-          <div class="route-row"><span>Custody</span><b>Non-custodial</b></div>
-          <a class="swap-cta" href="dashboard/" target="_blank" rel="noopener noreferrer"><svg class="cta-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></svg>Go to Swap<span class="cta-go" aria-hidden="true">→</span></a>
-        </section>
-        </div>
-        <a class="scrollcue2" href="#what" aria-label="Scroll to learn more"><span>Scroll</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M12 19l-6-6M12 19l6-6"/></svg></a>
-      </section>
-
-            <div class="content">
-        <div class="lead-in reveal">
-          <p>Mode Bridge is the wallet-connected route for moving supported assets between Ethereum and Mode, an EVM-compatible OP Stack layer two. You either bridge into Mode to use apps there, or bridge back out to Ethereum — and the path you pick (canonical bridge versus a liquidity route) changes your wait time, your trust assumptions, and sometimes your received asset. This is an independent reference dashboard: it doesn't custody funds and it doesn't execute transactions, so confirm everything against the <a href="https://docs.mode.network/">Mode documentation</a> and your own wallet before signing.</p>
-          <div class="tbl spec"><table><tbody><tr><td>Route</td><td>source chain <-> destination chain</td></tr><tr><td>Deposit</td><td>typically minutes</td></tr><tr><td>Withdraw</td><td>may need proving/finalization</td></tr><tr><td>Gas</td><td>native asset on both chains</td></tr><tr><td>Custody</td><td>Non-custodial — your wallet signs</td></tr><tr><td>Verify</td><td>Use the official contracts; beware fake bridge sites</td></tr></tbody></table></div>
-        </div>
-
-        <details id="what" class="sec reveal">
-          <summary><h2>What is Mode Bridge?</h2></summary>
-          <div class="sec-body"><p>It's Mode's canonical bridge — a fork of the Optimism Standard Bridge — plus third-party routes shown alongside it in the Mode app. The canonical path connects only Ethereum Mainnet and Mode Mainnet, escrowing your asset on L1 and releasing the corresponding balance on L2 via OP Stack cross-domain messaging. Mode's docs list ETH, USDC, USDT and WBTC as canonical assets, and canonically bridged ETH arrives as native ETH on Mode (which is also the gas token), not a wrapped version. The app also surfaces routes powered by LI.FI and other liquidity bridges; those can be faster or reach more chains, but you take on that protocol's contracts and liquidity assumptions on top of Mode's. If you're parking size, the canonical route has the fewest moving parts — that's the general trade-off with any <a href="https://docs.optimism.io/op-stack/protocol/getting-started">OP Stack bridge</a>, not a Mode-specific quirk.</p></div>
-        </details>
-
-        <details id="how" class="sec reveal">
-          <summary><h2>How bridging works</h2></summary>
-          <div class="sec-body"><p>Connect an EVM wallet, pick source chain, destination, asset, amount, and a route — then approve (for ERC-20s) and sign the bridge transaction. Native ETH skips the approval step entirely; tokens need an allowance granted to the route's contract first, so you're signing two transactions, not one. On a canonical deposit, funds are locked in the L1 Standard Bridge and minted or released on Mode once the L2 picks up the message. A canonical withdrawal runs the other way: initiate on Mode, prove on Ethereum, sit through the challenge window, then finalize with a second Ethereum transaction. Your wallet controls every signature — the bridge never takes custody in the exchange sense, but escrowed L1 funds do sit in upgradeable contracts while their L2 counterparts exist.</p></div>
-        </details>
-
-        <details id="deposit" class="sec reveal">
-          <summary><h2>Depositing to Mode</h2></summary>
-          <div class="sec-body"><p>Depositing is the easy direction: send from Ethereum, and canonical deposits generally land on Mode within minutes. Two things to set up first. Add Mode Mainnet (chain ID 34443) to your wallet — testnet users want Mode Sepolia (919). And make sure you'll have ETH on the Mode side for gas; a first-time canonical ETH deposit covers you, but if you're bridging only USDC you'll arrive with funds you can't move until you get gas there. The address receiving on Mode is the same EVM address as your L1 wallet, so there's no separate account to create. Keep a little ETH on Ethereum too — you'll need it if you ever withdraw back.</p></div>
-        </details>
-
-        <details id="withdraw" class="sec reveal">
-          <summary><h2>Withdrawing back to Ethereum</h2></summary>
-          <div class="sec-body"><p>Canonical withdrawals from Mode to Ethereum take about seven days because of the optimistic-rollup challenge period — plan around that, don't fight it. The flow is: initiate the withdrawal on Mode, submit a proof transaction on Ethereum once the state is published, wait out the challenge window, then send the finalization transaction on Ethereum to actually receive funds. Each Ethereum step costs L1 gas, so a small withdrawal can be uneconomic in fees even though the bridge itself charges nothing extra. If you need funds on L1 sooner, a liquidity bridge route can exit faster in exchange for its own fees and trust assumptions. Whatever you do, don't re-initiate the same withdrawal because the first one looks stuck — a pending canonical withdrawal is normal, not lost.</p></div>
-        </details>
-
-        <details id="fees" class="sec reveal">
-          <summary><h2>Time and fees</h2></summary>
-          <div class="sec-body"><p>You pay source-chain gas plus whatever route costs the quote shows — the canonical bridge doesn't tack on a separate toll. In practice that means an Ethereum deposit costs L1 gas at whatever the network is charging that day, while actions starting on Mode cost pennies-level L2 gas priced in ETH. Third-party routes add their own provider or liquidity fees, which the quote screen should itemize; read it before confirming rather than after. Timing splits cleanly by direction: deposits to Mode are minutes, canonical withdrawals back carry the seven-day challenge period. If a quote looks surprisingly expensive, it's almost always L1 gas on the Ethereum leg — check gas prices and consider waiting for a quieter block rather than abandoning the route.</p></div>
-        </details>
-
-        <details id="safety" class="sec reveal">
-          <summary><h2>Is Mode Bridge safe?</h2></summary>
-          <div class="sec-body"><p>Bridging removes exchange-custody risk but keeps smart-contract, upgrade, and phishing risk — no bridge is risk-free, audited or not. The honest risk list for this route: the bridge contracts are upgradeable, Mode currently relies on permissioned proposers and challengers, and any ERC-20 approval you grant is a standing allowance against a contract. <a href="https://l2beat.com/scaling/projects/mode">L2BEAT's Mode profile</a> is the place to check the current permissioning and upgrade setup for yourself. Phishing is the bigger day-to-day threat: fake bridge sites ranking for the exact name of the real one are a standard attack. Verify the URL, verify the contract address your wallet shows, and verify the allowance scope before signing — and treat unlimited approvals as something you revoke after large moves, not leave standing.</p></div>
-        </details>
-
-        <details id="troubleshoot" class="sec reveal">
-          <summary><h2>Problems and fixes</h2></summary>
-          <div class="sec-body"><p>Most bridge problems are one of four things, and all four are fixable without panic. <strong>Wrong network:</strong> your wallet is on Ethereum but you're trying to act on Mode (or vice versa) — switch networks, don't re-send. <strong>No gas on the destination:</strong> funds arrived on Mode but you have no ETH there to move them; bridge a small amount of ETH over to unstick yourself. <strong>Stuck-looking withdrawal:</strong> check whether it's waiting on the proof step, the challenge window, or finalization — each stage needs its own transaction, and "pending" for days during the challenge period is expected behavior, not an error. <strong>Suspected fake site:</strong> if the URL or contract doesn't match what the official docs show, disconnect and walk away; you can verify Mode-side transactions on the <a href="https://explorer.mode.network/">Mode explorer</a>. If a canonical transaction is confirmed on the source chain, the funds are in the bridge mechanism — what you're waiting on is messaging or finalization, not rescue.</p></div>
-        </details>
-
-        <details id="faq" class="sec reveal">
-          <summary><h2>Mode FAQ</h2></summary>
-          <div class="sec-body">
-          <details class="qa"><summary>Is this the official Mode Bridge site?</summary><div class="a"><p>No. This is an independent reference dashboard — it doesn't custody assets or execute transactions. Always confirm the bridge interface, contract addresses, and route against the official Mode documentation before signing anything.</p></div></details>
-          <details class="qa"><summary>How long does Mode Bridge take?</summary><div class="a"><p>Deposits from Ethereum to Mode generally complete within minutes. Canonical withdrawals back to Ethereum carry the optimistic-rollup challenge period of about seven days, plus a proof and a finalization transaction on Ethereum that you submit yourself.</p></div></details>
-          <details class="qa"><summary>How do I bridge to Mode?</summary><div class="a"><p>Connect an EVM wallet, choose Ethereum as source and Mode (chain ID 34443) as destination, pick the asset and amount, then approve the token if it's an ERC-20 and sign the bridge transaction. Native ETH needs no approval. The receiving address on Mode is the same as your Ethereum address.</p></div></details>
-          <details class="qa"><summary>Do I need ETH on Mode before bridging?</summary><div class="a"><p>Yes for transacting after you arrive — ETH is Mode's native gas token. A canonical ETH deposit gives you gas automatically, but if you bridge only USDC or another token, you'll hold funds you can't move until some ETH lands on your Mode address.</p></div></details>
-          <details class="qa"><summary>Is Mode Bridge safe to use?</summary><div class="a"><p>It removes exchange-custody risk but retains smart-contract, upgradeability, and Mode protocol risks — the contracts are upgradeable and proposers and challengers are currently permissioned, as tracked on <a href="https://l2beat.com/scaling/projects/mode">L2BEAT</a>. Verify the site, the contract, and the allowance before every signature, and never treat any bridge as risk-free.</p></div></details>
-          <details class="qa"><summary>What&#x27;s the difference between the canonical bridge and third-party routes?</summary><div class="a"><p>The canonical bridge is Mode's fork of the OP Stack Standard Bridge: it connects only Ethereum and Mode, escrows assets on L1, and carries the seven-day withdrawal wait. Third-party liquidity routes shown in the app can be faster or reach more chains, but add that provider's contracts, fees, and trust assumptions on top.</p></div></details>
-          </div>
-        </details>
-
-        <section class="field-notes reveal" id="notes">
-          <h2>Notes before you use Mode Bridge</h2>
-          <div class="fn-body"><p><strong>Bridging to Mode is simple; bridging back is where people get surprised.</strong> Deposits land in minutes, so newcomers assume exits work the same way — they don't, the canonical route carries a seven-day challenge window and two Ethereum transactions you have to send yourself.</p><p>The common mistake is approving a token on a bridge site found through search ads without checking the URL or the contract the wallet is actually asking you to approve.</p><p><strong>Before you sign:</strong></p><ul><li>Confirm the bridge site and the contract address in your wallet prompt against the official Mode docs — the L1 Standard Bridge proxy is 0x735aDBbE72226BD52e818E7181953f42E3b0FF21.</li><li>Check source and destination networks are what you intend (Mode Mainnet is chain ID 34443), and keep ETH for gas on BOTH sides.</li><li>Decide before depositing how you'll exit: canonical withdrawal (seven-day wait, L1 gas for proof and finalization) or a liquidity route with its own fees and assumptions.</li></ul><p>Contract addresses, supported assets, and the withdrawal flow above were checked against the Mode documentation, last reviewed 21 July 2026.</p><p><strong>Independent reference — confirm the route in your own wallet.</strong></p></div>
-        </section>
-      </div>
-    </main>
-    <aside class="sidebar">
-      <div class="side-top">
-        <div class="brand">
-          <a class="brand-logo" href="./" aria-label="Mode Bridge home"><img src="favicon.png" width="30" height="30" alt="Mode Bridge logo"></a>
-          <p class="brand-name">Mode</p>
-        </div>
-        <button class="nav-toggle" type="button" aria-label="Close navigation menu" aria-controls="sideNav" aria-expanded="false"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
-      </div>
-
-      <nav class="side-nav" id="sideNav" aria-label="Primary">
-        <p class="nav-label">Bridge</p>
-        <a class="nav-item is-active" href="#swap-preview" aria-current="true">
-          <svg class="ni-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 10h11l-3-3M17 14H6l3 3"/></svg>
-          Bridge preview
-        </a>
-        <p class="nav-label">On this page</p>
-        <details class="nav-group">
-          <summary>
-            <svg class="ni-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h10a3 3 0 0 1 3 3v11a2 2 0 0 0-2-2H4zM20 5h-1a3 3 0 0 0-3 3v11a2 2 0 0 1 2-2h2z"/></svg>
-            Guide sections
-            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="nav-sub"><a href="#what">What is Mode Bridge?</a><a href="#how">How bridging works</a><a href="#deposit">Depositing to Mode</a><a href="#withdraw">Withdrawing back to Ethereum</a><a href="#fees">Time and fees</a><a href="#safety">Is Mode Bridge safe?</a><a href="#troubleshoot">Problems and fixes</a><a href="#faq">FAQ</a></div>
-        </details>
-      </nav>
-
-      <div class="sidebar-foot">
-        <p class="disclose"><strong>Independent</strong> Mode Bridge information dashboard. Not affiliated with any official product.</p>
-        <p class="fine">Live metrics are compiled from public APIs. Review your route in the official app before signing.</p>
-        <p class="fine">© 2026 Mode Bridge dashboard.</p>
-      </div>
-    </aside>
-    <div class="scrim" data-scrim></div>
-  </div>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<main class="main" id="main">
+<header class="topbar">
+<div class="topbar-left">
+<h1 class="wordmark">Mode Bridge</h1>
+</div>
+<div class="topbar-right">
+<div aria-label="Live metrics" class="ticker">
+<a aria-label="Mode TVL" class="tick" href="https://defillama.com/chain/mode" rel="noopener noreferrer" target="_blank"><span>Mode TVL</span> <b id="sig-ctvl">…</b> <span aria-hidden="true" class="ext">↗</span></a>
+<a aria-label="Mode" class="tick" href="https://coinmarketcap.com/currencies/mode-2/" rel="noopener noreferrer" target="_blank"><span>Mode</span> <b id="sig-mode-2">…</b> <span aria-hidden="true" class="ext">↗</span></a>
+<a aria-label="ETH" class="tick" href="https://defillama.com/" rel="noopener noreferrer" target="_blank"><span>ETH</span> <b id="sig-ethereum">…</b> <span aria-hidden="true" class="ext">↗</span></a>
+</div>
+</div>
+</header>
+<section class="hero2">
+<div class="hero2-l">
+<h2 class="hero2-h">Bridge Assets Between Ethereum and Mode</h2>
+<p class="hero2-lead"><strong>Mode Bridge</strong> moves ETH and ERC-20 tokens between Ethereum and Mode using the canonical OP Stack bridge or third-party routes.</p>
+<div class="hero2-cta">
+<a class="btn2 btn2-primary" href="dashboard/" rel="noopener noreferrer" target="_blank">Open the Mode Bridge <span aria-hidden="true" class="go">↗</span></a>
+<a class="btn2 btn2-ghost" href="#what">How it works</a>
+</div>
+</div>
+<div class="hero2-r">
+<section aria-labelledby="preview-title" class="swap-card" id="swap-preview">
+<div class="card-head">
+<p class="card-title" id="preview-title">Preview</p>
+<span class="preview-tag"><span aria-hidden="true"></span>Preview only</span>
+</div>
+<div class="leg">
+<span class="asset" id="asset-from"><span class="tok"><img alt="Ethereum token" decoding="async" height="24" loading="lazy" src="eth.png" width="24"/></span><b>Ethereum</b><svg aria-hidden="true" class="chev-sm" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span>
+<span class="leg-amt"><span class="amount">0.00</span><span class="leg-sub">Preview</span></span>
+</div>
+<button aria-label="Swap preview direction" class="swap-arrow" id="route-swap" title="Swap preview direction" type="button">
+<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 4v13M8 4L4 8M8 4l4 4M16 20V7M16 20l-4-4M16 20l4-4"></path></svg>
+</button>
+<div class="leg">
+<span class="asset" id="asset-to"><span class="tok"><img alt="Mode token" decoding="async" height="24" loading="lazy" src="mode.png" width="24"/></span><b>Mode</b><svg aria-hidden="true" class="chev-sm" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span>
+<span class="leg-amt"><span class="amount">0.00</span><span class="leg-sub">Preview</span></span>
+</div>
+<div class="route-panel">
+<div class="route-info"><b id="route-name">Deposit · Ethereum → Mode</b><span>Non-custodial bridge route</span></div>
+<div class="route-tok"><span class="tok sm"><img alt="Mode token" decoding="async" height="18" loading="lazy" src="mode.png" width="18"/></span> Mode</div>
+</div>
+<div class="route-row"><span>Type</span><b>Bridge route</b></div>
+<div class="route-row"><span>Custody</span><b>Non-custodial</b></div>
+<a class="swap-cta" href="dashboard/" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="cta-ico" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"></path></svg>Go to Swap<span aria-hidden="true" class="cta-go">→</span></a>
+</section>
+</div>
+<a aria-label="Scroll to learn more" class="scrollcue2" href="#what"><span>Scroll</span><svg fill="none" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24"><path d="M12 5v14M12 19l-6-6M12 19l6-6"></path></svg></a>
+</section>
+<div class="content">
+<div class="lead-in reveal">
+<div class="feat">
+<div class="feat-l">
+<h2>Mode Bridge Protocol Architecture &amp; Route Overview</h2>
+<p class="feat-lead">Mode Bridge is the wallet-connected route for moving supported assets between Ethereum and Mode, an EVM-compatible OP Stack layer two.</p>
+<div class="feat-cta"><a class="feat-btn" href="dashboard/" rel="noopener noreferrer" target="_blank">Open the App <span aria-hidden="true" class="arr">→</span></a></div>
+<details class="feat-more">
+<summary class="feat-readmore">Read more <svg aria-hidden="true" class="chev" fill="none" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
+<div class="feat-detail">
+<p>You either bridge into Mode to use apps there, or bridge back out to Ethereum — and the path you pick (canonical bridge versus a liquidity route) changes your wait time, your trust assumptions, and sometimes your received asset. This is an independent reference dashboard: it doesn't custody funds and it doesn't execute transactions, so confirm everything against the <a href="https://docs.mode.network/">Mode documentation</a> and your own wallet before signing.</p>
+<div class="feat-facts">
+<div class="feat-fact"><span class="fl">Route</span><span class="fv">source chain &lt;-&gt; destination chain</span></div>
+<div class="feat-fact"><span class="fl">Deposit</span><span class="fv">typically minutes</span></div>
+<div class="feat-fact"><span class="fl">Withdraw</span><span class="fv">may need proving/finalization</span></div>
+<div class="feat-fact"><span class="fl">Gas</span><span class="fv">native asset on both chains</span></div>
+<div class="feat-fact"><span class="fl">Custody</span><span class="fv">Non-custodial — your wallet signs</span></div>
+<div class="feat-fact"><span class="fl">Verify</span><span class="fv">Use the official contracts; beware fake bridge sites</span></div>
+</div>
+</div>
+</details>
+</div>
+<div class="feat-r"><span class="feat-badge"><img alt="Mode Bridge" height="72" src="mode.png" width="72"/></span></div>
+</div>
+</div>
+<div class="docs">
+<nav aria-label="On this page" class="toc">
+<p class="toc-h">On this page</p>
+<a href="#what">What is Mode Bridge?</a>
+<a href="#how">How bridging works</a>
+<a href="#deposit">Depositing to Mode</a>
+<a href="#withdraw">Withdrawing back to Ethereum</a>
+<a href="#fees">Time and fees</a>
+<a href="#safety">Is Mode Bridge safe?</a>
+<a href="#troubleshoot">Problems and fixes</a>
+<a href="#faq">Mode FAQ</a>
+<a href="#notes">Notes before you use Mode Bridge</a>
+</nav>
+<div class="doc-main">
+<details class="sec reveal doc-sec" id="what" open="">
+<summary><h2>What is Mode Bridge?</h2></summary>
+<div class="sec-body"><p>Mode Bridge is the canonical bridge between Ethereum Mainnet and Mode Mainnet, with third-party routes shown alongside it in the Mode app. It is a fork of the Optimism Standard Bridge: the canonical path escrows your asset on L1 and releases the corresponding balance on L2 through <a href="https://docs.optimism.io/app-developers/guides/bridging/standard-bridge" rel="noopener noreferrer" target="_blank">OP Stack cross-domain messaging</a>. Mode's docs list ETH, USDC, USDT and WBTC as canonical assets, and canonically bridged ETH arrives as native ETH on Mode (which is also the gas token), not a wrapped version. The app also surfaces routes powered by LI.FI and other liquidity bridges; those can be faster or reach more chains, but you take on that protocol's contracts and liquidity assumptions on top of Mode's. A route using an <a href="https://en.wikipedia.org/wiki/Constant_function_market_maker" rel="noopener noreferrer" target="_blank">automated market maker</a> prices execution from pooled liquidity, so the route type matters when you compare the quote. If you're parking size, the canonical route has the fewest moving parts.</p></div>
+</details>
+<details class="sec reveal doc-sec" id="how" open="">
+<summary><h2>How bridging works</h2></summary>
+<div class="sec-body"><p>Bridging is a one-signature flow for native ETH and a two-transaction flow for ERC-20 tokens: connect an EVM wallet, pick source chain, destination, asset, amount, and route, then approve the token and sign the bridge transaction. The <a href="https://eips.ethereum.org/EIPS/eip-20" rel="noopener noreferrer" target="_blank">ERC-20 token standard</a> defines the approval mechanism; native ETH skips it entirely, while a token needs an allowance granted to the route's contract first. On a canonical deposit, funds are locked in the L1 Standard Bridge and minted or released on Mode once the L2 picks up the message. A canonical withdrawal runs the other way: initiate on Mode, prove on Ethereum, sit through the challenge window, then finalize with a second Ethereum transaction. Your wallet controls every signature — the bridge never takes custody in the exchange sense, but escrowed L1 funds do sit in upgradeable contracts while their L2 counterparts exist.</p></div>
+</details>
+<details class="sec reveal doc-sec" id="deposit" open="">
+<summary><h2>Depositing to Mode</h2></summary>
+<div class="sec-body"><p>Depositing from Ethereum to Mode generally lands within minutes, and the receiving address is the same EVM address as your L1 wallet. Add Mode Mainnet (chain ID 34443) to your wallet — testnet users want Mode Sepolia (919). ETH is the gas token on Mode: a first-time canonical ETH deposit covers you, but bridging only USDC leaves funds you cannot move until ETH reaches that Mode address. Keep a little ETH on Ethereum too — you'll need it if you ever withdraw back.</p></div>
+</details>
+<details class="sec reveal doc-sec" id="withdraw" open="">
+<summary><h2>Withdrawing back to Ethereum</h2></summary>
+<div class="sec-body"><p>Canonical withdrawals from Mode to Ethereum take about seven days because of the optimistic-rollup challenge period. The flow is: initiate the withdrawal on Mode, submit a proof transaction on Ethereum once the state is published, wait out the challenge window, then send the finalization transaction on Ethereum to actually receive funds. Each Ethereum step costs L1 gas, so a small withdrawal can be uneconomic in fees even though the bridge itself charges nothing extra. If you need funds on L1 sooner, a liquidity bridge route can exit faster in exchange for its own fees and trust assumptions. A canonical withdrawal that appears pending during the challenge window has not reached finalization; do not re-initiate the same withdrawal.</p></div>
+</details>
+<details class="sec reveal doc-sec" id="fees" open="">
+<summary><h2>Time and fees</h2></summary>
+<div class="sec-body"><p>Bridge cost is source-chain gas plus whatever route costs the quote shows — the canonical bridge doesn't tack on a separate toll. An <a href="https://ethereum.org/developers/docs/gas/" rel="noopener noreferrer" target="_blank">Ethereum gas model</a> makes the L1 charge vary with network demand: an Ethereum deposit costs L1 gas at whatever the network is charging that day, while actions starting on Mode cost pennies-level L2 gas priced in ETH. Third-party routes add their own provider or liquidity fees, which the quote screen should itemize. If the route uses an automated market maker, <a href="https://www.investopedia.com/terms/s/slippage.asp" rel="noopener noreferrer" target="_blank">slippage in finance</a> is the difference between the quoted and executed price, not a separate bridge toll. Timing splits cleanly by direction: deposits to Mode are minutes, canonical withdrawals back carry the seven-day challenge period. If a quote looks surprisingly expensive, it's almost always L1 gas on the Ethereum leg — check gas prices and consider waiting for a quieter block rather than abandoning the route.</p></div>
+</details>
+<details class="sec reveal doc-sec" id="safety" open="">
+<summary><h2>Is Mode Bridge safe?</h2></summary>
+<div class="sec-body"><p>Mode Bridge is non-custodial in the exchange sense, but its risk profile includes smart-contract, upgrade, permissioning, and phishing risk. The canonical bridge contracts are upgradeable, Mode currently relies on permissioned proposers and challengers, and any ERC-20 approval you grant is a standing allowance against a contract; <a href="https://l2beat.com/scaling/projects/mode" rel="noopener noreferrer" target="_blank">L2BEAT's Mode profile</a> tracks the current permissioning and upgrade setup. Before signing, verify the URL, the contract address your wallet shows, and the allowance scope; treat unlimited approvals as something you revoke after large moves, not leave standing.</p></div>
+</details>
+<details class="sec reveal doc-sec" id="troubleshoot" open="">
+<summary><h2>Problems and fixes</h2></summary>
+<div class="sec-body"><p>Bridge problems usually fall into four operational states: wrong network, no destination gas, an incomplete withdrawal stage, or a confirmed transaction still waiting on messaging. <strong>Wrong network:</strong> your wallet is on Ethereum but you're trying to act on Mode (or vice versa) — switch networks, don't re-send. <strong>No gas on the destination:</strong> funds arrived on Mode but you have no ETH there to move them; bridge a small amount of ETH over to unstick yourself. <strong>Stuck-looking withdrawal:</strong> check whether it's waiting on the proof step, the challenge window, or finalization — each stage needs its own transaction, and "pending" for days during the challenge period is expected behavior. <strong>Confirmed source transaction:</strong> the funds are in the bridge mechanism; what you're waiting on is messaging or finalization, not rescue. Mode-side transactions are visible on the <a href="https://explorer.mode.network/" rel="noopener noreferrer" target="_blank">Mode explorer</a>.</p></div>
+</details>
+<details class="sec reveal doc-sec" id="faq" open="">
+<summary><h2>Mode FAQ</h2></summary>
+<div class="sec-body">
+<details class="qa"><summary>Is this the official Mode Bridge site?</summary><div class="a"><p>No. This is an independent reference dashboard — it doesn't custody assets or execute transactions.</p></div></details>
+<details class="qa"><summary>How long does Mode Bridge take?</summary><div class="a"><p>Deposits from Ethereum to Mode generally complete within minutes. Canonical withdrawals back to Ethereum carry the optimistic-rollup challenge period of about seven days, plus a proof and a finalization transaction on Ethereum that you submit yourself.</p></div></details>
+<details class="qa"><summary>How do I bridge to Mode?</summary><div class="a"><p>Connect an EVM wallet, choose Ethereum as source and Mode (chain ID 34443) as destination, pick the asset and amount, then approve the token if it's an ERC-20 and sign the bridge transaction. Native ETH needs no approval. The receiving address on Mode is the same as your Ethereum address.</p></div></details>
+<details class="qa"><summary>Do I need ETH on Mode before bridging?</summary><div class="a"><p>Yes for transacting after you arrive — ETH is Mode's native gas token. A canonical ETH deposit gives you gas automatically, but if you bridge only USDC or another token, you'll hold funds you can't move until some ETH lands on your Mode address.</p></div></details>
+<details class="qa"><summary>Is Mode Bridge safe to use?</summary><div class="a"><p>It removes exchange-custody risk but retains smart-contract, upgradeability, and Mode protocol risks — the contracts are upgradeable and proposers and challengers are currently permissioned.</p></div></details>
+<details class="qa"><summary>What's the difference between the canonical bridge and third-party routes?</summary><div class="a"><p>The canonical bridge is Mode's fork of the OP Stack Standard Bridge: it connects only Ethereum and Mode, escrows assets on L1, and carries the seven-day withdrawal wait. Third-party liquidity routes shown in the app can be faster or reach more chains, but add that provider's contracts, fees, and trust assumptions on top.</p></div></details>
+</div>
+</details>
+<section class="field-notes reveal doc-sec" id="notes">
+<h2>Notes before you use Mode Bridge</h2>
+<div class="fn-body"><p><strong>Bridging to Mode is simple; bridging back is where people get surprised.</strong> Deposits land in minutes, while the canonical route back carries a seven-day challenge window and two Ethereum transactions you have to send yourself.</p><p>The <a href="https://etherscan.io/address/0x735aDBbE72226BD52e818E7181953f42E3b0FF21" rel="noopener noreferrer" target="_blank">L1 Standard Bridge proxy</a> is 0x735aDBbE72226BD52e818E7181953f42E3b0FF21. Mode Mainnet is chain ID 34443; keep ETH for gas on BOTH sides and decide before depositing whether you'll use the canonical withdrawal (seven-day wait, L1 gas for proof and finalization) or a liquidity route with its own fees and assumptions.</p><p><strong>Before you sign:</strong> confirm the bridge site, contract address, source and destination networks, and allowance scope in your wallet prompt against the official Mode docs.</p><p>Contract addresses, supported assets, and the withdrawal flow above were checked against the Mode documentation, last reviewed 21 July 2026.</p></div>
+</section>
+</div>
+</div>
+</div>
+<footer class="site-foot"><div class="wrap">Mode Bridge Guide &amp; Technical Reference · <a href="dashboard/" rel="noopener noreferrer" target="_blank">Open Mode Bridge App ↗</a> · © 2026</div></footer>
+</main>
+</div>
 <script>
 /* Mode Bridge: route preview, mobile nav, scroll-reveal. */
 (function () {
@@ -596,6 +657,17 @@ html.js .reveal.in { opacity: 1; transform: none; }
     if (el && el.tagName === "DETAILS") { el.open = true; el.classList.add("in"); }
   });
 
+  })();
+  (function(){
+    var links=[].slice.call(document.querySelectorAll(".toc a"));
+    if(!links.length)return;
+    var secs=[].slice.call(document.querySelectorAll(".doc-main [id]")).filter(function(s){return document.querySelector('.toc a[href="#'+s.id+'"]');});
+    if(!secs.length)return;
+    function setActive(id){links.forEach(function(a){a.classList.toggle("active",a.getAttribute("href")==="#"+id);});}
+    function update(){var cur=secs[0];for(var i=0;i<secs.length;i++){if(secs[i].getBoundingClientRect().top-120<=0)cur=secs[i];else break;}if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4)cur=secs[secs.length-1];if(cur)setActive(cur.id);}
+    window.addEventListener("scroll",update,{passive:true});
+    window.addEventListener("resize",update);
+    update();
   })();
   </script>
 </body>
