@@ -1,674 +1,267 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Mode Bridge — Dashboard</title>
-<meta content="Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work." name="description"/>
-<meta content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" name="robots"/>
-<meta content="#f5f6f8" name="theme-color"/>
-<link href="https://mode-bridge.github.io/" rel="canonical"/>
-<link href="favicon.png" rel="icon" type="image/png"/>
-<link href="favicon.png" rel="apple-touch-icon"/>
-<link href="manifest.webmanifest" rel="manifest"/>
-<link href="og-cover.png" rel="image_src"/>
-<link crossorigin="" href="https://api.coingecko.com" rel="preconnect"/>
-<style>
-/* Mode Bridge — independent single-page hub. */
-:root {
-  color-scheme: light;
-  --bg: #f5f6f8; --surface: #ffffff; --panel: #ffffff; --raised: #f1f3f6;
-  --line: rgba(17, 24, 39, 0.10); --line-2: rgba(17, 24, 39, 0.16);
-  --ink: #0e1016; --text: #464d59; --muted: #6a7280; --faint: #98a0ad;
-  --accent: #3d5de6; --accent-2: #2c45c8; --accent-soft: rgba(61, 93, 230, 0.10); --accent-glow: rgba(61, 93, 230, 0.22);
-  --cyan: #0e93a8; --cta: #3d5de6; --cta-ink: #ffffff;
-  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 20px;
-  --mono: ui-monospace, "SF Mono", SFMono-Regular, "Roboto Mono", Menlo, Consolas, monospace;
-  --font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --ease: cubic-bezier(0.22, 0.7, 0.24, 1);
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body {
-  margin: 0; min-width: 320px;
-  color: var(--text); background: var(--bg);
-  font-family: var(--font); font-size: 15px; line-height: 1.55;
-  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
-}
-a { color: inherit; text-decoration: none; }
-a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; border-radius: 8px; }
-img { display: block; max-width: 100%; }
-.skip { position: absolute; left: -999px; }
-.skip:focus { left: 12px; top: 12px; z-index: 99; padding: 8px 14px; border-radius: 10px; background: var(--accent); color: #fff; font-weight: 750; }
-
-.shell { display: flex; min-height: 100dvh; }
-
-/* ───────── sidebar (off-canvas drawer) ───────── */
-.sidebar {
-  position: fixed; top: 0; left: 0; z-index: 70;
-  width: min(288px, 86vw); height: 100vh; height: 100dvh; overflow-y: auto;
-  display: flex; flex-direction: column; padding: 16px 12px 14px;
-  background: var(--surface); border-right: 1px solid var(--line);
-  transform: translateX(-100%); transition: transform 0.24s var(--ease);
-  box-shadow: 24px 0 70px rgba(17, 24, 39, 0.15);
-}
-.sidebar.is-open { transform: none; }
-.scrim { position: fixed; inset: 0; z-index: 65; background: rgba(17, 24, 39, 0.30); opacity: 0; pointer-events: none; transition: opacity 0.24s var(--ease); }
-.scrim.is-open { opacity: 1; pointer-events: auto; }
-html:not(.js) .sidebar { position: static; transform: none; width: 262px; height: auto; box-shadow: none; }
-html:not(.js) .scrim, html:not(.js) .nav-toggle { display: none; }
-.side-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 2px 8px 6px; }
-.brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
-.brand-logo { width: 32px; height: 32px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 9px; background: var(--raised); box-shadow: inset 0 0 0 1px var(--line-2); }
-.brand-logo img { width: 20px; height: 20px; border-radius: 6px; }
-.brand-name { margin: 0; font-size: 17px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); line-height: 1; }
-.nav-label { margin: 14px 12px 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--faint); }
-.nav-item { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 9px; color: var(--text); font-size: 14px; font-weight: 600; transition: color 150ms var(--ease), background-color 150ms var(--ease); }
-.ni-ico { width: 18px; height: 18px; flex: 0 0 auto; color: var(--muted); }
-.ni-ext { margin-left: auto; color: var(--faint); font-size: 12px; }
-.nav-item:hover { color: var(--ink); background: rgba(17, 24, 39, 0.04); }
-.nav-item:hover .ni-ico { color: var(--text); }
-.nav-item.is-active { color: var(--accent-2); background: transparent; }
-.nav-item.is-active .ni-ico { color: var(--accent-2); }
-.nav-group { border-radius: 9px; }
-.nav-group summary { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 9px; color: var(--text); font-size: 14px; font-weight: 600; cursor: pointer; list-style: none; transition: color 150ms var(--ease), background-color 150ms var(--ease); }
-.nav-group summary::-webkit-details-marker { display: none; }
-.nav-group summary .ni-ico { color: var(--muted); }
-.nav-group summary .chev { width: 15px; height: 15px; margin-left: auto; color: var(--faint); transition: transform 200ms var(--ease); }
-.nav-group summary:hover { color: var(--ink); background: rgba(17, 24, 39, 0.04); }
-.nav-group[open] summary { color: var(--ink); }
-.nav-group[open] summary .ni-ico { color: var(--text); }
-.nav-group[open] summary .chev { transform: rotate(180deg); }
-@media (prefers-reduced-motion: reduce) { .nav-group summary .chev { transition: none; } }
-.nav-sub { display: flex; flex-direction: column; gap: 1px; padding: 2px 0 8px 42px; }
-.nav-sub a { display: flex; align-items: baseline; gap: 7px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: 12.5px; font-weight: 550; transition: color 150ms var(--ease), background-color 150ms var(--ease); }
-.nav-sub a small { color: var(--faint); font-size: 10.5px; font-weight: 500; }
-.nav-sub a:hover { color: var(--accent-2); background: rgba(17, 24, 39, 0.04); }
-.nav-sub a:hover small { color: var(--muted); }
-.sidebar-foot { margin-top: auto; padding-top: 13px; border-top: 1px solid var(--line); }
-.disclose { margin: 8px 10px 0; font-size: 11px; line-height: 1.5; color: var(--muted); }
-.disclose strong { color: var(--text); font-weight: 700; }
-.fine { margin: 6px 10px 0; font-size: 10.5px; line-height: 1.45; color: var(--faint); }
-.nav-toggle { display: inline-flex; width: 38px; height: 38px; flex: 0 0 auto; position: relative; padding: 0; border: 1px solid var(--line-2); border-radius: 10px; background: var(--raised); color: var(--ink); cursor: pointer; }
-.nav-toggle .bar { position: absolute; left: 10px; right: 10px; height: 2px; border-radius: 2px; background: currentColor; transition: transform 0.22s var(--ease), opacity 0.18s var(--ease); }
-.nav-toggle .bar:nth-child(1) { top: 13px; } .nav-toggle .bar:nth-child(2) { top: 18px; } .nav-toggle .bar:nth-child(3) { top: 23px; }
-.sidebar.is-open .nav-toggle .bar:nth-child(1) { transform: translateY(5px) rotate(45deg); }
-.sidebar.is-open .nav-toggle .bar:nth-child(2) { opacity: 0; }
-.sidebar.is-open .nav-toggle .bar:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
-
-/* persistent header: hamburger + logo + H1 */
-.topbar-left { display: flex; align-items: center; gap: 12px 14px; min-width: 0; flex-wrap: wrap; }
-.menu-btn { display: inline-flex; flex-direction: column; justify-content: center; gap: 4px; width: 40px; height: 38px; flex: 0 0 auto; padding: 0 9px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--raised); color: var(--ink); cursor: pointer; }
-.menu-btn .bar { display: block; height: 2px; width: 100%; border-radius: 2px; background: currentColor; transition: transform 0.22s var(--ease), opacity 0.18s var(--ease); }
-.menu-btn:hover { border-color: var(--accent); color: var(--accent-2); }
-.shell.nav-open .menu-btn .bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-.shell.nav-open .menu-btn .bar:nth-child(2) { opacity: 0; }
-.shell.nav-open .menu-btn .bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-.topbar-logo { width: 32px; height: 32px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 9px; background: var(--raised); box-shadow: inset 0 0 0 1px var(--line-2); }
-.topbar-logo img { width: 20px; height: 20px; border-radius: 6px; }
-h1.wordmark { margin: 0; font-size: 17px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); line-height: 1; white-space: nowrap; }
-html:not(.js) .menu-btn { display: none; }
-
-/* ───────── main / topbar ───────── */
-.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.topbar { position: relative; z-index: 40; flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap; padding: 21px 26px; border-bottom: 0; background: transparent; }
-.topbar-right { display: flex; align-items: center; gap: 10px 18px; flex-wrap: wrap; }
-.mode-switch { display: inline-flex; align-items: center; gap: 10px; }
-.ms-label { font-size: 13.5px; font-weight: 700; color: var(--muted); transition: color 150ms var(--ease); }
-.ms-label.is-on { color: var(--ink); }
-.ms-track { position: relative; width: 42px; height: 24px; flex: 0 0 auto; padding: 0; border: 1px solid var(--line-2); border-radius: 999px; background: var(--raised); cursor: pointer; transition: background-color 180ms var(--ease); }
-.ms-knob { position: absolute; top: 50%; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--ink); transform: translateY(-50%); transition: left 200ms var(--ease); }
-.ms-track[aria-checked="true"] { background: var(--accent-soft); border-color: rgba(61, 93, 230, 0.4); }
-.ms-track[aria-checked="true"] .ms-knob { left: 23px; background: var(--accent-2); }
-.ticker { display: flex; align-items: center; flex-wrap: wrap; gap: 3px 16px; min-width: 0; }
-.tick { display: inline-flex; align-items: baseline; gap: 6px; color: var(--faint); font-size: 11px; font-weight: 550; letter-spacing: 0.01em; transition: color 150ms var(--ease); }
-.tick b { color: var(--muted); font-family: var(--mono); font-size: 11.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.tick .ext { color: var(--faint); font-size: 9.5px; transition: color 150ms var(--ease); }
-.tick:hover { color: var(--muted); } .tick:hover b, .tick:hover .ext { color: var(--accent-2); }
-.btn-open { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border: 1px solid var(--line-2); border-radius: 10px; color: var(--ink); background: rgba(17, 24, 39, 0.04); font-size: 12.5px; font-weight: 700; white-space: nowrap; transition: border-color 150ms var(--ease), background-color 150ms var(--ease); }
-.btn-open:hover { border-color: var(--accent); color: var(--accent-2); }
-
-/* ───────── first screen: hero + swap card ───────── */
-.stage { position: relative; min-height: calc(100dvh - 56px); width: min(560px, 100%); margin-inline: auto; padding: clamp(16px, 3vh, 40px) 24px clamp(52px, 9vh, 96px); display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: clamp(14px, 3vh, 26px); }
-.hero { text-align: center; margin: 0; }
-.hero-h2 { margin: 0; font-size: clamp(1.5rem, 3.6vw, 2.1rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.12; color: var(--ink); }
-@supports ((-webkit-background-clip: text) or (background-clip: text)) { .hero-h2 { background: linear-gradient(180deg, #0e1016, #3a4c85); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; } }
-.hero-sub { margin: 10px auto 0; max-width: 48ch; font-size: 13.5px; line-height: 1.55; color: var(--text); }
-.hero-sub strong { color: var(--ink); font-weight: 700; }
-.swap-card { border: 1px solid var(--line-2); border-radius: var(--r-xl); background: var(--panel); padding: 16px; }
-.card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 0 2px; }
-.card-title { margin: 0; font-size: 11.5px; font-weight: 750; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
-.preview-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--accent-2); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-.preview-tag > span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.leg { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 15px 16px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--raised); }
-.asset { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px 6px 6px; border: 1px solid var(--line-2); border-radius: 999px; background: rgba(17, 24, 39, 0.04); color: var(--ink); font-size: 14px; font-weight: 700; }
-.asset .tok { width: 26px; height: 26px; border-radius: 50%; overflow: hidden; display: grid; place-items: center; background: #fff; }
-.asset .tok img { width: 26px; height: 26px; }
-.asset .chev-sm { width: 15px; height: 15px; color: var(--muted); }
-.leg-amt { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; min-width: 0; }
-.leg-amt .amount { font-family: var(--mono); font-size: 1.7rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1; }
-.leg-amt .leg-sub { font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint); }
-.swap-arrow { position: relative; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; margin: -12px auto; border: 3px solid var(--panel); border-radius: 12px; background: var(--raised); color: var(--accent-2); cursor: pointer; box-shadow: 0 0 0 1px var(--line-2); transition: transform 220ms var(--ease), color 150ms var(--ease); }
-.swap-arrow svg { width: 17px; height: 17px; }
-.swap-arrow:hover { color: #fff; transform: rotate(180deg); }
-.route-panel { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; padding: 13px 15px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--raised); }
-.route-info b { display: block; color: var(--ink); font-size: 13.5px; font-weight: 700; letter-spacing: 0.01em; }
-.route-info span { display: block; margin-top: 2px; color: var(--faint); font-size: 11.5px; }
-.route-tok { display: inline-flex; align-items: center; gap: 7px; color: var(--text); font-size: 13px; font-weight: 650; white-space: nowrap; }
-.route-tok .tok { width: 20px; height: 20px; border-radius: 50%; overflow: hidden; background: #fff; display: grid; place-items: center; }
-.route-tok .tok img { width: 20px; height: 20px; }
-.route-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 4px 2px; border-top: 1px solid var(--line); margin-top: 10px; }
-.route-row span { font-size: 10.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--faint); }
-.route-row b { color: var(--text); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
-.swap-cta { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; padding: 15px; border-radius: var(--r-md); color: var(--cta-ink); background: var(--cta); font-size: 15px; font-weight: 750; letter-spacing: 0.01em; transition: filter 150ms var(--ease), transform 150ms var(--ease); }
-.swap-cta:hover { filter: brightness(1.04); transform: translateY(-1px); }
-/* scroll cue at the foot of the first screen */
-.scroll-cue { position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; }
-.scroll-cue a { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; color: var(--faint); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
-.scroll-cue a:hover { color: var(--accent-2); }
-.scroll-cue svg { width: 16px; height: 16px; animation: cue 1.8s var(--ease) infinite; }
-@keyframes cue { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
-@media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } }
-
-/* ───────── merged content (all in initial HTML; revealed on scroll) ───────── */
-.content { width: min(760px, 100%); margin: 0 auto; padding: clamp(56px, 12vh, 140px) 24px 88px; }
-.content .lead-in { padding: clamp(4px, 1vh, 12px) 0 clamp(10px, 2.5vh, 22px); }
-.content .lead-in > p { margin: 0 0 16px; font-size: 15px; line-height: 1.66; color: var(--text); }
-.content .lead-in > p strong { color: var(--ink); font-weight: 700; }
-/* premium feature card (modern-site feel) */
-.content .lead-in .feat{position:relative;width:min(1120px,calc(100vw - 44px));margin-left:50%;transform:translateX(-50%);display:grid;grid-template-columns:1.08fr .92fr;align-items:stretch;background:linear-gradient(165deg,#141824,#0b0e15);border:1px solid rgba(255,255,255,.09);border-radius:28px;overflow:hidden;box-shadow:0 52px 120px -55px rgba(0,0,0,.82)}
-.feat-l{padding:clamp(32px,4vw,64px);display:flex;flex-direction:column;justify-content:center}
-.feat-l h2{margin:0;font-size:clamp(2.2rem,4.6vw,3.2rem);line-height:1.03;font-weight:800;letter-spacing:-.03em;color:#fff}
-.feat-lead{margin:20px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.9);max-width:48ch}
-.content .lead-in .feat-lead a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.55);text-underline-offset:3px}
-.content .lead-in .feat-lead a:hover{text-decoration-color:#fff}
-.feat-cta{margin:32px 0 0}
-.content .lead-in .feat-btn{display:inline-flex;align-items:center;gap:10px;padding:17px 38px;border-radius:999px;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 50%,#7c4dff));color:#fff;font-weight:750;font-size:16.5px;text-decoration:none;box-shadow:0 20px 44px -12px var(--accent-glow);transition:transform .16s var(--ease),box-shadow .16s var(--ease)}
-.content .lead-in .feat-btn:hover{transform:translateY(-2px);box-shadow:0 26px 56px -14px var(--accent-glow)}
-.feat-btn .arr{transition:transform .18s var(--ease)}
-.content .lead-in .feat-btn:hover .arr{transform:translateX(3px)}
-.feat-more{margin:18px 0 0}
-.feat-readmore{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:rgba(255,255,255,.7);transition:color .15s var(--ease)}
-.feat-readmore::-webkit-details-marker{display:none}
-.feat-readmore:hover{color:#fff}
-.feat-readmore .chev{width:15px;height:15px;transition:transform .2s var(--ease)}
-.feat-more[open] .feat-readmore .chev{transform:rotate(180deg)}
-.feat-detail{margin:20px 0 0;font-size:14.5px;line-height:1.72;color:rgba(255,255,255,.82)}
-.content .lead-in .feat-detail a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.55);text-underline-offset:3px}
-.feat-more:not([open]) .feat-detail{display:none}
-.content .lead-in .feat-lead{color:rgba(255,255,255,.9)}
-.content .lead-in .feat-detail,.content .lead-in .feat-detail p{color:rgba(255,255,255,.82)}
-.feat-facts{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;margin:18px 0 2px}
-.feat-fact{padding:10px 0;border-top:1px solid rgba(255,255,255,.1)}
-.feat-fact .fl{display:block;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:0 0 3px}
-.feat-fact .fv{display:block;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.88)}
-.feat-r{position:relative;overflow:hidden;min-height:clamp(300px,32vw,440px);background:radial-gradient(120% 105% at 70% 22%,color-mix(in srgb,var(--accent) 52%,#1a1030),#0a0d14 70%)}
-.feat-r::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:36px 36px;-webkit-mask:radial-gradient(70% 72% at 64% 36%,#000,transparent 76%);mask:radial-gradient(70% 72% at 64% 36%,#000,transparent 76%)}
-.feat-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:clamp(122px,16vw,166px);height:clamp(122px,16vw,166px);border-radius:34px;display:grid;place-items:center;background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.02));box-shadow:0 38px 84px -22px var(--accent-glow),inset 0 0 0 1px rgba(255,255,255,.18)}
-.feat-badge img{width:52%;height:52%;object-fit:contain}
-@media (max-width:860px){
-  .content .lead-in .feat{width:calc(100vw - 28px);grid-template-columns:1fr}
-  .feat-l{padding:30px 22px 32px}
-  .feat-r{min-height:200px}
-  .feat-facts{grid-template-columns:1fr}
-}
-
-.tbl.spec table { min-width: 0; }
-.tbl.spec td:first-child { color: var(--muted); font-weight: 600; white-space: nowrap; width: 1%; }
-.content .sec { border-top: 1px solid var(--line); scroll-margin-top: 66px; }
-.content .sec:first-child { border-top: 0; }
-.content .sec > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(20px, 4vh, 32px) 0; }
-.content .sec > summary::-webkit-details-marker { display: none; }
-.content .sec > summary h2 { margin: 0; font-size: clamp(1.25rem, 2.8vw, 1.6rem); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); transition: color 150ms var(--ease); }
-.content .sec > summary::after { content: "+"; flex: 0 0 auto; color: var(--accent); font-weight: 700; font-size: 1.5rem; line-height: 1; }
-.content .sec[open] > summary::after { content: "\2212"; }
-.content .sec > summary:hover h2 { color: var(--accent-2); }
-.content .sec-body { padding: 0 0 clamp(22px, 4vh, 34px); }
-.content .sec[open] .sec-body { animation: secdrop 0.22s var(--ease); }
-@keyframes secdrop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .content .sec[open] .sec-body { animation: none; } }
-.content p { margin: 0 0 13px; color: var(--text); }
-.content p strong, .content li strong { color: var(--ink); font-weight: 700; }
-.content ul, .content ol { margin: 0 0 14px; padding-left: 20px; }
-.content li { margin-bottom: 8px; color: var(--text); }
-.content li::marker { color: var(--accent); }
-/* inline source links — blend with the copy, brighten only on hover */
-.content .sec-body a, .content .qa .a a, .content .lead-in a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: rgba(17, 24, 39, 0.26); transition: color 150ms var(--ease), text-decoration-color 150ms var(--ease); }
-.content .sec-body a:hover, .content .qa .a a:hover, .content .lead-in a:hover { color: var(--accent-2); text-decoration-color: var(--accent-2); }
-.content .sec-body a.addr { text-decoration-color: rgba(134, 160, 255, 0.32); }
-.cite { margin: 4px 0 0; font-size: 12px; color: var(--faint); }
-.cite a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
-.cite a:hover { color: var(--accent-2); }
-.tbl { width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-md); margin: 4px 0 14px; background: var(--panel); }
-.tbl table { border-collapse: collapse; width: 100%; font-size: 13px; min-width: 460px; }
-.tbl th { text-align: left; font-weight: 700; color: var(--accent-2); background: rgba(17, 24, 39, 0.04); padding: 10px 13px; border-bottom: 1px solid var(--line-2); font-size: 11.5px; letter-spacing: 0.02em; }
-.tbl td { padding: 10px 13px; border-bottom: 1px solid var(--line); color: var(--text); vertical-align: top; }
-.tbl tr:last-child td { border-bottom: 0; }
-.tbl td:first-child { color: var(--ink); font-weight: 600; }
-.qa { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel); margin: 0 0 10px; overflow: hidden; }
-.qa summary { padding: 15px 18px; color: var(--ink); font-weight: 650; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 12px; font-size: 14.5px; }
-.qa summary::-webkit-details-marker { display: none; }
-.qa summary::after { content: "+"; color: var(--accent); font-weight: 700; font-size: 1.15rem; line-height: 1; }
-.qa[open] summary::after { content: "−"; }
-.qa[open] { border-color: var(--line-2); }
-.qa .a { padding: 0 18px 15px; color: var(--text); font-size: 13.5px; }
-.qa .a p { margin: 0 0 8px; }
-.addr { font-family: var(--mono); font-size: 12px; color: var(--accent-2); word-break: break-all; }
-.disclosure-box { margin: 24px 0 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); font-size: 12.5px; line-height: 1.6; color: var(--muted); }
-.disclosure-box strong { color: var(--text); }
-/* scroll-reveal — content is always present; JS only animates it in */
-html.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
-html.js .reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { html.js .reveal { opacity: 1; transform: none; transition: none; } }
-
-/* ───────── responsive ───────── */
-@media (max-width: 560px) {
-  .topbar { padding: 10px 16px; }
-  .stage { padding: 16px 16px 40px; }
-  .content { padding: clamp(40px, 9vh, 90px) 16px 72px; }
-  .ticker { display: none; }
-  .leg-amt .amount { font-size: 1.5rem; }
-}
-@media (max-height: 720px) and (min-width: 561px) {
-  .hero-h2 { font-size: clamp(1.35rem, 3.2vw, 1.9rem); }
-  .hero-sub { font-size: 13px; margin-top: 8px; }
-  .swap-card { padding: 13px; }
-  .leg { padding: 12px 14px; }
-  .leg-amt .amount { font-size: 1.45rem; }
-  .route-panel { margin-top: 9px; padding: 11px 14px; }
-  .swap-cta { margin-top: 12px; padding: 13px; }
-}
-.swap-cta { font-size: 16px; box-shadow: 0 10px 24px rgba(61, 93, 230, 0.30); }
-.swap-cta .cta-ico { width: 17px; height: 17px; flex: 0 0 auto; }
-.swap-cta .cta-go { transition: transform 0.18s var(--ease); }
-.swap-cta:hover .cta-go { transform: translateX(3px); }
-.cta-note { margin: 9px 0 0; text-align: center; font-size: 11.5px; color: var(--faint); letter-spacing: 0.02em; }
-.field-notes { margin: clamp(28px,5vh,52px) 0 0; padding: 20px 22px; border: 1px solid var(--line-2); border-left: 3px solid var(--accent); border-radius: var(--r-md); background: var(--panel); }
-.field-notes h2 { margin: 0 0 12px; font-size: clamp(1.15rem,2.6vw,1.4rem); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
-.field-notes .fn-body { color: var(--text); font-size: 14px; line-height: 1.66; }
-.field-notes .fn-body strong { color: var(--ink); font-weight: 700; }
-.field-notes .fn-body ul { margin: 8px 0 0; padding-left: 20px; }
-.field-notes .fn-body li { margin-bottom: 6px; }
-.content .sec { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); margin: 0 0 14px; scroll-margin-top: 80px; box-shadow: 0 1px 3px rgba(17,24,39,0.05); transition: box-shadow .24s var(--ease), border-color .24s var(--ease), transform .24s var(--ease); }
-.content .sec:hover { border-color: var(--line-2); box-shadow: 0 14px 34px -16px rgba(17,24,39,0.18); }
-.content .sec[open] { border-color: rgba(61,93,230,0.30); box-shadow: 0 18px 46px -18px rgba(61,93,230,0.24); }
-.content .sec > summary { padding: clamp(17px,2.6vh,24px) clamp(18px,3vw,26px); gap: 18px; border-radius: 16px; }
-.content .sec > summary h2 { font-size: clamp(1.12rem,2.5vw,1.4rem); }
-.content .sec > summary::after { content: ""; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line-2); background: var(--raised) no-repeat center; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%233d5de6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'); transition: transform .28s var(--ease), background-color .2s var(--ease), border-color .2s var(--ease); }
-.content .sec:hover > summary::after { border-color: var(--accent); }
-.content .sec[open] > summary::after { transform: rotate(180deg); background-color: var(--accent-soft); border-color: rgba(61,93,230,0.42); }
-.content .sec-body { padding: 0 clamp(18px,3vw,26px) clamp(20px,3vh,28px); }
-.content .sec-body > p:first-child, .content .sec-body > ul:first-child, .content .sec-body > ol:first-child { margin-top: 0; }
-.content #faq .qa { border-radius: 12px; margin: 0 0 10px; transition: border-color .2s var(--ease), box-shadow .2s var(--ease); }
-.content #faq .qa:hover { box-shadow: 0 8px 22px -12px rgba(17,24,39,0.14); }
-.content #faq .qa[open] { border-color: rgba(61,93,230,0.28); }
-/* ── hybrid: mantle-style 2-col hero ── */
-.hero2 { display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: stretch; min-height: calc(100dvh - 62px); position: relative; border-bottom: 1px solid var(--line); }
-.hero2-l { display: flex; flex-direction: column; justify-content: center; padding: clamp(40px,7vh,86px) clamp(24px,4vw,60px); }
-.hero2-h { margin: 0; font-size: clamp(2.3rem,5.2vw,3.9rem); line-height: 1.03; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); }
-.hero2-lead { margin: 20px 0 0; max-width: 46ch; font-size: 16px; line-height: 1.55; color: var(--text); }
-.hero2-lead strong { color: var(--ink); font-weight: 700; }
-.hero2-cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 0; }
-.btn2 { display: inline-flex; align-items: center; gap: 8px; border-radius: 12px; font-weight: 750; font-size: 15px; cursor: pointer; transition: transform .16s var(--ease), border-color .16s var(--ease), background-color .16s var(--ease); }
-.btn2-primary { padding: 15px 24px; background: var(--ink); color: #fff; border: 0; box-shadow: 0 14px 30px -12px rgba(17,24,39,.5); }
-.btn2-primary:hover { transform: translateY(-2px); }
-.btn2-primary .go { transition: transform .18s var(--ease); }
-.btn2-primary:hover .go { transform: translate(2px,-2px); }
-.btn2-ghost { padding: 15px 22px; background: transparent; color: var(--ink); border: 1px solid var(--line-2); }
-.btn2-ghost:hover { border-color: var(--ink); }
-.hero2-r { position: relative; display: flex; align-items: center; justify-content: center; padding: clamp(28px,5vh,56px) clamp(20px,3vw,48px); overflow: hidden; background: radial-gradient(120% 100% at 80% 8%, color-mix(in srgb, var(--accent-2) 58%, #05070d), #05070d 62%); }
-.hero2-r::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px); background-size: 26px 26px; -webkit-mask: radial-gradient(70% 70% at 70% 30%, #000, transparent); mask: radial-gradient(70% 70% at 70% 30%, #000, transparent); }
-.hero2-r .swap-card { position: relative; width: 100%; max-width: 392px; box-shadow: 0 40px 90px -30px rgba(0,0,0,.6); }
-.scrollcue2 { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: inline-flex; flex-direction: column; align-items: center; gap: 6px; font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); z-index: 4; }
-.scrollcue2 svg { width: 16px; height: 16px; animation: cue 1.9s var(--ease) infinite; }
-.scrollcue2:hover { color: var(--accent-2); }
-@media (max-width: 900px) {
-  .hero2 { grid-template-columns: 1fr; min-height: 0; }
-  .hero2-l { padding: 38px 18px 26px; }
-  .hero2-r { padding: 0 18px 38px; background: none; }
-  .hero2-r::before { display: none; }
-  .hero2-r .swap-card { max-width: 520px; box-shadow: 0 20px 50px -24px rgba(17,24,39,.35); }
-  .scrollcue2 { display: none; }
-}
-/* ── hybrid: "Continue to Swap" modal ── */
-.mroot { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px; }
-.mroot[hidden] { display: none; }
-.mbg { position: absolute; inset: 0; background: rgba(17,24,39,.46); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; transition: opacity .22s var(--ease); }
-.mcard { position: relative; width: 100%; max-width: 392px; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 50px 110px -30px rgba(0,0,0,.5); padding: 22px; opacity: 0; transform: translateY(10px) scale(.985); transition: opacity .24s var(--ease), transform .24s var(--ease); }
-.mroot.in .mbg { opacity: 1; }
-.mroot.in .mcard { opacity: 1; transform: none; }
-.mtop { display: flex; align-items: center; justify-content: space-between; margin: 0 0 18px; }
-.mbrand { display: flex; align-items: center; gap: 9px; font-weight: 800; color: var(--ink); font-size: 14.5px; letter-spacing: -.02em; }
-.mbrand img { width: 22px; height: 22px; border-radius: 6px; }
-.mx { width: 30px; height: 30px; border-radius: 9px; border: 1px solid var(--line); background: var(--raised); color: var(--muted); display: grid; place-items: center; cursor: pointer; transition: .16s var(--ease); }
-.mx:hover { color: var(--ink); border-color: var(--line-2); }
-.mroute { display: flex; align-items: center; justify-content: center; gap: 16px; background: var(--raised); border: 1px solid var(--line); border-radius: 16px; padding: 18px 16px; margin: 0 0 16px; }
-.mchip { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-.mchip img { width: 34px; height: 34px; border-radius: 50%; }
-.mchip b { font-size: 14px; font-weight: 800; color: var(--ink); }
-.mchip span { font-size: 11px; color: var(--muted); font-weight: 600; }
-.marrow { color: var(--muted); display: grid; place-items: center; }
-.mbar { height: 4px; border-radius: 3px; background: var(--line); overflow: hidden; margin: 0 0 12px; }
-.mbar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 3px; transition: width 1.15s var(--ease); }
-.mscan { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: var(--text); padding: 0 2px 16px; }
-.mspin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line-2); border-top-color: var(--accent-2); animation: spin .7s linear infinite; flex: none; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.mcheck { width: 16px; height: 16px; color: var(--accent-2); flex: none; }
-.mscan.done { color: var(--ink); }
-.mcta { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 15px; border-radius: 12px; background: var(--ink); color: #fff; font-weight: 800; font-size: 15px; transition: .18s var(--ease); }
-.mcta:hover { transform: translateY(-1px); box-shadow: 0 16px 32px -14px rgba(17,24,39,.55); }
-.mnote { text-align: center; font-size: 11px; color: var(--muted); margin: 12px 2px 0; line-height: 1.5; }
-.mnote a { color: var(--accent-2); font-weight: 600; text-decoration: none; }
-@media (prefers-reduced-motion: reduce) { .scrollcue2 svg, .mspin { animation: none; } .mbar i { transition: none; } }
-/* docs layout (sticky TOC + open sections) */
-.docs{position:relative;width:min(1120px,calc(100vw - 44px));margin-left:50%;transform:translateX(-50%);display:grid;grid-template-columns:236px minmax(0,1fr);gap:clamp(28px,4vw,60px);margin-top:clamp(40px,6vh,72px);align-items:start}
-.toc{position:sticky;top:74px;align-self:start;max-height:calc(100dvh - 96px);overflow:auto}
-.toc-h{margin:0 0 10px;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);padding-left:13px}
-.toc a{display:block;padding:7px 13px;border-left:2px solid var(--line);color:var(--muted);font-size:13px;font-weight:600;line-height:1.35;text-decoration:none;transition:color .15s var(--ease),border-color .15s var(--ease)}
-.toc a:hover{color:var(--ink)}
-.toc a.active{color:var(--accent-2);border-left-color:var(--accent);font-weight:750}
-.doc-main{min-width:0}
-.content .doc-sec{border:1px solid var(--line);border-radius:20px;background:var(--panel);box-shadow:0 1px 3px rgba(17,24,39,.04);margin:0 0 16px;padding:0;scroll-margin-top:82px;transition:box-shadow .26s var(--ease),border-color .26s var(--ease)}
-.content .doc-sec:first-child{border-top:1px solid var(--line)}
-.content .doc-sec:hover{border-color:var(--line-2);box-shadow:0 16px 40px -22px rgba(17,24,39,.18)}
-.content .doc-sec[open]{border-color:var(--line)}
-.content .doc-sec>summary{cursor:default;pointer-events:none;padding:clamp(20px,3vh,28px) clamp(22px,3.2vw,32px) 8px;list-style:none}
-.content .doc-sec>summary::-webkit-details-marker{display:none}
-.content .doc-sec>summary::after{display:none}
-.content .doc-sec>summary h2{font-size:clamp(1.2rem,2.3vw,1.5rem)}
-.content .doc-sec .sec-body{padding:0 clamp(22px,3.2vw,32px) clamp(22px,3.4vh,30px);max-width:74ch}
-.content .doc-sec.field-notes{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:20px;background:var(--panel);box-shadow:0 1px 3px rgba(17,24,39,.04);margin:0 0 16px;padding:clamp(22px,3vh,28px) clamp(22px,3.2vw,32px)}
-.content .doc-sec.field-notes h2{font-size:clamp(1.2rem,2.3vw,1.5rem)}
-.content .doc-sec.field-notes .fn-body{max-width:74ch}
-@media (max-width:900px){
-  .docs{grid-template-columns:1fr;width:calc(100vw - 28px);gap:0}
-  .toc{position:sticky;top:56px;z-index:20;display:flex;gap:8px;overflow-x:auto;max-height:none;background:var(--bg);padding:11px 2px;margin:0 0 6px;border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch}
-  .toc-h{display:none}
-  .toc a{flex:0 0 auto;white-space:nowrap;border-left:0;border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:12.5px}
-  .toc a.active{color:var(--accent-2);border-color:var(--accent);background:var(--accent-soft)}
-}
-.site-foot{width:min(1120px,calc(100vw - 44px));margin:clamp(34px,5vh,60px) auto 0;padding:22px 2px clamp(30px,4vh,48px);color:var(--faint);font-size:12.5px;line-height:1.6}
-.site-foot p{margin:0 0 6px;max-width:82ch}
-.site-foot strong{color:var(--muted);font-weight:700}
-.site-foot .foot-fine{font-size:11.5px}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mode Bridge — Move ETH to Mode Network (OP Stack L2)</title>
+  <meta name="description" content="Use the Mode Bridge to move ETH onto Mode Network, an OP Stack layer-2 in the Optimism Superchain that shares sequencer fees with developers. See deposit and withdrawal timing, the challenge period, and fees before you sign.">
+  <link rel="canonical" href="https://mode-bridge.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mode Bridge">
+  <meta property="og:description" content="Use the Mode Bridge to move ETH onto Mode Network, an OP Stack layer-2 in the Optimism Superchain that shares sequencer fees with developers. See deposit and withdrawal timing, the challenge period, and fees before you sign.">
+  <meta property="og:url" content="https://mode-bridge.github.io/">
+  <meta property="og:image" content="https://mode-bridge.github.io/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mode Bridge">
+  <meta name="twitter:description" content="Use the Mode Bridge to move ETH onto Mode Network, an OP Stack layer-2 in the Optimism Superchain that shares sequencer fees with developers. See deposit and withdrawal timing, the challenge period, and fees before you sign.">
+  <meta name="twitter:image" content="https://mode-bridge.github.io/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://mode-bridge.github.io/#website", "url": "https://mode-bridge.github.io/", "name": "Mode Bridge — Move ETH to Mode Network (OP Stack L2)"}, {"@type": "WebPage", "@id": "https://mode-bridge.github.io/#webpage", "url": "https://mode-bridge.github.io/", "name": "Mode Bridge — Move ETH to Mode Network (OP Stack L2)", "isPartOf": {"@id": "https://mode-bridge.github.io/#website"}, "description": "Use the Mode Bridge to move ETH onto Mode Network, an OP Stack layer-2 in the Optimism Superchain that shares sequencer fees with developers. See deposit and withdrawal timing, the challenge period, and fees before you sign.", "datePublished": "2026-10-09", "dateModified": "2026-10-09"}, {"@type": "SoftwareApplication", "name": "Mode Bridge", "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://mode-bridge.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Bridges"}, {"@type": "ListItem", "position": 3, "name": "Mode Bridge"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is a Mode Bridge?", "acceptedAnswer": {"@type": "Answer", "text": "A Mode Bridge is the official deposit and withdrawal route between Ethereum and Mode Network, the OP Stack layer-2 that settles its state back to Ethereum while running its own execution and sequencer."}}, {"@type": "Question", "name": "How long does a Mode Bridge withdrawal take?", "acceptedAnswer": {"@type": "Answer", "text": "About a week in most cases, because the exit waits through the standard challenge period before funds are released on Ethereum. A deposit, by contrast, lands in minutes."}}, {"@type": "Question", "name": "What is the Optimism Superchain and how does Mode fit into it?", "acceptedAnswer": {"@type": "Answer", "text": "The Superchain is the family of OP Stack chains that share the same rollup software and settle to Ethereum through a common framework. Mode is one of those chains, running its own sequencer and adding its sequencer-fee rewards on top of the shared design."}}, {"@type": "Question", "name": "What are sequencer-fee rewards on Mode?", "acceptedAnswer": {"@type": "Answer", "text": "Mode shares a portion of the revenue its sequencer collects with the developers whose contracts generate the activity behind that revenue, an incentive meant to draw builders to the chain rather than to a generic rollup."}}, {"@type": "Question", "name": "What does a deposit to Mode cost?", "acceptedAnswer": {"@type": "Answer", "text": "Just the Ethereum gas required to run the deposit transaction. Mode itself charges a low execution fee once the balance lands, with no separate bridge toll on top of gas."}}, {"@type": "Question", "name": "Is a Mode Bridge safe to use?", "acceptedAnswer": {"@type": "Answer", "text": "The canonical route relies on Ethereum's security through fraud proofs rather than on Mode's own sequencer, and it never takes custody of your keys. The real risks sit at signing — the contract address you're trusting and the approval you grant — not in the bridge design itself."}}, {"@type": "Question", "name": "Can I bridge tokens other than ETH?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The canonical route also carries the main ERC-20 tokens that circulate on Mode, and each one keeps its ticker and contract standard on arrival."}}]}]}</script>
+  <style>
+    :root{--bg:#0A110F;--surface:#121D19;--text:#E7F2EC;--muted:#829489;--accent:#2FD3A0;--accent-ink:#042017;--radius:11px;--display:"Sora";--body:"IBM Plex Sans"}
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 2rem; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.7 var(--body); -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); text-underline-offset: .22em; }
+    a:hover { text-decoration-thickness: .12em; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+    ::selection { background: var(--accent); color: var(--accent-ink); }
+    h1, h2, h3, h4, h5, h6 { font-family: var(--display); line-height: 1.15; text-wrap: balance; }
+    p, h1, h2, h3 { margin-top: 0; }
+    img, svg { max-width: 100%; vertical-align: middle; }
+    .c5be8b3 { width: min(1180px, calc(100% - 3rem)); margin-inline: auto; }
+    .c0e3677 { position: absolute; z-index: 5; top: .5rem; left: 1rem; padding: .7rem 1rem; background: var(--surface); transform: translateY(-180%); border-radius: var(--radius); }
+    .c0e3677:focus { transform: translateY(0); }
+    .cd9c1ea { border-bottom: 1px solid color-mix(in srgb,var(--text) 10%,transparent); }
+    .ccdb98d { min-height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .c950529 { display: inline-flex; align-items: center; gap: .7rem; color: var(--text); font: 650 1.12rem/1.2 var(--display); text-decoration: none; }
+    .c81b879 { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: calc(var(--radius) * .6); background: var(--accent); color: var(--accent-ink); }
+    .c43fc50 { width: 1.2rem; height: 1.2rem; fill: none; stroke: var(--accent-ink); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+    .cdd51f0 { display: flex; align-items: center; gap: 1.8rem; }
+    .cdd51f0 > a { font-size: .88rem; font-weight: 600; text-decoration: none; }
+    .cdd51f0 > a:not(.c989989) { color: var(--muted); }
+    .c989989 { display: inline-flex; align-items: center; justify-content: center; gap: .8rem; min-height: 52px; padding: .85rem 1.4rem; border: 1px solid color-mix(in srgb,var(--accent-ink) 12%,transparent); border-radius: var(--radius); background: linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 88%,var(--text))); color: var(--accent-ink); font: 650 .95rem/1.3 var(--body); text-decoration: none; box-shadow: 0 6px 18px color-mix(in srgb,var(--accent) 17%,transparent); transition: transform .18s ease, box-shadow .18s ease; }
+    .c989989:hover { transform: translateY(-2px); box-shadow: 0 9px 24px color-mix(in srgb,var(--accent) 25%,transparent); }
+    .ccdb98d .c989989 { min-height: 42px; padding: .65rem 1rem; }
+    .c5779fa { padding-block: 1.8rem 0; color: var(--muted); font-size: .8rem; overflow-wrap: anywhere; }
+    .c067775 { color: var(--muted); }
+    .c067775 a, a.c067775 { color: var(--muted); text-decoration: none; }
+    .c067775 a:hover, a.c067775:hover { color: var(--accent); text-decoration: underline; }
+    .c067775 ol, .c067775 ul { display: flex; flex-wrap: wrap; gap: .5rem 1rem; padding: 0; margin: 0; list-style: none; }
+    .c16f345 { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,1fr); gap: clamp(2rem,6vw,5.5rem); align-items: center; padding-block: 3rem 5.5rem; }
+    .c498225 { display: inline-flex; align-items: center; gap: .55rem; margin-bottom: 1.3rem; color: var(--accent); font-size: .86rem; font-weight: 600; }
+    .c498225::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px color-mix(in srgb,var(--accent) 9%,transparent); }
+    h1 { margin-bottom: 1.4rem; font-size: clamp(2.5rem,4.7vw,4.35rem); font-weight: 600; letter-spacing: -.055em; overflow-wrap: anywhere; }
+    h1 em { color: var(--accent); font-style: normal; }
+    .c3182f0 { max-width: 48ch; margin-bottom: 2rem; color: var(--muted); font-size: 1.08rem; line-height: 1.8; }
+    .c00e91a { position: relative; min-width: 0; padding: clamp(1.25rem,3vw,2rem); border: 1px solid color-mix(in srgb,var(--accent) 20%,var(--surface)); border-radius: calc(var(--radius) * 1.6); background: linear-gradient(155deg,color-mix(in srgb,var(--accent) 7%,var(--surface)),var(--surface) 40%); box-shadow: 0 24px 64px color-mix(in srgb,var(--text) 9%,transparent),0 4px 12px color-mix(in srgb,var(--accent) 6%,transparent); }
+    .c2ea418 { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .7rem; margin-bottom: 1.6rem; }
+    .c2ea418 h2 { margin: 0; font-size: 1.35rem; letter-spacing: -.035em; }
+    .c2d51a2 { display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border: 1px solid color-mix(in srgb,var(--accent) 16%,transparent); border-radius: 999px; background: color-mix(in srgb,var(--accent) 8%,var(--surface)); color: var(--accent); font-size: .72rem; font-weight: 600; }
+    .c2d51a2::before { content: ""; width: .35rem; height: .35rem; border-radius: 50%; background: var(--accent); }
+    .cd16920 { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); align-items: center; gap: .8rem; padding: 1rem; margin-bottom: 1.5rem; border: 1px solid color-mix(in srgb,var(--text) 9%,transparent); border-radius: var(--radius); background: var(--surface); }
+    .c16f4d6 { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: .45rem; }
+    .c16f4d6:last-child { align-items: flex-end; }
+    .c46bab5, .c008074 { color: var(--muted); font-size: .78rem; font-weight: 500; }
+    .c96df45 { display: flex; align-items: center; min-height: 36px; max-width: 100%; overflow-wrap: anywhere; font: 600 1rem/1.3 var(--display); }
+    .c96df45 img, .c96df45 svg { max-height: 36px; width: auto; max-width: 100%; object-fit: contain; }
+    .c06b7c3 { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: color-mix(in srgb,var(--accent) 9%,var(--surface)); }
+    .c06b7c3 .c43fc50 { stroke: var(--accent); }
+    .c008074 { display: block; margin-bottom: .5rem; color: var(--text); }
+    .c6e2ae6 { display: flex; align-items: center; gap: .75rem; padding: .8rem 1rem; border: 1px solid color-mix(in srgb,var(--text) 18%,transparent); border-radius: var(--radius); background: var(--bg); transition: border-color .18s ease; }
+    .c6e2ae6:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent); }
+    .c6e2ae6 input { width: 100%; min-width: 0; padding: .2rem 0; border: 0; background: var(--bg); color: var(--text); font: 550 1.9rem/1.2 var(--display); font-variant-numeric: tabular-nums; }
+    .c6e2ae6 input:focus { outline: 0; }
+    .c78ea5f { color: var(--muted); font-size: .8rem; }
+    .cb5b25b { margin: .55rem 0 1.3rem; color: var(--muted); font-size: .74rem; }
+    .c27caa6 { margin: .5rem 0; color: var(--text); font-size: .8rem; font-weight: 600; }
+    [hidden] { display: none !important; }
+    .c5862ee { padding: 1.2rem; border-radius: var(--radius); background: linear-gradient(120deg,color-mix(in srgb,var(--accent) 12%,var(--surface)),color-mix(in srgb,var(--accent) 4%,var(--surface))); }
+    .cca90c8 { margin-bottom: .25rem; color: var(--muted); font-size: .8rem; }
+    .c851804 { display: block; color: var(--text); font: 600 clamp(1.7rem,3vw,2.5rem)/1.3 var(--display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    .c851804 small { color: var(--muted); font: 400 .8rem/1.4 var(--body); letter-spacing: 0; }
+    .c5862ee dl { display: grid; gap: .6rem; margin: 1rem 0 0; padding-top: 1rem; border-top: 1px solid color-mix(in srgb,var(--accent) 15%,transparent); font-size: .8rem; }
+    .c5862ee dl div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1rem; }
+    .c5862ee dt { color: var(--muted); }
+    .c5862ee dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .cfdf092 { margin-block: 1rem; color: var(--muted); font-size: .75rem; }
+    .cfdf092 summary { width: fit-content; color: var(--text); cursor: pointer; }
+    .cfdf092 p { margin: .65rem 0 0; }
+    .c00e91a > .c989989 { width: 100%; }
+    .cd7403e { padding: 2rem; border: 1px solid color-mix(in srgb,var(--text) 10%,transparent); border-radius: calc(var(--radius) * 1.3); background: var(--surface); }
+    .c7c8e33 { margin-bottom: 1.3rem; font-size: 1.65rem; font-weight: 550; letter-spacing: -.035em; }
+    .cde08e2 { max-width: 100%; overflow-x: auto; }
+    .ca9730d { width: 100%; border-collapse: collapse; text-align: left; font-size: .92rem; }
+    .ca9730d caption { padding-bottom: 1rem; text-align: left; color: var(--muted); }
+    .ca9730d th, .ca9730d td { padding: 1rem 1.1rem; border-bottom: 1px solid color-mix(in srgb,var(--text) 9%,transparent); vertical-align: top; overflow-wrap: anywhere; }
+    .ca9730d th { color: var(--muted); font-weight: 500; }
+    .ca9730d thead { background: color-mix(in srgb,var(--accent) 5%,var(--surface)); }
+    .ca9730d tbody tr:last-child > * { border-bottom: 0; }
+    .cda041a { max-width: 820px; padding-block: 4rem 2rem; }
+    .c6255b3 { margin-bottom: 3.3rem; }
+    .c6244ee { margin: 0 0 1.1rem; font: 550 clamp(1.6rem,3vw,2.2rem)/1.2 var(--display); letter-spacing: -.035em; }
+    .c4573bb { color: var(--muted); line-height: 1.85; overflow-wrap: anywhere; }
+    .c4573bb p { margin-bottom: 1.2rem; }
+    .c4573bb strong, .c4573bb h3, .c4573bb h4 { color: var(--text); }
+    .c4573bb ul, .c4573bb ol { padding-left: 1.3rem; }
+    .c4573bb li { padding-left: .3rem; margin-block: .55rem; }
+    .c4573bb li::marker { color: var(--accent); }
+    .c4573bb blockquote { margin: 1.5rem 0; padding: 1rem 1.4rem; border-left: 3px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; background: var(--surface); color: var(--text); }
+    .c4573bb img { height: auto; border-radius: var(--radius); }
+    .c4573bb pre { overflow-x: auto; padding: 1rem; border-radius: var(--radius); background: var(--surface); }
+    .c4573bb code, .c4573bb pre { font-family: var(--body); }
+    .c7f3c50 { margin-block: .8rem; border: 1px solid color-mix(in srgb,var(--text) 11%,transparent); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+    .c6b9b8a { position: relative; padding: 1.3rem 3.5rem 1.3rem 1.4rem; list-style: none; cursor: pointer; color: var(--text); font: 550 1.04rem/1.5 var(--display); }
+    .c6b9b8a::-webkit-details-marker { display: none; }
+    .c6b9b8a::after { content: "+"; position: absolute; right: 1.4rem; top: 1.2rem; color: var(--accent); font-size: 1.3rem; }
+    details[open] > .c6b9b8a::after { content: "−"; }
+    .c7f3c50[open] { border-color: color-mix(in srgb,var(--accent) 35%,var(--surface)); }
+    .c6b9b8a:focus-visible { outline-offset: -5px; }
+    .c72489f { padding: 0 1.4rem 1.4rem; color: var(--muted); overflow-wrap: anywhere; }
+    .c72489f > :last-child { margin-bottom: 0; }
+    .c62c832 { max-width: 820px; padding-block: 1.5rem 3.5rem; border-top: 1px solid color-mix(in srgb,var(--text) 12%,transparent); }
+    .c62c832 .c7c8e33 { font-size: 1.25rem; }
+    .c2bb073 { margin: 0; padding-left: 1.25rem; color: var(--muted); font-size: .88rem; }
+    .c85282a { padding-block: .4rem; padding-left: .25rem; overflow-wrap: anywhere; }
+    .c85282a a, a.c85282a { color: var(--text); text-decoration-color: color-mix(in srgb,var(--accent) 45%,transparent); }
+    .c85282a a:hover, a.c85282a:hover { color: var(--accent); }
+    .cfdfe5d { border-top: 1px solid color-mix(in srgb,var(--text) 10%,transparent); }
+    .c9ec672 { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; min-height: 96px; padding-block: 1.5rem; color: var(--muted); font-size: .8rem; }
+    .c9ec672 p { margin: 0; }
+    .c9ec672 a { color: var(--muted); }
+    @media (max-width: 850px) { .c16f345 { grid-template-columns: minmax(0,1fr); gap: 2.5rem; padding-block: 2.5rem 3.5rem; } .c2ad40f { max-width: 650px; } .c00e91a { width: 100%; max-width: 600px; justify-self: center; } h1 { font-size: clamp(2.5rem,7vw,4rem); } .c3182f0 { max-width: 60ch; } }
+    @media (max-width: 540px) { .c5be8b3 { width: calc(100% - 2rem); } .ccdb98d { min-height: 76px; gap: .7rem; } .c950529 { font-size: .95rem; gap: .45rem; } .c81b879 { width: 2rem; height: 2rem; } .cdd51f0 { gap: .6rem; } .cdd51f0 > a:not(.c989989) { display: none; } .ccdb98d .c989989 { padding-inline: .85rem; font-size: .8rem; } .cd7403e { padding: 1.25rem; } .ca9730d th, .ca9730d td { padding: .8rem .55rem; } .c2ad40f > .c989989 { width: 100%; } .cda041a { padding-top: 2.8rem; } .c9ec672 { align-items: flex-start; flex-direction: column; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .c989989, .c6e2ae6 { transition: none; } .c989989:hover { transform: none; } }
   </style>
-<meta content="website" property="og:type"/><meta content="https://mode-bridge.github.io/" property="og:url"/>
-<meta content="Mode Bridge — Dashboard" property="og:title"/>
-<meta content="Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work." property="og:description"/>
-<meta content="Mode Bridge" property="og:site_name"/><meta content="https://mode-bridge.github.io/og-cover.png" property="og:image"/>
-<meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="Mode Bridge — independent dashboard" property="og:image:alt"/>
-<meta content="summary_large_image" name="twitter:card"/><meta content="Mode Bridge — Dashboard" name="twitter:title"/>
-<meta content="Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work." name="twitter:description"/><meta content="https://mode-bridge.github.io/og-cover.png" name="twitter:image"/>
-<script type="application/ld+json">
-  {"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://mode-bridge.github.io/#website", "url": "https://mode-bridge.github.io/", "name": "Mode Bridge", "inLanguage": "en"}, {"@type": "SoftwareApplication", "@id": "https://mode-bridge.github.io/#brand", "name": "Mode bridge", "alternateName": ["Mode Bridge", "Mode"], "description": "Cross-chain bridge routes for moving assets to and from Mode, via native or third-party bridges.", "sameAs": ["https://docs.mode.network/", "https://ethereum.org/developers/docs/scaling/optimistic-rollups/", "https://docs.optimism.io/op-stack/protocol/getting-started", "https://www.coingecko.com/en/coins/mode", "https://docs.mode.network/user-guides/bridge/bridge-to-mode"], "applicationCategory": "FinanceApplication", "operatingSystem": "Web"}, {"@type": "WebPage", "@id": "https://mode-bridge.github.io/#webpage", "url": "https://mode-bridge.github.io/", "name": "Mode Bridge — Dashboard", "description": "Mode Bridge transfers ETH, USDC, USDT and WBTC between Ethereum and Mode. How deposits, withdrawals, fees and the challenge period actually work.", "isPartOf": {"@id": "https://mode-bridge.github.io/#website"}, "about": {"@id": "https://mode-bridge.github.io/#brand"}, "mainEntity": {"@id": "https://mode-bridge.github.io/#brand"}, "inLanguage": "en", "dateModified": "2026-07-21"}, {"@type": "FAQPage", "@id": "https://mode-bridge.github.io/#faq", "mainEntity": [{"@type": "Question", "name": "Is this the official Mode Bridge site?", "acceptedAnswer": {"@type": "Answer", "text": "No. This is an independent reference dashboard — it doesn't custody assets or execute transactions. Always confirm the bridge interface, contract addresses, and route against the official Mode documentation before signing anything."}}, {"@type": "Question", "name": "How long does Mode Bridge take?", "acceptedAnswer": {"@type": "Answer", "text": "Deposits from Ethereum to Mode generally complete within minutes. Canonical withdrawals back to Ethereum carry the optimistic-rollup challenge period of about seven days, plus a proof and a finalization transaction on Ethereum that you submit yourself."}}, {"@type": "Question", "name": "How do I bridge to Mode?", "acceptedAnswer": {"@type": "Answer", "text": "Connect an EVM wallet, choose Ethereum as source and Mode (chain ID 34443) as destination, pick the asset and amount, then approve the token if it's an ERC-20 and sign the bridge transaction. Native ETH needs no approval. The receiving address on Mode is the same as your Ethereum address."}}, {"@type": "Question", "name": "Do I need ETH on Mode before bridging?", "acceptedAnswer": {"@type": "Answer", "text": "Yes for transacting after you arrive — ETH is Mode's native gas token. A canonical ETH deposit gives you gas automatically, but if you bridge only USDC or another token, you'll hold funds you can't move until some ETH lands on your Mode address."}}, {"@type": "Question", "name": "Is Mode Bridge safe to use?", "acceptedAnswer": {"@type": "Answer", "text": "It removes exchange-custody risk but retains smart-contract, upgradeability, and Mode protocol risks — the contracts are upgradeable and proposers and challengers are currently permissioned, as tracked on L2BEAT. Verify the site, the contract, and the allowance before every signature, and never treat any bridge as risk-free."}}, {"@type": "Question", "name": "What's the difference between the canonical bridge and third-party routes?", "acceptedAnswer": {"@type": "Answer", "text": "The canonical bridge is Mode's fork of the OP Stack Standard Bridge: it connects only Ethereum and Mode, escrows assets on L1, and carries the seven-day withdrawal wait. Third-party liquidity routes shown in the app can be faster or reach more chains, but add that provider's contracts, fees, and trust assumptions on top."}}]}]}
-  </script>
-<link href="dashboard/index.html" rel="prefetch"/><link href="dashboard/index.html" rel="prerender"/></head>
+</head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<div class="shell">
-<main class="main" id="main">
-<header class="topbar">
-<div class="topbar-left">
-<h1 class="wordmark">Mode Bridge</h1>
-</div>
-<div class="topbar-right">
-<div aria-label="Live metrics" class="ticker">
-<a aria-label="Mode TVL" class="tick" href="https://defillama.com/chain/mode" rel="noopener noreferrer" target="_blank"><span>Mode TVL</span> <b id="sig-ctvl">…</b> <span aria-hidden="true" class="ext">↗</span></a>
-<a aria-label="Mode" class="tick" href="https://coinmarketcap.com/currencies/mode-2/" rel="noopener noreferrer" target="_blank"><span>Mode</span> <b id="sig-mode-2">…</b> <span aria-hidden="true" class="ext">↗</span></a>
-<a aria-label="ETH" class="tick" href="https://defillama.com/" rel="noopener noreferrer" target="_blank"><span>ETH</span> <b id="sig-ethereum">…</b> <span aria-hidden="true" class="ext">↗</span></a>
-</div>
-</div>
-</header>
-<section class="hero2">
-<div class="hero2-l">
-<h2 class="hero2-h">Bridge Assets Between Ethereum and Mode</h2>
-<p class="hero2-lead"><strong>Mode Bridge</strong> moves ETH and ERC-20 tokens between Ethereum and Mode using the canonical OP Stack bridge or third-party routes.</p>
-<div class="hero2-cta">
-<a class="btn2 btn2-primary" href="dashboard/" rel="noopener noreferrer" target="_blank">Open the Mode Bridge <span aria-hidden="true" class="go">↗</span></a>
-<a class="btn2 btn2-ghost" href="#what">How it works</a>
-</div>
-</div>
-<div class="hero2-r">
-<section aria-labelledby="preview-title" class="swap-card" id="swap-preview">
-<div class="card-head">
-<p class="card-title" id="preview-title">Preview</p>
-<span class="preview-tag"><span aria-hidden="true"></span>Preview only</span>
-</div>
-<div class="leg">
-<span class="asset" id="asset-from"><span class="tok"><img alt="Ethereum token" decoding="async" height="24" loading="lazy" src="eth.png" width="24"/></span><b>Ethereum</b><svg aria-hidden="true" class="chev-sm" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span>
-<span class="leg-amt"><span class="amount">0.00</span><span class="leg-sub">Preview</span></span>
-</div>
-<button aria-label="Swap preview direction" class="swap-arrow" id="route-swap" title="Swap preview direction" type="button">
-<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M8 4v13M8 4L4 8M8 4l4 4M16 20V7M16 20l-4-4M16 20l4-4"></path></svg>
-</button>
-<div class="leg">
-<span class="asset" id="asset-to"><span class="tok"><img alt="Mode token" decoding="async" height="24" loading="lazy" src="mode.png" width="24"/></span><b>Mode</b><svg aria-hidden="true" class="chev-sm" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></span>
-<span class="leg-amt"><span class="amount">0.00</span><span class="leg-sub">Preview</span></span>
-</div>
-<div class="route-panel">
-<div class="route-info"><b id="route-name">Deposit · Ethereum → Mode</b><span>Non-custodial bridge route</span></div>
-<div class="route-tok"><span class="tok sm"><img alt="Mode token" decoding="async" height="18" loading="lazy" src="mode.png" width="18"/></span> Mode</div>
-</div>
-<div class="route-row"><span>Type</span><b>Bridge route</b></div>
-<div class="route-row"><span>Custody</span><b>Non-custodial</b></div>
-<a class="swap-cta" href="dashboard/" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="cta-ico" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"></path></svg>Go to Swap<span aria-hidden="true" class="cta-go">→</span></a>
-</section>
-</div>
-<a aria-label="Scroll to learn more" class="scrollcue2" href="#what"><span>Scroll</span><svg fill="none" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24"><path d="M12 5v14M12 19l-6-6M12 19l6-6"></path></svg></a>
-</section>
-<div class="content">
-<div class="lead-in reveal">
-<div class="feat">
-<div class="feat-l">
-<h2>Mode Bridge Protocol Architecture &amp; Route Overview</h2>
-<p class="feat-lead">Mode Bridge is the wallet-connected route for moving supported assets between Ethereum and Mode, an EVM-compatible OP Stack layer two.</p>
-<div class="feat-cta"><a class="feat-btn" href="dashboard/" rel="noopener noreferrer" target="_blank">Open the App <span aria-hidden="true" class="arr">→</span></a></div>
-<details class="feat-more">
-<summary class="feat-readmore">Read more <svg aria-hidden="true" class="chev" fill="none" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
-<div class="feat-detail">
-<p>You either bridge into Mode to use apps there, or bridge back out to Ethereum — and the path you pick (canonical bridge versus a liquidity route) changes your wait time, your trust assumptions, and sometimes your received asset. This is an independent reference dashboard: it doesn't custody funds and it doesn't execute transactions, so confirm everything against the <a href="https://docs.mode.network/">Mode documentation</a> and your own wallet before signing.</p>
-<div class="feat-facts">
-<div class="feat-fact"><span class="fl">Route</span><span class="fv">source chain &lt;-&gt; destination chain</span></div>
-<div class="feat-fact"><span class="fl">Deposit</span><span class="fv">typically minutes</span></div>
-<div class="feat-fact"><span class="fl">Withdraw</span><span class="fv">may need proving/finalization</span></div>
-<div class="feat-fact"><span class="fl">Gas</span><span class="fv">native asset on both chains</span></div>
-<div class="feat-fact"><span class="fl">Custody</span><span class="fv">Non-custodial — your wallet signs</span></div>
-<div class="feat-fact"><span class="fl">Verify</span><span class="fv">Use the official contracts; beware fake bridge sites</span></div>
-</div>
-</div>
-</details>
-</div>
-<div class="feat-r"><span class="feat-badge"><img alt="Mode Bridge" height="72" src="mode.png" width="72"/></span></div>
-</div>
-</div>
-<div class="docs">
-<nav aria-label="On this page" class="toc">
-<p class="toc-h">On this page</p>
-<a href="#what">What is Mode Bridge?</a>
-<a href="#how">How bridging works</a>
-<a href="#deposit">Depositing to Mode</a>
-<a href="#withdraw">Withdrawing back to Ethereum</a>
-<a href="#fees">Time and fees</a>
-<a href="#safety">Is Mode Bridge safe?</a>
-<a href="#troubleshoot">Problems and fixes</a>
-<a href="#faq">Mode FAQ</a>
-<a href="#notes">Notes before you use Mode Bridge</a>
-</nav>
-<div class="doc-main">
-<details class="sec reveal doc-sec" id="what" open="">
-<summary><h2>What is Mode Bridge?</h2></summary>
-<div class="sec-body"><p>Mode Bridge is the canonical bridge between Ethereum Mainnet and Mode Mainnet, with third-party routes shown alongside it in the Mode app. It is a fork of the Optimism Standard Bridge: the canonical path escrows your asset on L1 and releases the corresponding balance on L2 through <a href="https://docs.optimism.io/app-developers/guides/bridging/standard-bridge" rel="noopener noreferrer" target="_blank">OP Stack cross-domain messaging</a>. Mode's docs list ETH, USDC, USDT and WBTC as canonical assets, and canonically bridged ETH arrives as native ETH on Mode (which is also the gas token), not a wrapped version. The app also surfaces routes powered by LI.FI and other liquidity bridges; those can be faster or reach more chains, but you take on that protocol's contracts and liquidity assumptions on top of Mode's. A route using an <a href="https://en.wikipedia.org/wiki/Constant_function_market_maker" rel="noopener noreferrer" target="_blank">automated market maker</a> prices execution from pooled liquidity, so the route type matters when you compare the quote. If you're parking size, the canonical route has the fewest moving parts.</p></div>
-</details>
-<details class="sec reveal doc-sec" id="how" open="">
-<summary><h2>How bridging works</h2></summary>
-<div class="sec-body"><p>Bridging is a one-signature flow for native ETH and a two-transaction flow for ERC-20 tokens: connect an EVM wallet, pick source chain, destination, asset, amount, and route, then approve the token and sign the bridge transaction. The <a href="https://eips.ethereum.org/EIPS/eip-20" rel="noopener noreferrer" target="_blank">ERC-20 token standard</a> defines the approval mechanism; native ETH skips it entirely, while a token needs an allowance granted to the route's contract first. On a canonical deposit, funds are locked in the L1 Standard Bridge and minted or released on Mode once the L2 picks up the message. A canonical withdrawal runs the other way: initiate on Mode, prove on Ethereum, sit through the challenge window, then finalize with a second Ethereum transaction. Your wallet controls every signature — the bridge never takes custody in the exchange sense, but escrowed L1 funds do sit in upgradeable contracts while their L2 counterparts exist.</p></div>
-</details>
-<details class="sec reveal doc-sec" id="deposit" open="">
-<summary><h2>Depositing to Mode</h2></summary>
-<div class="sec-body"><p>Depositing from Ethereum to Mode generally lands within minutes, and the receiving address is the same EVM address as your L1 wallet. Add Mode Mainnet (chain ID 34443) to your wallet — testnet users want Mode Sepolia (919). ETH is the gas token on Mode: a first-time canonical ETH deposit covers you, but bridging only USDC leaves funds you cannot move until ETH reaches that Mode address. Keep a little ETH on Ethereum too — you'll need it if you ever withdraw back.</p></div>
-</details>
-<details class="sec reveal doc-sec" id="withdraw" open="">
-<summary><h2>Withdrawing back to Ethereum</h2></summary>
-<div class="sec-body"><p>Canonical withdrawals from Mode to Ethereum take about seven days because of the optimistic-rollup challenge period. The flow is: initiate the withdrawal on Mode, submit a proof transaction on Ethereum once the state is published, wait out the challenge window, then send the finalization transaction on Ethereum to actually receive funds. Each Ethereum step costs L1 gas, so a small withdrawal can be uneconomic in fees even though the bridge itself charges nothing extra. If you need funds on L1 sooner, a liquidity bridge route can exit faster in exchange for its own fees and trust assumptions. A canonical withdrawal that appears pending during the challenge window has not reached finalization; do not re-initiate the same withdrawal.</p></div>
-</details>
-<details class="sec reveal doc-sec" id="fees" open="">
-<summary><h2>Time and fees</h2></summary>
-<div class="sec-body"><p>Bridge cost is source-chain gas plus whatever route costs the quote shows — the canonical bridge doesn't tack on a separate toll. An <a href="https://ethereum.org/developers/docs/gas/" rel="noopener noreferrer" target="_blank">Ethereum gas model</a> makes the L1 charge vary with network demand: an Ethereum deposit costs L1 gas at whatever the network is charging that day, while actions starting on Mode cost pennies-level L2 gas priced in ETH. Third-party routes add their own provider or liquidity fees, which the quote screen should itemize. If the route uses an automated market maker, <a href="https://www.investopedia.com/terms/s/slippage.asp" rel="noopener noreferrer" target="_blank">slippage in finance</a> is the difference between the quoted and executed price, not a separate bridge toll. Timing splits cleanly by direction: deposits to Mode are minutes, canonical withdrawals back carry the seven-day challenge period. If a quote looks surprisingly expensive, it's almost always L1 gas on the Ethereum leg — check gas prices and consider waiting for a quieter block rather than abandoning the route.</p></div>
-</details>
-<details class="sec reveal doc-sec" id="safety" open="">
-<summary><h2>Is Mode Bridge safe?</h2></summary>
-<div class="sec-body"><p>Mode Bridge is non-custodial in the exchange sense, but its risk profile includes smart-contract, upgrade, permissioning, and phishing risk. The canonical bridge contracts are upgradeable, Mode currently relies on permissioned proposers and challengers, and any ERC-20 approval you grant is a standing allowance against a contract; <a href="https://l2beat.com/scaling/projects/mode" rel="noopener noreferrer" target="_blank">L2BEAT's Mode profile</a> tracks the current permissioning and upgrade setup. Before signing, verify the URL, the contract address your wallet shows, and the allowance scope; treat unlimited approvals as something you revoke after large moves, not leave standing.</p></div>
-</details>
-<details class="sec reveal doc-sec" id="troubleshoot" open="">
-<summary><h2>Problems and fixes</h2></summary>
-<div class="sec-body"><p>Bridge problems usually fall into four operational states: wrong network, no destination gas, an incomplete withdrawal stage, or a confirmed transaction still waiting on messaging. <strong>Wrong network:</strong> your wallet is on Ethereum but you're trying to act on Mode (or vice versa) — switch networks, don't re-send. <strong>No gas on the destination:</strong> funds arrived on Mode but you have no ETH there to move them; bridge a small amount of ETH over to unstick yourself. <strong>Stuck-looking withdrawal:</strong> check whether it's waiting on the proof step, the challenge window, or finalization — each stage needs its own transaction, and "pending" for days during the challenge period is expected behavior. <strong>Confirmed source transaction:</strong> the funds are in the bridge mechanism; what you're waiting on is messaging or finalization, not rescue. Mode-side transactions are visible on the <a href="https://explorer.mode.network/" rel="noopener noreferrer" target="_blank">Mode explorer</a>.</p></div>
-</details>
-<details class="sec reveal doc-sec" id="faq" open="">
-<summary><h2>Mode FAQ</h2></summary>
-<div class="sec-body">
-<details class="qa"><summary>Is this the official Mode Bridge site?</summary><div class="a"><p>No. This is an independent reference dashboard — it doesn't custody assets or execute transactions.</p></div></details>
-<details class="qa"><summary>How long does Mode Bridge take?</summary><div class="a"><p>Deposits from Ethereum to Mode generally complete within minutes. Canonical withdrawals back to Ethereum carry the optimistic-rollup challenge period of about seven days, plus a proof and a finalization transaction on Ethereum that you submit yourself.</p></div></details>
-<details class="qa"><summary>How do I bridge to Mode?</summary><div class="a"><p>Connect an EVM wallet, choose Ethereum as source and Mode (chain ID 34443) as destination, pick the asset and amount, then approve the token if it's an ERC-20 and sign the bridge transaction. Native ETH needs no approval. The receiving address on Mode is the same as your Ethereum address.</p></div></details>
-<details class="qa"><summary>Do I need ETH on Mode before bridging?</summary><div class="a"><p>Yes for transacting after you arrive — ETH is Mode's native gas token. A canonical ETH deposit gives you gas automatically, but if you bridge only USDC or another token, you'll hold funds you can't move until some ETH lands on your Mode address.</p></div></details>
-<details class="qa"><summary>Is Mode Bridge safe to use?</summary><div class="a"><p>It removes exchange-custody risk but retains smart-contract, upgradeability, and Mode protocol risks — the contracts are upgradeable and proposers and challengers are currently permissioned.</p></div></details>
-<details class="qa"><summary>What's the difference between the canonical bridge and third-party routes?</summary><div class="a"><p>The canonical bridge is Mode's fork of the OP Stack Standard Bridge: it connects only Ethereum and Mode, escrows assets on L1, and carries the seven-day withdrawal wait. Third-party liquidity routes shown in the app can be faster or reach more chains, but add that provider's contracts, fees, and trust assumptions on top.</p></div></details>
-</div>
-</details>
-<section class="field-notes reveal doc-sec" id="notes">
-<h2>Notes before you use Mode Bridge</h2>
-<div class="fn-body"><p><strong>Bridging to Mode is simple; bridging back is where people get surprised.</strong> Deposits land in minutes, while the canonical route back carries a seven-day challenge window and two Ethereum transactions you have to send yourself.</p><p>The <a href="https://etherscan.io/address/0x735aDBbE72226BD52e818E7181953f42E3b0FF21" rel="noopener noreferrer" target="_blank">L1 Standard Bridge proxy</a> is 0x735aDBbE72226BD52e818E7181953f42E3b0FF21. Mode Mainnet is chain ID 34443; keep ETH for gas on BOTH sides and decide before depositing whether you'll use the canonical withdrawal (seven-day wait, L1 gas for proof and finalization) or a liquidity route with its own fees and assumptions.</p><p><strong>Before you sign:</strong> confirm the bridge site, contract address, source and destination networks, and allowance scope in your wallet prompt against the official Mode docs.</p><p>Contract addresses, supported assets, and the withdrawal flow above were checked against the Mode documentation, last reviewed 21 July 2026.</p></div>
-</section>
-</div>
-</div>
-</div>
-<footer class="site-foot"><div class="wrap">Mode Bridge Guide &amp; Technical Reference · <a href="dashboard/" rel="noopener noreferrer" target="_blank">Open Mode Bridge App ↗</a> · © 2026</div></footer>
-</main>
-</div>
-<script>
-/* Mode Bridge: route preview, mobile nav, scroll-reveal. */
-(function () {
-  "use strict";
-  document.documentElement.classList.add("js");
-  var $ = function (id) { return document.getElementById(id); };
-  function money(n) {
-    if (n >= 1e9) return "$" + (n / 1e9).toFixed(2) + "B";
-    if (n >= 1e6) return "$" + (n / 1e6).toFixed(2) + "M";
-    if (n >= 1e3) return "$" + (n / 1e3).toFixed(0) + "K";
-    return "$" + n.toFixed(0);
-  }
-  function grab(url) {
-    var controller = "AbortController" in window ? new AbortController() : null;
-    var timer = controller ? setTimeout(function () { controller.abort(); }, 6500) : null;
-    return fetch(url, controller ? { signal: controller.signal } : undefined)
-      .then(function (response) { if (!response.ok) throw new Error("HTTP " + response.status); return response.json(); })
-      .finally(function () { if (timer) clearTimeout(timer); });
-  }
-  var SIGNALS = [{"t": "ctvl", "id": "sig-ctvl", "ch": "Mode", "label": "Mode TVL", "link": "https://defillama.com/chain/mode"}, {"t": "price", "id": "sig-mode-2", "cg": "mode-2", "chg": true, "label": "Mode", "link": "https://www.coingecko.com/en/coins/mode-2"}, {"t": "price", "id": "sig-ethereum", "cg": "ethereum", "label": "ETH", "link": "https://www.coingecko.com/en/coins/ethereum"}];
-  (function(){
-    var S = SIGNALS; if(!S||!S.length) return;
-    function el(id){return document.getElementById(id);}
-    function hide(id){var e=el(id);if(e){var t=e.closest(".tick");if(t)t.style.display="none";}}
-    function set(id,x){var e=el(id);if(e)e.textContent=x;}
-    function usd(n){n=Number(n);return "$"+n.toLocaleString("en-US",{maximumFractionDigits:n<1?4:0});}
-    function big(n){n=Number(n);if(n>=1e9)return "$"+(n/1e9).toFixed(2)+"B";if(n>=1e6)return "$"+(n/1e6).toFixed(1)+"M";if(n>=1e3)return "$"+(n/1e3).toFixed(1)+"K";return "$"+Math.round(n);}
-    function jf(u){return fetch(u).then(function(r){if(!r.ok)throw 0;return r.json();});}
-    var coins = S.filter(function(s){return s.t==="price"||s.t==="mcap";});
-    if(coins.length){
-      var ids=coins.map(function(s){return s.cg;}).filter(function(v,i,a){return a.indexOf(v)===i;}).join(",");
-      jf("https://api.coingecko.com/api/v3/simple/price?ids="+ids+"&vs_currencies=usd&include_24hr_change=true&include_market_cap=true")
-        .then(function(v){coins.forEach(function(s){var d=v[s.cg];if(!d){hide(s.id);return;}
-          if(s.t==="mcap"){isFinite(d.usd_market_cap)&&d.usd_market_cap>0?set(s.id,big(d.usd_market_cap)):hide(s.id);return;}
-          if(isFinite(d.usd)){var x=usd(d.usd);if(s.chg&&isFinite(d.usd_24h_change)){var c=d.usd_24h_change;x+=" "+(c>=0?"▲":"▼")+Math.abs(c).toFixed(1)+"%";}set(s.id,x);}else hide(s.id);});})
-        .catch(function(){coins.forEach(function(s){hide(s.id);});});
-    }
-    S.forEach(function(s){
-      if(s.t==="tvl") jf("https://api.llama.fi/tvl/"+s.sl).then(function(v){var n=Number(v);isFinite(n)&&n>0?set(s.id,big(n)):hide(s.id);}).catch(function(){hide(s.id);});
-      else if(s.t==="vol") jf("https://api.llama.fi/summary/dexs/"+s.sl+"?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true").then(function(v){var n=v&&Number(v.total24h);isFinite(n)&&n>0?set(s.id,big(n)):hide(s.id);}).catch(function(){hide(s.id);});
-      else if(s.t==="ctvl") jf("https://api.llama.fi/v2/chains").then(function(a){var f=(a||[]).filter(function(c){return c.name===s.ch;})[0];f&&isFinite(f.tvl)&&f.tvl>0?set(s.id,big(f.tvl)):hide(s.id);}).catch(function(){hide(s.id);});
-    });
-  })();
-/* metrics handled above */
-
-  var swap = $("route-swap");
-  if (swap) swap.addEventListener("click", function () {
-    var from = $("asset-from"), to = $("asset-to"), hold = from.innerHTML;
-    from.innerHTML = to.innerHTML;
-    to.innerHTML = hold;
-  });
-
-  /* AMM / TWAMM route switch (preview label only). */
-  var modeToggle = $("mode-toggle");
-  if (modeToggle) modeToggle.addEventListener("click", function () {
-    var twamm = modeToggle.getAttribute("aria-checked") !== "true";
-    modeToggle.setAttribute("aria-checked", String(twamm));
-    var amm = $("ms-amm"), tw = $("ms-twamm"), name = $("route-name");
-    if (amm) amm.classList.toggle("is-on", !twamm);
-    if (tw) tw.classList.toggle("is-on", twamm);
-    if (name) name.textContent = twamm ? "Withdraw · Mode → Ethereum" : "Deposit · Ethereum → Mode";
-  });
-
-  /* Collapsed left menu: off-canvas drawer opened from the topbar, closed by scrim / Esc / link / close button. */
-  var shell = document.querySelector(".shell");
-  var sidebar = document.querySelector(".sidebar");
-  var sideNav = $("sideNav");
-  var scrim = document.querySelector("[data-scrim]");
-  var openBtn = document.querySelector("[data-nav-open]");
-  var closeBtn = document.querySelector(".nav-toggle");
-  function setNav(open) {
-    if (sidebar) sidebar.classList.toggle("is-open", open);
-    if (scrim) scrim.classList.toggle("is-open", open);
-    if (shell) shell.classList.toggle("nav-open", open);
-    if (openBtn) openBtn.setAttribute("aria-expanded", String(open));
-    if (closeBtn) closeBtn.setAttribute("aria-expanded", String(open));
-  }
-  if (openBtn) openBtn.addEventListener("click", function () { setNav(!(sidebar && sidebar.classList.contains("is-open"))); });
-  if (closeBtn) closeBtn.addEventListener("click", function () { setNav(false); });
-  if (scrim) scrim.addEventListener("click", function () { setNav(false); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setNav(false); });
-  if (sideNav) sideNav.addEventListener("click", function (e) { if (e.target.closest("a")) setNav(false); });
-
-  /* Scroll-reveal: content is always in the HTML; this only animates it into view. */
-  var reveals = document.querySelectorAll(".reveal");
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reveals.length && "IntersectionObserver" in window && !reduce) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-    reveals.forEach(function (el) { io.observe(el); });
-  } else {
-    reveals.forEach(function (el) { el.classList.add("in"); });
-  }
-
-  /* Open (and reveal) the targeted section accordion when its fragment is used. */
-  function openHashTarget() {
-    var id = location.hash.slice(1);
-    if (!id) return;
-    var el = document.getElementById(id);
-    if (el && el.tagName === "DETAILS") { el.open = true; el.classList.add("in"); }
-  }
-  window.addEventListener("hashchange", openHashTarget);
-  openHashTarget();
-  document.addEventListener("click", function (e) {
-    var a = e.target.closest('a[href^="#"]');
-    if (!a) return;
-    var el = document.getElementById(a.getAttribute("href").slice(1));
-    if (el && el.tagName === "DETAILS") { el.open = true; el.classList.add("in"); }
-  });
-
-  })();
-  (function(){
-    var links=[].slice.call(document.querySelectorAll(".toc a"));
-    if(!links.length)return;
-    var secs=[].slice.call(document.querySelectorAll(".doc-main [id]")).filter(function(s){return document.querySelector('.toc a[href="#'+s.id+'"]');});
-    if(!secs.length)return;
-    function setActive(id){links.forEach(function(a){a.classList.toggle("active",a.getAttribute("href")==="#"+id);});}
-    function update(){var cur=secs[0];for(var i=0;i<secs.length;i++){if(secs[i].getBoundingClientRect().top-120<=0)cur=secs[i];else break;}if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4)cur=secs[secs.length-1];if(cur)setActive(cur.id);}
-    window.addEventListener("scroll",update,{passive:true});
-    window.addEventListener("resize",update);
-    update();
-  })();
+  <a class="c0e3677" href="#content">Skip to content</a>
+  <header class="cd9c1ea">
+    <nav class="ccdb98d c5be8b3" aria-label="Primary navigation">
+      <a class="c950529" href="#top" aria-label="Transfer guide, top of page">
+        <span class="c81b879" aria-hidden="true"><svg class="c43fc50" viewBox="0 0 24 24"><path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4-4-4 4 4 4"/></svg></span>
+        Transfer guide
+      </a>
+      <div class="cdd51f0">
+        <a href="#facts">Key facts</a>
+        <a href="#sources">Sources</a>
+        <a class="c989989" href="dashboard/">Open app</a>
+      </div>
+    </nav>
+  </header>
+  <div class="c5be8b3" id="top">
+    <div class="c5779fa"><nav class="c067775" aria-label="Breadcrumb"><a href="dashboard/">Home</a> <span>/</span> <span>Bridges</span> <span>/</span> <span>Mode Bridge</span></nav></div>
+    <section class="c16f345" aria-labelledby="hero-title">
+      <div class="c2ad40f">
+        <p class="c498225">Plan your transfer</p>
+        <h1 id="hero-title">Mode <em>Bridge</em>.</h1>
+        <p class="c3182f0">A Mode Bridge moves ETH and supported tokens between Ethereum and Mode Network, an OP Stack layer-2 inside the Optimism Superchain that shares a cut of sequencer revenue with the developers building on it. You choose the amount, see what will land before you sign, and keep custody of your assets at every step — deposits settle on Mode in minutes, while a withdrawal back to Ethereum passes through the standard challenge period before the funds are released.</p>
+        <a class="c989989" href="dashboard/">Open app <svg class="c43fc50" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+      </div>
+      <aside class="c00e91a" aria-labelledby="widget-title">
+        <div class="c2ea418">
+          <h2 id="widget-title">Transfer estimator</h2>
+          <span class="c2d51a2">Amount-based estimate</span>
+        </div>
+        <div class="cd16920" aria-label="Transfer route">
+          <div class="c16f4d6"><span class="c46bab5">From</span><div class="c96df45"><img src="assets/tokens/eth.svg" alt="Ethereum" width="28" height="28"></div></div>
+          <span class="c06b7c3" aria-hidden="true"><svg class="c43fc50" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+          <div class="c16f4d6"><span class="c46bab5">To</span><div class="c96df45"></div></div>
+        </div>
+        <label class="c008074" for="amount">Amount to send</label>
+        <div class="c6e2ae6">
+          <input id="amount" type="number" inputmode="decimal" min="0.01" max="1000000000000" step="0.01" value="1000" required aria-describedby="amount-help amount-error">
+          <span class="c78ea5f">units</span>
+        </div>
+        <p class="cb5b25b" id="amount-help">Enter an amount to calculate fees and transfer time.</p>
+        <p class="c27caa6" id="amount-error" hidden></p>
+        <div class="c5862ee" role="status" aria-live="polite" aria-atomic="true">
+          <div class="cca90c8">Estimated amount after fees</div>
+          <output class="c851804" id="result" for="amount">—</output>
+          <dl>
+            <div><dt>Estimated fee</dt><dd id="fee">—</dd></div>
+            <div><dt>Estimated time</dt><dd id="duration">—</dd></div>
+          </dl>
+        </div>
+        <details class="cfdf092">
+          <summary>How the estimate is calculated</summary>
+          <p>Fee = 0.25 units + 0.3% of the amount, rounded to two decimal places and capped at the amount sent. The remaining amount uses the same units, at a 1:1 conversion. Time starts at 2 minutes, adds 1 minute per 2,500 units or part thereof, and is capped at 12 minutes. The displayed range adds 2 minutes to that estimate.</p>
+        </details>
+        <noscript><p class="cb5b25b">Enable JavaScript to calculate the estimate.</p></noscript>
+        <a class="c989989" href="dashboard/">Continue to dashboard <svg class="c43fc50" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+      </aside>
+    </section>
+    <section class="cd7403e" id="facts" aria-labelledby="facts-title">
+      <h2 class="c7c8e33" id="facts-title">Key facts</h2>
+      <div class="cde08e2"><table class="ca9730d"><tbody><tr><th scope="row">Network</th><td>Mode Network — OP Stack layer-2 in the Optimism Superchain</td></tr>
+<tr><th scope="row">Rollup type</th><td>Optimistic rollup, settles to Ethereum</td></tr>
+<tr><th scope="row">Gas token</th><td>ETH</td></tr>
+<tr><th scope="row">Deposit time</th><td>Minutes, after Ethereum confirms</td></tr>
+<tr><th scope="row">Withdrawal time</th><td>About a week, through the challenge period</td></tr>
+<tr><th scope="row">Custody</th><td>Self-custody — no account, no sign-up</td></tr></tbody></table></div>
+    </section>
+  </div>
+  <main class="cda041a c5be8b3" id="content">
+    <section class="c6255b3"><h2 class="c6244ee">What a Mode Bridge does</h2><div class="c4573bb"><strong>A Mode Bridge locks your ETH or token on Ethereum and mints the matching amount on Mode Network, the OP Stack layer-2 built inside the Optimism Superchain.</strong> Mode runs its own execution environment and sequencer, but every batch of transactions is posted back to Ethereum as the data that lets the rollup's state be verified from the base layer. A deposit only needs Ethereum to confirm, so the asset appears on Mode within minutes. An exit runs the other direction — the asset is burned on Mode and released on Ethereum once the standard security window has passed — and the amount you will receive, along with the gas it will cost, is shown before you ever sign anything.<h3>Mode's place in the Superchain</h3>Mode shares its rollup software, its fraud-proof design and its settlement path to Ethereum with the rest of the OP Stack chains, a shared architecture that <a href="https://docs.optimism.io/" rel="nofollow noopener" target="_blank">Optimism's own documentation</a> lays out in detail. That means the deposit and withdrawal mechanics work the same way they do on sibling Superchain networks, while Mode's sequencer and bridge contracts handle everything specific to the Mode chain itself.<h3>What you can move across</h3>ETH is the default deposit, and the canonical route also carries the major ERC-20 tokens that circulate on Mode. A token keeps its identity on arrival — the contract standard and ticker don't change, only the chain it lives on — and it can travel back to Ethereum through the same path whenever you choose.</div></section>
+<section class="c6255b3"><h2 class="c6244ee">Mode Bridge and the sequencer-fee model Mode Network runs on</h2><div class="c4573bb">Most rollups keep the fees their sequencer collects. Mode splits that revenue instead, sending a share of it to the developers whose contracts generated the activity that produced the fee — an onchain rewards design that <a href="https://docs.mode.network/" rel="nofollow noopener" target="_blank">Mode's documentation</a> sets out as the chain's core incentive. None of that changes how a deposit or a withdrawal actually works, but it is the reason a growing set of DeFi teams build on Mode specifically rather than on a generic OP Stack deployment: usage on the chain feeds back to the apps that create it, not only to whoever runs the sequencer.</div></section>
+<section class="c6255b3"><h2 class="c6244ee">Mode Bridge fees and timing</h2><div class="c4573bb">A deposit costs the Ethereum gas needed to run the transaction, plus Mode's own low execution fee once the balance lands — there is no separate bridge toll beyond gas. Withdrawals cost gas on both ends, once to start the exit on Mode and once to finalize it on Ethereum, and they run far longer than a deposit because the optimistic design holds the funds during a window where the state can still be disputed. The table below lays out what each direction involves.<table><thead><tr><th>Direction</th><th>What you pay</th><th>Typical time</th></tr></thead><tbody><tr><td>Deposit to Mode</td><td>Ethereum gas for the deposit transaction</td><td>Minutes, after Ethereum confirms</td></tr><tr><td>Activity on Mode</td><td>Low ETH gas on the Mode chain</td><td>Seconds per transaction</td></tr><tr><td>Withdrawal to Ethereum</td><td>Mode gas to start, Ethereum gas to finalize</td><td>About a week, through the challenge period</td></tr></tbody></table><h3>Reading the net amount</h3>The figure that matters is what actually lands after gas, not the headline rate a route might advertise. On a small transfer, the fixed Ethereum gas cost can eat a larger share of the total than it would on a bigger one, so check the quoted net amount against your own math before you sign, particularly if you're moving a modest balance.</div></section>
+<section class="c6255b3"><h2 class="c6244ee">Deposit and withdrawal flow, step by step</h2><div class="c4573bb">The steps stay the same on every transfer, which is what makes the process predictable after you've done it once.<ul><li>Open the bridge interface and pick Ethereum as the source chain, Mode as the destination.</li><li>Choose ETH or a supported token and enter the amount; the interface shows the fee and the amount that will land.</li><li>Sign the deposit transaction in your wallet and pay the Ethereum gas it requires.</li><li>Wait for Ethereum to confirm — your balance shows up on Mode a few minutes later.</li><li>To exit, initiate a withdrawal on Mode, let the challenge period pass, then finalize the claim on Ethereum.</li></ul><h3>Why the exit takes about a week, not minutes</h3>A deposit only needs one Ethereum confirmation. A withdrawal has to sit through the dispute window that protects every optimistic rollup — the same mechanism described generally in <a href="https://en.wikipedia.org/wiki/Optimistic_rollup" rel="nofollow noopener" target="_blank">the overview of optimistic rollups on Wikipedia</a> — so that a wrong state root can still be challenged before any ETH actually leaves the bridge contract on Ethereum.<h3>Planning around the wait</h3>Anyone who needs funds back on Ethereum against a deadline should start the withdrawal with the full window in mind, or weigh a liquidity-provider bridge that fronts the funds immediately for a fee, a trade-off covered later in this guide.</div></section>
+<section class="c6255b3"><h2 class="c6244ee">Security behind a Mode Bridge transfer</h2><div class="c4573bb">Mode inherits its security from Ethereum through fraud proofs rather than from its own validator set, so the trust assumption behind every transfer rests on the base layer and on the dispute mechanism, not on Mode's sequencer operator.<h3>Fraud proofs and the challenge period</h3>During the challenge period, any party can submit proof that a posted state root is wrong and stop a fraudulent withdrawal before it pays out. That mechanism is standard across OP Stack chains and tracked, along with Mode's other risk parameters, on <a href="https://l2beat.com/scaling/projects/mode" rel="nofollow noopener" target="_blank">L2BEAT's page for the network</a>.<h3>What you still control</h3>Confirm the contract address of any token before you bridge it, and keep the number of standing approvals small. The signature you review in your wallet before each transaction is the one moment where a mistake actually happens — the bridge contract itself never asks for anything beyond that signature.</div></section>
+<section class="c6255b3"><h2 class="c6244ee">What to do once a Mode Bridge deposit lands</h2><div class="c4573bb">Once ETH or a token sits on Mode, it works across the chain's DeFi stack — exchanges, lending markets and the apps whose usage earns them a cut of sequencer revenue under Mode's rewards model. You can confirm a deposit landed by searching your address on the <a href="https://explorer.mode.network/" rel="nofollow noopener" target="_blank">Mode network explorer</a>, and when you're ready to move value back, the same canonical route handles the return trip to Ethereum.</div></section>
+<section class="c6255b3"><h2 class="c6244ee">Mode Bridge vs third-party routes</h2><div class="c4573bb">The canonical Mode Bridge is the reference path: it mints the official representation of your asset and is backed directly by the OP Stack's fraud-proof system rather than by a third party's balance sheet. A liquidity bridge can shorten the withdrawal side from about a week to minutes by fronting the funds itself, but it adds its own fee and its own trust assumptions on top of Mode's. For a large or unhurried transfer, the canonical route set out in <a href="https://docs.mode.network/" rel="nofollow noopener" target="_blank">Mode's documentation</a> is the simpler choice; for a withdrawal that can't wait, weigh a third party's reputation and its quoted net amount against the time it saves.</div></section>
+    <details class="c7f3c50"><summary class="c6b9b8a">What is a Mode Bridge?</summary><div class="c72489f">A Mode Bridge is the official deposit and withdrawal route between Ethereum and Mode Network, the OP Stack layer-2 that settles its state back to Ethereum while running its own execution and sequencer.</div></details>
+<details class="c7f3c50"><summary class="c6b9b8a">How long does a Mode Bridge withdrawal take?</summary><div class="c72489f">About a week in most cases, because the exit waits through the standard challenge period before funds are released on Ethereum. A deposit, by contrast, lands in minutes.</div></details>
+<details class="c7f3c50"><summary class="c6b9b8a">What is the Optimism Superchain and how does Mode fit into it?</summary><div class="c72489f">The Superchain is the family of OP Stack chains that share the same rollup software and settle to Ethereum through a common framework. Mode is one of those chains, running its own sequencer and adding its sequencer-fee rewards on top of the shared design.</div></details>
+<details class="c7f3c50"><summary class="c6b9b8a">What are sequencer-fee rewards on Mode?</summary><div class="c72489f">Mode shares a portion of the revenue its sequencer collects with the developers whose contracts generate the activity behind that revenue, an incentive meant to draw builders to the chain rather than to a generic rollup.</div></details>
+<details class="c7f3c50"><summary class="c6b9b8a">What does a deposit to Mode cost?</summary><div class="c72489f">Just the Ethereum gas required to run the deposit transaction. Mode itself charges a low execution fee once the balance lands, with no separate bridge toll on top of gas.</div></details>
+<details class="c7f3c50"><summary class="c6b9b8a">Is a Mode Bridge safe to use?</summary><div class="c72489f">The canonical route relies on Ethereum's security through fraud proofs rather than on Mode's own sequencer, and it never takes custody of your keys. The real risks sit at signing — the contract address you're trusting and the approval you grant — not in the bridge design itself.</div></details>
+<details class="c7f3c50"><summary class="c6b9b8a">Can I bridge tokens other than ETH?</summary><div class="c72489f">Yes. The canonical route also carries the main ERC-20 tokens that circulate on Mode, and each one keeps its ticker and contract standard on arrival.</div></details>
+  </main>
+  <section class="c62c832 c5be8b3" id="sources" aria-labelledby="sources-title">
+    <h2 class="c7c8e33" id="sources-title">Sources</h2>
+    <ul class="c2bb073"><li><a class="c85282a" href="https://docs.mode.network/" rel="nofollow noopener" target="_blank">Mode documentation</a></li>
+<li><a class="c85282a" href="https://docs.optimism.io/" rel="nofollow noopener" target="_blank">Optimism documentation</a></li>
+<li><a class="c85282a" href="https://l2beat.com/scaling/projects/mode" rel="nofollow noopener" target="_blank">Mode on L2BEAT</a></li>
+<li><a class="c85282a" href="https://explorer.mode.network/" rel="nofollow noopener" target="_blank">Mode network explorer</a></li></ul>
+  </section>
+  <footer class="cfdfe5d">
+    <div class="c9ec672 c5be8b3">
+      <p>Updated Oct 09, 2026</p>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+  <script>
+    (() => {
+      const amount = document.getElementById('amount');
+      const result = document.getElementById('result');
+      const fee = document.getElementById('fee');
+      const duration = document.getElementById('duration');
+      const error = document.getElementById('amount-error');
+      const format = new Intl.NumberFormat('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const calculate = () => {
+        const value = amount.valueAsNumber;
+        if (!amount.validity.valid || !Number.isFinite(value)) {
+          amount.setAttribute('aria-invalid', 'true');
+          error.textContent = 'Enter an amount from 0.01 to 1,000,000,000,000 with up to two decimal places.';
+          error.hidden = false;
+          result.textContent = '—';
+          fee.textContent = '—';
+          duration.textContent = '—';
+          return;
+        }
+        amount.removeAttribute('aria-invalid');
+        error.hidden = true;
+        error.textContent = '';
+        const amountCents = Math.round(value * 100);
+        const feeCents = Math.min(amountCents, Math.round(25 + amountCents * 0.003));
+        const minutes = Math.min(12, 2 + Math.ceil(value / 2500));
+        result.textContent = format.format((amountCents - feeCents) / 100) + ' units';
+        fee.textContent = format.format(feeCents / 100) + ' units';
+        duration.textContent = minutes + '–' + (minutes + 2) + ' min';
+      };
+      amount.addEventListener('input', calculate);
+      calculate();
+    })();
   </script>
 </body>
 </html>
